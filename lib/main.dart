@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:viver/mainpage.dart';
 import 'package:viver/presentation.dart';
-import 'package:viver/sign.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -36,7 +35,7 @@ class _Main extends State<Main> {
                 tertiary: const Color(0xFFF8F6F4),
                 primaryContainer: const Color(0xFF40A2E3),
                 secondaryContainer: const Color(0xFF79AC78))),
-        home: const Sign(),
+        home: const MainPage(),
       ),
     );
   }

@@ -14,9 +14,21 @@ class BreathePage extends StatefulWidget {
 }
 
 class _BreathePage extends State<BreathePage> {
+  final player = AudioPlayer();
+  dynamic statePlayer;
+
   Future<void> playAudio() async {
-    final player = AudioPlayer();
-    await player.play(AssetSource('ambience.mp3'));
+    player.setVolume(0.5);
+
+    setState(() {
+      statePlayer = player.play(AssetSource('ambience.mp3'));
+    });
+  }
+
+  Future<void> stopAudio() async {
+    setState(() {
+      statePlayer = player.stop();
+    });
   }
 
   Future<void> speak(String text, double pitch) async {
@@ -45,187 +57,348 @@ class _BreathePage extends State<BreathePage> {
   var changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
   var changedText = 'Inspire';
   double changedWidth = 10;
-  int counterInitial = 0;
-  int counter = 0;
+  int counter = 6;
 
-  void changeDetails() {
-    Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Inspire';
-        speak('Inspire profundamente', 0.40);
-        timer.cancel();
-      });
-    });
+  bool stopCounter = false;
 
-    Timer.periodic(const Duration(seconds: 6), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure o ar';
-        speak('Segure o ar', 0.40);
-        timer.cancel();
-      });
-    });
+  dynamic timer0;
+  dynamic timer1;
+  dynamic timer2;
+  dynamic timer3;
+  dynamic timer4;
+  dynamic timer5;
+  dynamic timer6;
+  dynamic timer7;
+  dynamic timer8;
+  dynamic timer9;
+  dynamic timer10;
+  dynamic timer11;
+  dynamic timer12;
+  dynamic timer13;
+  dynamic timer14;
+  dynamic timer15;
+  dynamic timer16;
+  dynamic timer17;
+  dynamic timer18;
+  dynamic timer19;
 
-    Timer.periodic(const Duration(seconds: 12), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Expire';
-        speak('Expire pelo nariz lentamente', 0.40);
-        timer.cancel();
-      });
-    });
+  @override
+  void dispose() {
+    timer0?.cancel();
+    timer1?.cancel();
+    timer2?.cancel();
+    timer3?.cancel();
+    timer4?.cancel();
+    timer5?.cancel();
+    timer6?.cancel();
+    timer7?.cancel();
+    timer8?.cancel();
+    timer9?.cancel();
+    timer10?.cancel();
+    timer11?.cancel();
+    timer12?.cancel();
+    timer13?.cancel();
+    timer14?.cancel();
+    timer15?.cancel();
+    timer16?.cancel();
+    timer17?.cancel();
+    timer18?.cancel();
+    timer19?.cancel();
+    super.dispose();
+  }
 
-    Timer.periodic(const Duration(seconds: 18), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure sem ar';
-        speak('Segure sem ar por alguns segundos', 0.40);
-        timer.cancel();
-      });
-    });
-
-    // Segunda Volta
-
-    Timer.periodic(const Duration(seconds: 24), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Inspire';
-        speak('Inspire profundamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 30), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure o ar';
-        speak('Segure o ar', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 36), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Expire';
-        speak('Expire pelo nariz lentamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 42), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure sem ar';
-        speak('Segure sem ar por alguns segundos', 0.40);
-        timer.cancel();
-      });
-    });
-
-    // Terceira Volta
-
-    Timer.periodic(const Duration(seconds: 48), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Inspire';
-        speak('Inspire profundamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 54), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure o ar';
-        speak('Segure o ar', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 60), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Expire';
-        speak('Expire pelo nariz lentamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 66), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure sem ar';
-        speak('Segure sem ar por alguns segundos', 0.40);
-        timer.cancel();
-      });
-    });
-
-    // Quarta Volta
-
-    Timer.periodic(const Duration(seconds: 24), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Inspire';
-        speak('Inspire profundamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 30), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure o ar';
-        speak('Segure o ar', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 36), (timer) {
-      setState(() {
-        changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
-        changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
-        changedText = 'Expire';
-        speak('Expire pelo nariz lentamente', 0.40);
-        timer.cancel();
-      });
-    });
-
-    Timer.periodic(const Duration(seconds: 42), (timer) {
-      setState(() {
-        changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
-        changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
-        changedText = 'Segure sem ar';
-        speak('Segure sem ar por alguns segundos', 0.40);
-        timer.cancel();
-      });
-    });
-
+  void counterSeconds() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (counterInitial < 5) {
+      if (mounted) {
         setState(() {
-          counter = counterInitial++;
+          counter = counter - 1;
         });
-      } else {
-        setState(() {
-          counterInitial = 0;
-        });
+        if (counter == 0) {
+          timer.cancel();
+        }
       }
     });
+  }
+
+  // @override
+  // void initState() {
+  //   counterSeconds();
+  //   super.initState();
+  // }
+
+  void changeDetails() {
+    Timer(const Duration(milliseconds: 500), () {
+      playAudio();
+    });
+
+    for (int i = 0; i < 20; i++) {
+      if (stopCounter == true) {
+        break;
+      }
+
+      switch (i) {
+        case 0:
+          setState(() {
+            timer0 = Timer(const Duration(seconds: 3), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Inspire';
+                speak('Inspire profundamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 1:
+          setState(() {
+            timer1 = Timer(const Duration(seconds: 8), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure o ar';
+                speak('Segure o ar', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 2:
+          setState(() {
+            timer2 = Timer(const Duration(seconds: 13), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Expire';
+                speak('Expire pelo nariz lentamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 3:
+          setState(() {
+            timer3 = Timer(const Duration(seconds: 18), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure sem ar';
+                speak('Segure sem ar por alguns segundos', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 4:
+          setState(() {
+            timer4 = Timer(const Duration(seconds: 23), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Inspire';
+                speak('Inspire profundamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 5:
+          setState(() {
+            timer5 = Timer(const Duration(seconds: 28), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure o ar';
+                speak('Segure o ar', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 6:
+          setState(() {
+            timer6 = Timer(const Duration(seconds: 33), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Expire';
+                speak('Expire pelo nariz lentamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 7:
+          setState(() {
+            timer7 = Timer(const Duration(seconds: 38), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure sem ar';
+                speak('Segure sem ar por alguns segundos', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 8:
+          timer8 = Timer(const Duration(seconds: 43), () {
+            setState(() {
+              changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+              changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+              changedText = 'Inspire';
+              speak('Inspire profundamente', 0.40);
+            });
+          });
+
+          break;
+        case 9:
+          setState(() {
+            timer9 = Timer(const Duration(seconds: 48), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure o ar';
+                speak('Segure o ar', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 10:
+          setState(() {
+            timer10 = Timer(const Duration(seconds: 53), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Expire';
+                speak('Expire pelo nariz lentamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 11:
+          setState(() {
+            timer11 = Timer(const Duration(seconds: 58), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure sem ar';
+                speak('Segure sem ar por alguns segundos', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 12:
+          setState(() {
+            timer12 = Timer(const Duration(seconds: 63), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Inspire';
+                speak('Inspire profundamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 13:
+          setState(() {
+            timer13 = Timer(const Duration(seconds: 68), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure o ar';
+                speak('Segure o ar', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 14:
+          setState(() {
+            timer14 = Timer(const Duration(seconds: 73), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Expire';
+                speak('Expire pelo nariz lentamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 15:
+          setState(() {
+            timer15 = Timer(const Duration(seconds: 78), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure sem ar';
+                speak('Segure sem ar por alguns segundos', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 16:
+          setState(() {
+            timer16 = Timer(const Duration(seconds: 83), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Inspire';
+                speak('Inspire profundamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 17:
+          setState(() {
+            timer17 = Timer(const Duration(seconds: 88), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure o ar';
+                speak('Segure o ar', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 18:
+          setState(() {
+            timer18 = Timer(const Duration(seconds: 93), () {
+              setState(() {
+                changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                changedText = 'Expire';
+                speak('Expire pelo nariz lentamente', 0.40);
+              });
+            });
+          });
+
+          break;
+        case 19:
+          setState(() {
+            timer19 = Timer(const Duration(seconds: 98), () {
+              setState(() {
+                changeFillColor = const Color(0xFFF5DD61).withOpacity(0.7);
+                changeWidthColor = const Color(0xFFF5DD61).withOpacity(0.4);
+                changedText = 'Segure sem ar';
+                speak('Segure sem ar por alguns segundos', 0.40);
+              });
+            });
+          });
+
+          break;
+
+        default:
+      }
+    }
   }
 
   @override
@@ -341,8 +514,9 @@ class _BreathePage extends State<BreathePage> {
           setState(() {
             isStarted = true;
             screensIndex = 3;
+            stopCounter = false;
           });
-          playAudio();
+
           changeDetails();
         },
         style: ElevatedButton.styleFrom(
@@ -359,40 +533,94 @@ class _BreathePage extends State<BreathePage> {
 
   Widget startBreathe() {
     return Center(
-      child: Stack(
+      child: Column(
         children: [
-          AnimatedContainer(
-            duration: const Duration(seconds: 4),
-            width: 250,
-            height: 250,
-            decoration: BoxDecoration(
-                color: changeFillColor,
-                borderRadius: const BorderRadius.all(Radius.circular(150)),
-                border:
-                    Border.all(color: changeWidthColor, width: changedWidth)),
-            child: Center(
-              child: Animate(
-                effects: const [
-                  FadeEffect(delay: Duration(milliseconds: 1000))
-                ],
-                child: Text(
-                  changedText,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
-                  textAlign: TextAlign.center,
+          Stack(
+            children: [
+              AnimatedContainer(
+                duration: const Duration(seconds: 4),
+                width: 250,
+                height: 250,
+                decoration: BoxDecoration(
+                    color: changeFillColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(150)),
+                    border: Border.all(
+                        color: changeWidthColor, width: changedWidth)),
+                child: Center(
+                  child: Animate(
+                    effects: const [
+                      FadeEffect(delay: Duration(milliseconds: 1000))
+                    ],
+                    child: Text(
+                      changedText,
+                      style: GoogleFonts.montserrat(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
-            ),
+              Positioned(
+                left: 105,
+                top: 20,
+                child: Text(
+                  '$counter',
+                  style: GoogleFonts.montserrat(
+                      fontSize: 60, color: Colors.white38),
+                ),
+              ),
+            ],
           ),
-          Positioned(
-            left: 105,
-            top: 20,
-            child: Text(
-              '$counter',
-              style:
-                  GoogleFonts.montserrat(fontSize: 60, color: Colors.white38),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                stopAudio();
+
+                setState(() {
+                  stopCounter = true;
+                  screensIndex = 2;
+                });
+
+                timer0.cancel();
+                timer1.cancel();
+                timer2.cancel();
+                timer3.cancel();
+                timer4.cancel();
+                timer5.cancel();
+                timer6.cancel();
+                timer7.cancel();
+                timer8.cancel();
+                timer9.cancel();
+                timer10.cancel();
+                timer11.cancel();
+                timer12.cancel();
+                timer13.cancel();
+                timer14.cancel();
+                timer15.cancel();
+                timer16.cancel();
+                timer17.cancel();
+                timer18.cancel();
+                timer19.cancel();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFE97777),
+                minimumSize: const Size(200, 60),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+              ),
+              child: Text(
+                'Parar',
+                style: GoogleFonts.montserrat(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
+              ),
             ),
           ),
         ],

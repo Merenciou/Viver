@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:viver/breathe.dart';
+import 'package:viver/homepage.dart';
 import 'package:viver/sleep.dart';
+import 'package:viver/stretching.dart';
 import 'package:viver/water.dart';
 
-int buttonIndex = 0;
+int buttonIndex = 2;
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -35,9 +37,9 @@ class _MainPage extends State<MainPage> {
     return [
       const WaterPage(),
       const BreathePage(),
-      const WaterPage(),
+      const HomePage(),
       const Sleep(),
-      const WaterPage(),
+      const StretchingPage(),
     ];
   }
 
@@ -62,7 +64,7 @@ class _MainPage extends State<MainPage> {
       // ),
       bottomNavigationBar: bottomButtons(context)[buttonIndex],
       backgroundColor: Theme.of(context).colorScheme.primary,
-      body: screensList(context)[3],
+      body: screensList(context)[buttonIndex],
     );
   }
 

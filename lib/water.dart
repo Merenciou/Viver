@@ -15,7 +15,12 @@ class _WaterPage extends State<WaterPage> {
   bool dialogBox = false;
   TextEditingController weightController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  int calcValue = 0;
+  double? waterIdeal;
+
+  void calculator() {
+    dynamic weight = double.parse(weightController.text.replaceAll(',', '.'));
+    waterIdeal = weight * 0.350 / 10;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,53 +42,50 @@ class _WaterPage extends State<WaterPage> {
                       child: Column(
                         children: [
                           Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Defina um lembrete para beber água:',
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black38),
-                              )),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Defina um lembrete para beber água:',
+                              style:
+                                  GoogleFonts.montserrat(color: Colors.black38),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: SizedBox(
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(30))),
                               width: 350,
                               height: 90,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(30))),
-                                width: 350,
-                                height: 90,
-                                child: Center(
-                                  child: SwitchListTile(
-                                    title: Text(
-                                      'Ativado',
-                                      style: GoogleFonts.montserrat(),
-                                    ),
-                                    secondary: Text(
-                                      '07:00',
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700,
-                                          color: Colors.black45),
-                                    ),
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    value: alarmSwitch,
-                                    activeColor:
-                                        Theme.of(context).colorScheme.secondary,
-                                    inactiveTrackColor:
-                                        Theme.of(context).colorScheme.primary,
-                                    trackOutlineColor:
-                                        const MaterialStatePropertyAll(
-                                            Colors.white),
-                                    onChanged: (details) {
-                                      setState(() {
-                                        alarmSwitch = !alarmSwitch;
-                                      });
-                                    },
+                              child: Center(
+                                child: SwitchListTile(
+                                  title: Text(
+                                    'Ativado',
+                                    style: GoogleFonts.montserrat(),
                                   ),
+                                  secondary: Text(
+                                    '07:00',
+                                    style: GoogleFonts.montserrat(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black45),
+                                  ),
+                                  controlAffinity:
+                                      ListTileControlAffinity.leading,
+                                  activeColor:
+                                      Theme.of(context).colorScheme.secondary,
+                                  inactiveTrackColor:
+                                      Theme.of(context).colorScheme.primary,
+                                  trackOutlineColor:
+                                      const MaterialStatePropertyAll(
+                                          Colors.white),
+                                  value: alarmSwitch,
+                                  onChanged: (details) {
+                                    setState(() {
+                                      alarmSwitch = !alarmSwitch;
+                                    });
+                                  },
                                 ),
                               ),
                             ),
@@ -103,9 +105,6 @@ class _WaterPage extends State<WaterPage> {
                             key: _formKey,
                             child: TextFormField(
                               controller: weightController,
-                              onChanged: (value) {
-                                weightController.text = value;
-                              },
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Ops, digite o seu peso! :)';
@@ -138,6 +137,8 @@ class _WaterPage extends State<WaterPage> {
                                   setState(() {
                                     dialogBox = true;
                                   });
+
+                                  calculator();
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -216,7 +217,8 @@ class _WaterPage extends State<WaterPage> {
                       GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
                 ),
                 Text(
-                  '2, 1 litros',
+                  '${waterIdeal?.toStringAsFixed(2)} litros'
+                      .replaceAll('.', ','),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                       fontSize: 18, color: Colors.yellow),
