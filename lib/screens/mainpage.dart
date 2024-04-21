@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:viver/breathe.dart';
-import 'package:viver/homepage.dart';
-import 'package:viver/sleep.dart';
-import 'package:viver/stretching.dart';
-import 'package:viver/water.dart';
+import 'package:viver/screens/breathe.dart';
+import 'package:viver/screens/homepage.dart';
+import 'package:viver/screens/sleep.dart';
+import 'package:viver/screens/stretching.dart';
+import 'package:viver/screens/water.dart';
 
 int buttonIndex = 2;
 
@@ -46,24 +46,8 @@ class _MainPage extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   backgroundColor: Theme.of(context).colorScheme.primary,
-      //   automaticallyImplyLeading: false,
-      //   leading: IconButton(
-      //       onPressed: () {
-      //         Navigator.pop(context);
-      //       },
-      //       icon: const Padding(
-      //         padding: EdgeInsets.only(left: 20, top: 20),
-      //         child: Icon(
-      //           Icons.arrow_back_rounded,
-      //           color: Colors.black54,
-      //           size: 36,
-      //         ),
-      //       )),
-      // ),
       bottomNavigationBar: bottomButtons(context)[buttonIndex],
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: screensList(context)[buttonIndex],
     );
   }
@@ -75,8 +59,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -194,8 +178,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -306,8 +290,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -418,8 +402,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -530,8 +514,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.primary,
-          color: Theme.of(context).colorScheme.primary,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.background,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,

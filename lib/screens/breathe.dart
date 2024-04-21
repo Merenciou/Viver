@@ -522,10 +522,10 @@ class _BreathePage extends State<BreathePage> {
         style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
             minimumSize: const Size(250, 250),
-            backgroundColor: Theme.of(context).colorScheme.primaryContainer),
+            backgroundColor: Theme.of(context).colorScheme.tertiary),
         child: Text(
           'Iniciar',
-          style: GoogleFonts.montserrat(fontSize: 30),
+          style: GoogleFonts.montserrat(fontSize: 30, color: Colors.white),
         ),
       ),
     );

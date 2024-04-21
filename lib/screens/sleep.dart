@@ -1,6 +1,17 @@
+// Verificar pacote desatualizado datetime_picker_formfield
+// Mudar formato de horas para aceitar 24h
+
+// import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+// import 'package:intl/intl.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:viver/custom_widgets/custom_timepicker.dart';
+import 'package:viver/user_controller/user_controller.dart';
+
+final TextEditingController ageController = TextEditingController();
 
 class Sleep extends StatefulWidget {
   const Sleep({super.key});
@@ -11,9 +22,97 @@ class Sleep extends StatefulWidget {
 
 class _SleepState extends State<Sleep> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController ageController = TextEditingController();
-  TextEditingController wakeUpController = TextEditingController();
   bool isPressed = false;
+  int? hourIdealMin;
+  int? hourIdealMax;
+  List<dynamic> hourToSleep = [];
+
+  Future<void> loadJsonList() async {
+    String jsonString = await DefaultAssetBundle.of(context)
+        .loadString('lib/assets/json_list_info/list.json');
+    Map<String, dynamic> jsonResponse = jsonDecode(jsonString);
+
+    List<dynamic> hourToSleepList = jsonResponse['hourtosleep'];
+
+    setState(() {
+      hourToSleep = hourToSleepList;
+    });
+  }
+
+  void getIdealHour() {
+    double age = double.parse(ageController.text.replaceAll(',', '.'));
+
+    switch (age) {
+      case >= 0.01 && <= 0.03:
+        setState(() {
+          hourIdealMin = hourToSleep[0]['0at0.3'][0];
+          hourIdealMax = hourToSleep[0]['0at0.3'][1];
+        });
+        break;
+      case >= 0.04 && <= 0.11:
+        setState(() {
+          hourIdealMin = hourToSleep[1]['0.4at0.11'][0];
+          hourIdealMax = hourToSleep[1]['0.4at0.11'][1];
+        });
+        break;
+      case >= 1 && <= 2:
+        setState(() {
+          hourIdealMin = hourToSleep[2]['1at2'][0];
+          hourIdealMax = hourToSleep[2]['1at2'][1];
+        });
+        break;
+      case >= 3 && <= 5:
+        setState(() {
+          hourIdealMin = hourToSleep[3]['3at5'][0];
+          hourIdealMax = hourToSleep[3]['3at5'][1];
+        });
+        break;
+      case >= 6 && <= 12:
+        setState(() {
+          hourIdealMin = hourToSleep[4]['6at12'][0];
+          hourIdealMax = hourToSleep[4]['6at12'][1];
+        });
+        break;
+      case >= 13 && <= 18:
+        setState(() {
+          hourIdealMin = hourToSleep[5]['13at18'][0];
+          hourIdealMax = hourToSleep[5]['13at18'][1];
+        });
+        break;
+      case >= 19 && <= 60:
+        setState(() {
+          hourIdealMin = hourToSleep[6]['19at60'][0];
+          hourIdealMax = hourToSleep[6]['19at60'][1];
+        });
+        break;
+      case >= 61 && <= 64:
+        setState(() {
+          hourIdealMin = hourToSleep[7]['61at64'][0];
+          hourIdealMax = hourToSleep[7]['61at64'][1];
+        });
+        break;
+      case >= 65:
+        setState(() {
+          hourIdealMin = hourToSleep[8]['65orMore'][0];
+          hourIdealMax = hourToSleep[8]['65orMore'][1];
+        });
+        break;
+      default:
+    }
+  }
+
+  @override
+  void initState() {
+    loadJsonList();
+    super.initState();
+  }
+
+  final GlobalKey<TooltipState> toolTipKey = GlobalKey<TooltipState>();
+
+  void _onTooltipTap(GlobalKey tooltipKey) {
+    final dynamic tooltip = tooltipKey.currentState;
+    tooltip?.ensureTooltipVisible();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +150,7 @@ class _SleepState extends State<Sleep> {
                         children: [
                           TextFormField(
                             controller: ageController,
+                            textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
@@ -69,47 +169,31 @@ class _SleepState extends State<Sleep> {
                                 border: const OutlineInputBorder(
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide.none)),
+                                    borderSide: BorderSide.none),
+                                suffixIcon: Tooltip(
+                                  key: toolTipKey,
+                                  triggerMode: TooltipTriggerMode.manual,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  textAlign: TextAlign.center,
+                                  textStyle: GoogleFonts.montserrat(
+                                      color: Colors.white),
+                                  message:
+                                      'Para recém nascidos insira os meses dessa maneira: \n ex.: "0,02" (2 meses).',
+                                  child: IconButton(
+                                    onPressed: () {
+                                      _onTooltipTap(toolTipKey);
+                                    },
+                                    icon: const Icon(
+                                      Icons.info,
+                                      color: Colors.black38,
+                                    ),
+                                  ),
+                                )),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: TextFormField(
-                              controller: wakeUpController,
-                              keyboardType: TextInputType.number,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Por favor, preencha este campo!';
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                  suffixIcon: Tooltip(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    textAlign: TextAlign.center,
-                                    textStyle: GoogleFonts.montserrat(
-                                        color: Colors.white),
-                                    message:
-                                        'Esta informação será utilizada apenas para definir seus alarmes de beber água!',
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.info,
-                                          color: Colors.black38,
-                                        )),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  label: Text(
-                                    'Que horas você costuma acordar?',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black38),
-                                  ),
-                                  border: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(10)),
-                                      borderSide: BorderSide.none)),
-                            ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            child: CustomTimePicker(),
                           ),
                         ],
                       ),
@@ -117,6 +201,8 @@ class _SleepState extends State<Sleep> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          getIdealHour();
+
                           setState(() {
                             isPressed = true;
                           });
@@ -128,10 +214,11 @@ class _SleepState extends State<Sleep> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                           backgroundColor:
-                              Theme.of(context).colorScheme.primaryContainer),
+                              Theme.of(context).colorScheme.tertiary),
                       child: Text(
                         'Calcular',
-                        style: GoogleFonts.montserrat(fontSize: 18),
+                        style: GoogleFonts.montserrat(
+                            fontSize: 18, color: Colors.white),
                       ),
                     )
                   ],
@@ -195,7 +282,7 @@ class _SleepState extends State<Sleep> {
                       GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
                 ),
                 Text(
-                  '8 a 9 horas',
+                  '$hourIdealMin a $hourIdealMax',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.montserrat(
                       fontSize: 18, color: Colors.yellow),
@@ -221,7 +308,15 @@ class _SleepState extends State<Sleep> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    UserController().setAge();
+                    UserController().setWakeUpHour();
+                    setState(() {
+                      isPressed = false;
+                    });
+                    ageController.clear();
+                    wakeUpHourController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(),
@@ -233,7 +328,13 @@ class _SleepState extends State<Sleep> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ageController.clear();
+                    wakeUpHourController.clear();
+                    setState(() {
+                      isPressed = false;
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(

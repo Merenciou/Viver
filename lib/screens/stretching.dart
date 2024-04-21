@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:viver/clock.dart';
+import 'package:viver/custom_widgets/clock.dart';
 
 List<String> intervalStretching = <String>[
   '00:10',
@@ -53,7 +53,7 @@ class _StretchingPageState extends State<StretchingPage> {
                 child: SwitchListTile(
                   title: Text(
                     'Desativado',
-                    style: GoogleFonts.montserrat(),
+                    style: GoogleFonts.montserrat(color: Colors.black38),
                   ),
                   secondary: DropdownButton<String>(
                       value: dropDownValue,
@@ -69,7 +69,7 @@ class _StretchingPageState extends State<StretchingPage> {
                       ),
                       underline: Container(
                         height: 2,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       elevation: 1,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -94,7 +94,7 @@ class _StretchingPageState extends State<StretchingPage> {
                   // ),
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  inactiveTrackColor: Theme.of(context).colorScheme.primary,
+                  inactiveTrackColor: Theme.of(context).colorScheme.background,
                   trackOutlineColor:
                       const MaterialStatePropertyAll(Colors.white),
                   value: stateAlarm,

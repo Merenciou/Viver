@@ -1,15 +1,5 @@
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-// Adicionar arrastar pro lado
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +14,7 @@ class Presentation extends StatefulWidget {
 }
 
 class _Presentation extends State<Presentation> {
+  double directionX = 0.0;
   List<Widget> presentation(BuildContext context) {
     return [
       welcome(),
@@ -34,22 +25,82 @@ class _Presentation extends State<Presentation> {
     ];
   }
 
+  String userName = 'padrão';
+
+  void getName() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference userCollection = firestore.collection('User');
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      await userCollection.doc(user.uid).get().then(
+        (DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            Map<String, dynamic>? data =
+                documentSnapshot.data() as Map<String, dynamic>;
+
+            setState(() {
+              userName = data['name'];
+            });
+          }
+        },
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    getName();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: SizedBox(
-          width: double.infinity,
-          height: 900,
-          child: Align(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: 1,
-                itemBuilder: (BuildContext context, int index) {
-                  return presentation(context)[presentationIndex];
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: SizedBox(
+        width: double.infinity,
+        height: 900,
+        child: Align(
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: 1,
+            itemBuilder: (BuildContext context, int index) {
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onPanUpdate: ((details) {
+                  setState(() {
+                    directionX += details.delta.dx;
+                  });
                 }),
+                onPanEnd: ((details) {
+                  if (directionX < 100) {
+                    if (presentationIndex <= 3) {
+                      setState(() {
+                        presentationIndex = presentationIndex + 1;
+                      });
+                    }
+                  } else if (directionX > 100) {
+                    if (presentationIndex >= 1) {
+                      setState(() {
+                        presentationIndex = presentationIndex - 1;
+                      });
+                    }
+                  }
+
+                  setState(() {
+                    directionX = 0.0;
+                  });
+                }),
+                child: presentation(context)[presentationIndex],
+              );
+            },
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget welcome() {
@@ -67,7 +118,7 @@ class _Presentation extends State<Presentation> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
-            'Olá, Vitor',
+            'Olá, $userName',
             style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
           ),
         ),
@@ -142,7 +193,7 @@ class _Presentation extends State<Presentation> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 0, top: 20),
+          padding: const EdgeInsets.only(top: 20),
           child: TextButton(
             onPressed: () {
               setState(() {
@@ -250,35 +301,38 @@ class _Presentation extends State<Presentation> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 0, top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 0;
-                  });
-                },
-                child: Text(
-                  'Voltar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+          padding: const EdgeInsets.only(top: 20),
+          child: SizedBox(
+            width: 240,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 0;
+                    });
+                  },
+                  child: Text(
+                    'Voltar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 2;
-                  });
-                },
-                child: Text(
-                  'Avançar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 2;
+                    });
+                  },
+                  child: Text(
+                    'Avançar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -375,35 +429,38 @@ class _Presentation extends State<Presentation> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 0, top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 1;
-                  });
-                },
-                child: Text(
-                  'Voltar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+          padding: const EdgeInsets.only(top: 20),
+          child: SizedBox(
+            width: 240,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 1;
+                    });
+                  },
+                  child: Text(
+                    'Voltar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 3;
-                  });
-                },
-                child: Text(
-                  'Avançar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 3;
+                    });
+                  },
+                  child: Text(
+                    'Avançar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -500,35 +557,38 @@ class _Presentation extends State<Presentation> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 0, top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 2;
-                  });
-                },
-                child: Text(
-                  'Voltar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+          padding: const EdgeInsets.only(top: 20),
+          child: SizedBox(
+            width: 240,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 2;
+                    });
+                  },
+                  child: Text(
+                    'Voltar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 4;
-                  });
-                },
-                child: Text(
-                  'Avançar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 4;
+                    });
+                  },
+                  child: Text(
+                    'Avançar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -625,33 +685,36 @@ class _Presentation extends State<Presentation> {
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(right: 0, top: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    presentationIndex = 3;
-                  });
-                },
-                child: Text(
-                  'Voltar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+          padding: const EdgeInsets.only(top: 20),
+          child: SizedBox(
+            width: 240,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      presentationIndex = 3;
+                    });
+                  },
+                  child: Text(
+                    'Voltar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/homepage');
-                },
-                child: Text(
-                  'Continuar',
-                  style: GoogleFonts.montserrat(
-                      fontSize: 20, color: Colors.black45),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/mainpage');
+                  },
+                  child: Text(
+                    'Continuar',
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20, color: Colors.black45),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],

@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+// import 'package:viver/notifications/notifications.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,12 +14,77 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DateTime time = DateTime.now();
+  String salutation = '';
+  List<String> dayShift = [
+    'Bom dia, ',
+    'Boa tarde, ',
+    'Boa noite, ',
+  ];
+
+  void shiftSalutation() {
+    if (time.hour >= 0 && time.hour <= 5) {
+      setState(() {
+        salutation = dayShift[2];
+      });
+    }
+    if (time.hour >= 6 && time.hour <= 12) {
+      setState(() {
+        salutation = dayShift[0];
+      });
+    }
+    if (time.hour >= 13 && time.hour <= 18) {
+      setState(() {
+        salutation = dayShift[1];
+      });
+    }
+    if (time.hour >= 19 && time.hour <= 24) {
+      setState(() {
+        salutation = dayShift[2];
+      });
+    }
+  }
+
   var screenReportIndex = 0;
+
   List<Widget> screenReportList(BuildContext context) {
     return [
       reportSleep(),
       reportWater(),
     ];
+  }
+
+  String userName = 'nome';
+
+  void getName() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference userCollection = firestore.collection('User');
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      await userCollection
+          .doc(user.uid)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          Map<String, dynamic>? data =
+              documentSnapshot.data() as Map<String, dynamic>;
+
+          setState(() {
+            userName = data['name'];
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    shiftSalutation();
+    // NotificationController().getWakeUpHour();
+    getName();
+    super.initState();
   }
 
   @override
@@ -66,14 +134,14 @@ class _HomePageState extends State<HomePage> {
                       text: TextSpan(
                         children: <TextSpan>[
                           TextSpan(
-                            text: 'Bom dia, ',
+                            text: salutation,
                             style: GoogleFonts.montserrat(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 24),
                           ),
                           TextSpan(
-                            text: 'Vitor',
+                            text: userName,
                             style: GoogleFonts.montserrat(
                                 color: Theme.of(context).colorScheme.secondary,
                                 fontWeight: FontWeight.w500,
@@ -493,7 +561,7 @@ class _CustomChartBarState extends State<CustomChartBar> {
 BarTouchData get barTouchData => BarTouchData(
       enabled: false,
       touchTooltipData: BarTouchTooltipData(
-          tooltipBgColor: Colors.transparent,
+          getTooltipColor: (BarChartGroupData group) => Colors.transparent,
           tooltipPadding: EdgeInsets.zero,
           tooltipMargin: 8,
           getTooltipItem: (

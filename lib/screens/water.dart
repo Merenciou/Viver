@@ -1,7 +1,18 @@
+// import 'dart:async';
+
+// import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_animate/flutter_animate.dart'; CONFERIR A IMPORTÂNCIA DESSE PACOTE
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:viver/clock.dart';
+import 'package:viver/authentication/auth_service.dart';
+import 'package:viver/custom_widgets/clock.dart';
+import 'package:viver/notifications/notifications.dart';
+import 'package:viver/user_controller/user_controller.dart';
+
+TextEditingController weightController = TextEditingController();
 
 class WaterPage extends StatefulWidget {
   const WaterPage({super.key});
@@ -13,7 +24,6 @@ class WaterPage extends StatefulWidget {
 class _WaterPage extends State<WaterPage> {
   bool alarmSwitch = false;
   bool dialogBox = false;
-  TextEditingController weightController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   double? waterIdeal;
 
@@ -22,14 +32,46 @@ class _WaterPage extends State<WaterPage> {
     waterIdeal = weight * 0.350 / 10;
   }
 
+  String hourWakeUp = '00:00';
+
+  void getHourWakeUp() async {
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    CollectionReference userCollection = firestore.collection('User');
+    User? user = auth.currentUser;
+
+    if (user != null) {
+      await userCollection
+          .doc(user.uid)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          Map<String, dynamic>? data =
+              documentSnapshot.data() as Map<String, dynamic>;
+          setState(() {
+            hourWakeUp = data['wakeUpHour'] ?? '00:00';
+          });
+        }
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getHourWakeUp();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: dialogBox
-            ? calcResult()
-            : Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+      body: dialogBox
+          ? calcResult()
+          : SingleChildScrollView(
+              reverse: true,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -61,11 +103,11 @@ class _WaterPage extends State<WaterPage> {
                               child: Center(
                                 child: SwitchListTile(
                                   title: Text(
-                                    'Ativado',
+                                    alarmSwitch ? 'Ativado' : 'Desativado',
                                     style: GoogleFonts.montserrat(),
                                   ),
                                   secondary: Text(
-                                    '07:00',
+                                    hourWakeUp,
                                     style: GoogleFonts.montserrat(
                                         fontSize: 30,
                                         fontWeight: FontWeight.w700,
@@ -76,15 +118,23 @@ class _WaterPage extends State<WaterPage> {
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
                                   inactiveTrackColor:
-                                      Theme.of(context).colorScheme.primary,
+                                      Theme.of(context).colorScheme.background,
                                   trackOutlineColor:
                                       const MaterialStatePropertyAll(
                                           Colors.white),
                                   value: alarmSwitch,
-                                  onChanged: (details) {
+                                  onChanged: (details) async {
                                     setState(() {
                                       alarmSwitch = !alarmSwitch;
                                     });
+
+                                    if (alarmSwitch) {
+                                      await NotificationController
+                                          .scheduleNewNotification();
+                                    } else {
+                                      await NotificationController
+                                          .cancelAllSchedules();
+                                    }
                                   },
                                 ),
                               ),
@@ -146,21 +196,32 @@ class _WaterPage extends State<WaterPage> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10))),
                                   minimumSize: const Size(200, 60),
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
+                                  backgroundColor:
+                                      Theme.of(context).colorScheme.tertiary),
                               child: Text(
                                 'Calcular',
-                                style: GoogleFonts.montserrat(fontSize: 18),
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 18, color: Colors.white),
                               ),
                             ),
                           ),
+                          IconButton(
+                              onPressed: () {
+                                AuthService().signOut();
+                              },
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Colors.red,
+                                size: 60,
+                              ))
                         ],
                       ),
                     )
                   ],
                 ),
-              ));
+              ),
+            ),
+    );
   }
 
   Widget calcResult() {
@@ -184,6 +245,7 @@ class _WaterPage extends State<WaterPage> {
                       alignment: Alignment.topRight,
                       child: IconButton(
                           onPressed: () {
+                            weightController.clear();
                             setState(() {
                               dialogBox = false;
                             });
@@ -244,7 +306,10 @@ class _WaterPage extends State<WaterPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    UserController().setWeight();
+                    weightController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(),
@@ -256,7 +321,12 @@ class _WaterPage extends State<WaterPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      dialogBox = false;
+                    });
+                    weightController.clear();
+                  },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(
