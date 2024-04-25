@@ -30,10 +30,10 @@ class _Sign extends State<Sign> {
     User? user = await auth.signInWithEmailAndPassword(email, password);
 
     if (user != null) {
-      _snackBarLoginSucessful();
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.pushNamed(context, '/mainpage');
-      });
+      // _snackBarLoginSucessful();
+      // Future.delayed(const Duration(milliseconds: 4000), () {
+      //   Navigator.pushNamed(context, '/mainpage');
+      // });
     } else if (authError == 'invalid-email') {
       _snackBarEmailWrong();
     } else if (authError == 'invalid-credential') {
@@ -50,10 +50,10 @@ class _Sign extends State<Sign> {
     User? user = await auth.signUpWithEmailAndPassword(email, password);
 
     if (user != null) {
-      _snackBarSignUpSucessfull();
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.pushNamed(context, '/presentation');
-      });
+      // _snackBarSignUpSucessfull();
+      // Future.delayed(const Duration(milliseconds: 2000), () {
+      //   Navigator.pushNamed(context, '/presentation');
+      // });
     }
     if (authError == 'email-already-in-use') {
       _snackBarEmailAlreadInUse();

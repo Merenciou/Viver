@@ -12,6 +12,8 @@ import 'package:viver/custom_widgets/custom_timepicker.dart';
 import 'package:viver/user_controller/user_controller.dart';
 
 final TextEditingController ageController = TextEditingController();
+int? hourIdealMin;
+int? hourIdealMax;
 
 class Sleep extends StatefulWidget {
   const Sleep({super.key});
@@ -23,8 +25,6 @@ class Sleep extends StatefulWidget {
 class _SleepState extends State<Sleep> {
   final _formKey = GlobalKey<FormState>();
   bool isPressed = false;
-  int? hourIdealMin;
-  int? hourIdealMax;
   List<dynamic> hourToSleep = [];
 
   Future<void> loadJsonList() async {
@@ -49,7 +49,7 @@ class _SleepState extends State<Sleep> {
           hourIdealMax = hourToSleep[0]['0at0.3'][1];
         });
         break;
-      case >= 0.04 && <= 0.11:
+      case >= 0.04 && < 1:
         setState(() {
           hourIdealMin = hourToSleep[1]['0.4at0.11'][0];
           hourIdealMax = hourToSleep[1]['0.4at0.11'][1];
@@ -311,6 +311,7 @@ class _SleepState extends State<Sleep> {
                   onPressed: () {
                     UserController().setAge();
                     UserController().setWakeUpHour();
+                    UserController().setHourIdealSleepMax();
                     setState(() {
                       isPressed = false;
                     });

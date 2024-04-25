@@ -15,12 +15,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  UserModel userModel = UserModel();
+  // UserModel userModel = UserModel();
 
-  await userModel.getName();
-  await userModel.getWeight();
-  await userModel.getAge();
-  await userModel.getWakeUpHour();
+  // await userModel.getName();
+  // await userModel.getWeight();
+  // await userModel.getAge();
+  // await userModel.getWakeUpHour();
 
   getWaterProperties();
   getSleepHourIdeal();

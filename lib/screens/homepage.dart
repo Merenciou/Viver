@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/user_controller/user_model.dart';
 // import 'package:viver/notifications/notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late Future<String?> futureName;
   DateTime time = DateTime.now();
   String salutation = '';
   List<String> dayShift = [
@@ -55,35 +55,44 @@ class _HomePageState extends State<HomePage> {
   }
 
   String userName = 'nome';
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
+  // void getName() async {
+  //   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   final FirebaseAuth auth = FirebaseAuth.instance;
+  //   CollectionReference userCollection = firestore.collection('User');
+  //   User? user = auth.currentUser;
 
-  void getName() async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    CollectionReference userCollection = firestore.collection('User');
-    User? user = auth.currentUser;
+  //   if (user != null) {
+  //     await userCollection
+  //         .doc(user.uid)
+  //         .get()
+  //         .then((DocumentSnapshot documentSnapshot) {
+  //       if (documentSnapshot.exists) {
+  //         Map<String, dynamic>? data =
+  //             documentSnapshot.data() as Map<String, dynamic>;
 
-    if (user != null) {
-      await userCollection
-          .doc(user.uid)
-          .get()
-          .then((DocumentSnapshot documentSnapshot) {
-        if (documentSnapshot.exists) {
-          Map<String, dynamic>? data =
-              documentSnapshot.data() as Map<String, dynamic>;
-
-          setState(() {
-            userName = data['name'];
-          });
-        }
-      });
-    }
-  }
+  //         setState(() {
+  //           userName = data['name'];
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
 
   @override
   void initState() {
     shiftSalutation();
+    futureName = UserModel().getName();
     // NotificationController().getWakeUpHour();
-    getName();
+    // getName();
     super.initState();
   }
 
@@ -130,26 +139,69 @@ class _HomePageState extends State<HomePage> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: salutation,
-                            style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24),
-                          ),
-                          TextSpan(
-                            text: userName,
-                            style: GoogleFonts.montserrat(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24),
-                          ),
-                        ],
-                      ),
+                    child: FutureBuilder(
+                      future: futureName,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String?> asyncSnapshot) {
+                        if (asyncSnapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (asyncSnapshot.hasData) {
+                            return RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: salutation,
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 24),
+                                  ),
+                                  TextSpan(
+                                    text: asyncSnapshot.data,
+                                    style: GoogleFonts.montserrat(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Text(
+                              salutation,
+                              style: GoogleFonts.montserrat(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 24),
+                            );
+                          }
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
                     ),
+                    // RichText(
+                    //   text: TextSpan(
+                    //     children: <TextSpan>[
+                    //       TextSpan(
+                    //         text: salutation,
+                    //         style: GoogleFonts.montserrat(
+                    //             color: Colors.black,
+                    //             fontWeight: FontWeight.w500,
+                    //             fontSize: 24),
+                    //       ),
+                    //       TextSpan(
+                    //         text: userName,
+                    //         style: GoogleFonts.montserrat(
+                    //             color: Theme.of(context).colorScheme.secondary,
+                    //             fontWeight: FontWeight.w500,
+                    //             fontSize: 24),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ),
                 ),
                 Padding(

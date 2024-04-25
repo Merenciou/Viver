@@ -16,7 +16,7 @@ Future<double?> getWaterProperties() async {
   UserModel userModel = UserModel();
   await userModel.getWeight();
   weight = userModel.weight;
-  waterIdeal = (weight! * 0.350) / 10;
+  waterIdeal = (weight ?? 0 * 0.350) / 10;
   double dosage = waterIdeal! / 9;
   String roundedString = dosage.toStringAsFixed(3);
   waterDosage = double.tryParse(roundedString);
