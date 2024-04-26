@@ -5,7 +5,6 @@ import 'package:viver/notifications/notifications.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/presentation.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:viver/user_controller/user_model.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 

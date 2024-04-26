@@ -48,6 +48,7 @@ dependencies:
   intl: ^0.19.0
   flutter_native_splash: ^2.3.10
   awesome_notifications: ^0.9.3+1
+  shrink_sidemenu: ^2.0.0+2-null-safety
 
 flutter_native_splash:
   color: "#d2e0fb"
