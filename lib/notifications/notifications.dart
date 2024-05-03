@@ -1,36 +1,61 @@
+// IMPLEMENTAR VERIFICAÇÃO DE NULO CASO NÃO
+
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
-// import 'package:flutter_animate/flutter_animate.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'package:viver/main.dart';
-import 'package:viver/user_controller/user_controller.dart';
 import 'package:viver/user_controller/user_model.dart';
 
-String? wakeUpHour = UserController().wakeUpHour;
-double? weight;
-double? waterIdeal;
-double? waterIngested;
+late String? name;
+late String? wakeUpHour;
+late int? hourSleepMax;
+late double? hourSleepRemainings;
+late double? hourDividedPerDay;
+late int? seconds;
+late double? weight;
+late double? waterIdeal;
 double? waterDosage;
+double waterIngested = 0;
 
-Future<double?> getWaterProperties() async {
-  UserModel userModel = UserModel();
-  await userModel.getWeight();
-  weight = userModel.weight;
-  waterIdeal = (weight ?? 0 * 0.350) / 10;
-  double dosage = waterIdeal! / 9;
+void initializeWaterProperties() async {
+  weight = await UserModel().getWeight();
+  waterIdeal = (weight! * 0.350) / 10;
+  double? dosage = waterIdeal! / 9;
   String roundedString = dosage.toStringAsFixed(3);
   waterDosage = double.tryParse(roundedString);
-
-  return weight;
 }
 
-Future<String?> getSleepHourIdeal() async {
-  UserModel userModel = UserModel();
-  await userModel.getWakeUpHour();
+void initializeScheduleProperties() async {
+  name = await UserModel().getName();
+  wakeUpHour = await UserModel().getWakeUpHour();
+  hourSleepMax = await UserModel().getHourIdealSleepMax();
+  hourSleepRemainings = 24.0 - hourSleepMax!;
+  hourDividedPerDay = hourSleepRemainings! / 9;
 
-  wakeUpHour = userModel.wakeUpHour;
+  String hourToString = hourDividedPerDay!.toStringAsFixed(3);
+  int? hour = int.tryParse(hourToString.substring(0, 1))! * 3600;
+  int? minute = int.tryParse(hourToString.substring(2, 4))! * 60;
+  seconds = hour + minute;
+}
 
-  return wakeUpHour;
+void setWaterIngestedPerDay() async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  User? user = auth.currentUser;
+  CollectionReference userCollection = firestore.collection('User');
+  DateTime now = DateTime.now();
+  String dayNow = DateFormat('EEEE', 'en_US').format(now);
+
+  if (user != null) {
+    await userCollection
+        .doc(user.uid)
+        .collection('waterIngestedPerDay')
+        .doc('days')
+        .set({dayNow: waterIngested}, SetOptions(merge: true));
+  }
 }
 
 class NotificationController {
@@ -47,25 +72,22 @@ class NotificationController {
         null,
         [
           NotificationChannel(
-            channelKey: 'water_channel',
+            channelKey: 'viver_channel',
             channelName: 'Viver Notificações',
             channelDescription: 'Lembrete de Hidratação',
             importance: NotificationImportance.High,
           )
         ],
         debug: true);
-
-    // initialAction = await AwesomeNotifications()
-    //     .getInitialNotificationAction(removeFromActionEvents: false);
   }
 
   static ReceivePort? receivePort;
   static Future<void> initializeIsolateReceivePort() async {
-    receivePort = ReceivePort('Porta de ação de notificação no isolado')
+    receivePort = ReceivePort('Notification action port in main isolate')
       ..listen(
           (silentData) => onActionReceivedImplementationMethod(silentData));
 
-    IsolateNameServer.registerPortWithName(receivePort!.sendPort, 'Hidratar');
+    IsolateNameServer.registerPortWithName(receivePort!.sendPort, 'hidratar');
   }
 
   static Future<void> startListeningNotificationEvents() async {
@@ -80,10 +102,14 @@ class NotificationController {
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
-    if (receivedAction.buttonKeyPressed == 'Hidratar') {
-      waterIngested = waterIngested! + waterDosage!;
-      print('QUANTIDADE DE ÁGUA INGERIDA: $waterIngested');
+    if (receivedAction.buttonKeyPressed == 'hidratar') {
+      // VERIFICARRRRRRRRRRRRRRRRRRRR A INCREMENTAÇÃO
+      waterIngested += waterDosage!;
+      setWaterIngestedPerDay();
+
+      // print('A ÁGUA INGERIDA FOI::::::::$waterIngested');
     }
+
     if (receivedAction.buttonKeyPressed == 'Desativar') {
       cancelAllSchedules();
     }
@@ -96,45 +122,6 @@ class NotificationController {
         arguments: receivedAction);
   }
 
-  // static Future<void> executeLongTaskInBackground() async {
-  //   print('Iniciando Long Task');
-  //   await Future.delayed(const Duration(seconds: 4));
-  //   final url = Uri.parse('http://google.com');
-  //   final re = await http.get(url);
-  // }
-
-  // static Future<void> createNotification() async {
-  //   await AwesomeNotifications().createNotification(
-  //     content: NotificationContent(
-  //       id: 1,
-  //       channelKey: 'water_channel',
-  //       title: 'É hora de se hidratar!',
-  //       body: 'Olá, Vitor! Beba 350ml de água.',
-  //       summary: 'Lembrete',
-  //       wakeUpScreen: true,
-  //       backgroundColor: const Color(0XFF79AC78),
-  //       locked: true,
-  //     ),
-  //     actionButtons: [
-  //       NotificationActionButton(
-  //         key: 'Hidratar',
-  //         label: 'Hidratar-se',
-  //         actionType: ActionType.SilentAction,
-  //       ),
-  //       NotificationActionButton(
-  //         key: 'Adiar',
-  //         label: 'Adiar',
-  //         actionType: ActionType.SilentAction,
-  //       ),
-  //       NotificationActionButton(
-  //         key: 'Desativar',
-  //         label: 'Desativar',
-  //         actionType: ActionType.SilentBackgroundAction,
-  //       ),
-  //     ],
-  //   );
-  // }
-
   static Future<void> scheduleNewNotification() async {
     bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
     if (!isAllowed) {
@@ -144,45 +131,32 @@ class NotificationController {
 
     await myNotifyScheduleInHours();
   }
-
-  // static Future<void> resetBadgeCounter() async {
-  //   await AwesomeNotifications().resetGlobalBadge();
-  // }
 }
 
 Future<void> myNotifyScheduleInHours() async {
-  UserModel userModel = UserModel();
-  await userModel.getName();
-
-  await userModel.getWakeUpHour();
-  int hour = int.parse(userModel.wakeUpHour!.substring(0, 2));
-  int minute = int.parse(userModel.wakeUpHour!.substring(3, 5));
-
   await AwesomeNotifications().createNotification(
-    schedule: NotificationCalendar(
-      hour: hour,
-      minute: minute,
+    schedule: NotificationInterval(
+      interval: 60,
       repeats: true,
       allowWhileIdle: true,
     ),
     content: NotificationContent(
       id: 1,
-      channelKey: 'water_channel',
+      channelKey: 'viver_channel',
       title: 'É hora de se hidratar!',
-      body: 'Olá, ${userModel.name}! Beba $waterDosage de água.',
+      body: 'Olá, $name! Beba $waterDosage de água.',
       summary: 'Lembrete',
       wakeUpScreen: true,
       backgroundColor: const Color(0XFF79AC78),
       category: NotificationCategory.Alarm,
       actionType: ActionType.SilentAction,
-
       notificationLayout: NotificationLayout.BigPicture,
-      //actionType : ActionType.DismissAction,
       color: const Color(0xFF000000),
+      locked: true,
     ),
     actionButtons: [
       NotificationActionButton(
-        key: 'Hidratar',
+        key: 'hidratar',
         label: 'Hidratar-se',
       ),
       NotificationActionButton(

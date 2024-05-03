@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_animate/flutter_animate.dart'; CONFERIR A IMPORTÂNCIA DESSE PACOTE
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:viver/authentication/auth_service.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/user_controller/user_controller.dart';
@@ -26,13 +25,12 @@ class _WaterPage extends State<WaterPage> {
   bool dialogBox = false;
   final _formKey = GlobalKey<FormState>();
   double? waterIdeal;
+  String hourWakeUp = '00:00';
 
   void calculator() {
     dynamic weight = double.parse(weightController.text.replaceAll(',', '.'));
     waterIdeal = weight * 0.350 / 10;
   }
-
-  String hourWakeUp = '00:00';
 
   void getHourWakeUp() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -71,7 +69,7 @@ class _WaterPage extends State<WaterPage> {
               reverse: true,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -205,15 +203,6 @@ class _WaterPage extends State<WaterPage> {
                               ),
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {
-                                AuthService().signOut();
-                              },
-                              icon: const Icon(
-                                Icons.logout,
-                                color: Colors.red,
-                                size: 60,
-                              ))
                         ],
                       ),
                     )
@@ -309,6 +298,9 @@ class _WaterPage extends State<WaterPage> {
                   onPressed: () {
                     UserController().setWeight();
                     weightController.clear();
+                    setState(() {
+                      dialogBox = false;
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),

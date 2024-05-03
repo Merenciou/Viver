@@ -5,6 +5,7 @@ import 'package:viver/notifications/notifications.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/presentation.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:viver/user_controller/user_model.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -14,16 +15,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // UserModel userModel = UserModel();
-
-  // await userModel.getName();
-  // await userModel.getWeight();
-  // await userModel.getAge();
-  // await userModel.getWakeUpHour();
-
-  getWaterProperties();
-  getSleepHourIdeal();
-
   await NotificationController.initializeLocalNotifications();
   await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
@@ -31,6 +22,17 @@ void main() async {
     }
   });
   await NotificationController.startListeningNotificationEvents();
+
+  UserModel userModel = UserModel();
+
+  await userModel.getName();
+  await userModel.getWeight();
+  await userModel.getAge();
+  await userModel.getWakeUpHour();
+  await userModel.getHourIdealSleepMax();
+
+  initializeWaterProperties();
+  initializeScheduleProperties();
 
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Color(0xFFD2E0FB)));
