@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:viver/authentication/auth_service.dart';
 import 'package:viver/screens/breathe.dart';
 import 'package:viver/screens/homepage.dart';
 import 'package:viver/screens/sleep.dart';
 import 'package:viver/screens/stretching.dart';
 import 'package:viver/screens/water.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
-import 'package:viver/user_controller/user_model.dart';
+import 'package:viver/controllers/user_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 int buttonIndex = 2;
@@ -141,7 +142,9 @@ class _MainPage extends State<MainPage> {
                   ),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    AuthService().signOutUser();
+                  },
                   child: Text(
                     'Trocar de Usuário',
                     style: GoogleFonts.montserrat(

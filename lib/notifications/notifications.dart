@@ -7,7 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:viver/main.dart';
-import 'package:viver/user_controller/user_model.dart';
+import 'package:viver/controllers/user_model.dart';
 
 late String? name;
 late String? wakeUpHour;
@@ -21,17 +21,21 @@ double? waterDosage;
 double waterIngested = 0;
 
 void initializeWaterProperties() async {
-  weight = await UserModel().getWeight();
-  waterIdeal = (weight! * 0.350) / 10;
-  double? dosage = waterIdeal! / 9;
-  String roundedString = dosage.toStringAsFixed(3);
-  waterDosage = double.tryParse(roundedString);
+  UserModel userModel = UserModel();
+  weight = await userModel.getWeight();
+  if (weight != null) {
+    waterIdeal = ((weight ?? 0) * 0.350) / 10;
+
+    double? dosage = waterIdeal! / 9;
+    String roundedString = dosage.toStringAsFixed(3);
+    waterDosage = double.tryParse(roundedString);
+  }
 }
 
 void initializeScheduleProperties() async {
   name = await UserModel().getName();
   wakeUpHour = await UserModel().getWakeUpHour();
-  hourSleepMax = await UserModel().getHourIdealSleepMax();
+  hourSleepMax = await UserModel().getHourIdealSleepMax() ?? 0;
   hourSleepRemainings = 24.0 - hourSleepMax!;
   hourDividedPerDay = hourSleepRemainings! / 9;
 
@@ -45,16 +49,18 @@ void setWaterIngestedPerDay() async {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? user = auth.currentUser;
-  CollectionReference userCollection = firestore.collection('User');
+  CollectionReference userCollection = firestore.collection('Users');
   DateTime now = DateTime.now();
-  String dayNow = DateFormat('EEEE', 'en_US').format(now);
+  String dayNow = DateFormat('EEEE', 'en_US').format(now).toLowerCase();
+
+  String waterIngestedFormatation = waterIngested.toStringAsFixed(2);
 
   if (user != null) {
     await userCollection
         .doc(user.uid)
         .collection('waterIngestedPerDay')
         .doc('days')
-        .set({dayNow: waterIngested}, SetOptions(merge: true));
+        .set({dayNow: waterIngestedFormatation}, SetOptions(merge: true));
   }
 }
 
@@ -103,14 +109,13 @@ class NotificationController {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == 'hidratar') {
-      // VERIFICARRRRRRRRRRRRRRRRRRRR A INCREMENTAÇÃO
+      initializeWaterProperties();
+
       waterIngested += waterDosage!;
       setWaterIngestedPerDay();
-
-      // print('A ÁGUA INGERIDA FOI::::::::$waterIngested');
     }
 
-    if (receivedAction.buttonKeyPressed == 'Desativar') {
+    if (receivedAction.buttonKeyPressed == 'desativar') {
       cancelAllSchedules();
     }
   }
@@ -164,7 +169,7 @@ Future<void> myNotifyScheduleInHours() async {
         label: 'Adiar',
       ),
       NotificationActionButton(
-        key: 'Desativar',
+        key: 'desativar',
         label: 'Desativar',
       ),
     ],

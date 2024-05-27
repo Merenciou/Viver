@@ -40,13 +40,8 @@ class AuthService {
     return null;
   }
 
-  void signOut() async {
+  void signOutUser() async {
     final FirebaseAuth auth = FirebaseAuth.instance;
-
-    User? user = auth.currentUser;
-
-    if (user != null) {
-      auth.signOut();
-    }
+    auth.signOut();
   }
 }

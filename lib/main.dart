@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:viver/authentication/auth_screen.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/presentation.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:viver/user_controller/user_model.dart';
+import 'package:viver/controllers/user_controller.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -23,20 +24,29 @@ void main() async {
   });
   await NotificationController.startListeningNotificationEvents();
 
-  UserModel userModel = UserModel();
+  // UserModel userModel = UserModel();
 
-  await userModel.getName();
-  await userModel.getWeight();
-  await userModel.getAge();
-  await userModel.getWakeUpHour();
-  await userModel.getHourIdealSleepMax();
+  // await userModel.getName();
+  // await userModel.getWeight();
+  // await userModel.getAge();
+  // await userModel.getWakeUpHour();
+  // await userModel.getHourIdealSleepMax();
 
   initializeWaterProperties();
   initializeScheduleProperties();
 
   SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Color(0xFFD2E0FB)));
-  runApp(const Main());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => UserController(),
+        )
+      ],
+      child: const Main(),
+    ),
+  );
 }
 
 class Main extends StatefulWidget {

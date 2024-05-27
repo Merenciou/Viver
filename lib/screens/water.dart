@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
-import 'package:viver/user_controller/user_controller.dart';
+import 'package:viver/controllers/user_controller.dart';
 
 TextEditingController weightController = TextEditingController();
 
@@ -297,6 +297,7 @@ class _WaterPage extends State<WaterPage> {
                 ElevatedButton(
                   onPressed: () {
                     UserController().setWeight();
+                    UserController().setWaterIdeal();
                     weightController.clear();
                     setState(() {
                       dialogBox = false;

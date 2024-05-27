@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:viver/authentication/auth_service.dart';
-import 'package:viver/user_controller/user_controller.dart';
+import 'package:viver/controllers/user_controller.dart';
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
@@ -38,25 +38,6 @@ class _Sign extends State<Sign> {
       _snackBarEmailWrong();
     } else if (authError == 'invalid-credential') {
       _snackBarPasswordWrong();
-    }
-  }
-
-  void _signUpAuth(context) async {
-    final AuthService auth = AuthService();
-
-    String email = emailController.text;
-    String password = passwordController.text;
-
-    User? user = await auth.signUpWithEmailAndPassword(email, password);
-
-    if (user != null) {
-      // _snackBarSignUpSucessfull();
-      // Future.delayed(const Duration(milliseconds: 2000), () {
-      //   Navigator.pushNamed(context, '/presentation');
-      // });
-    }
-    if (authError == 'email-already-in-use') {
-      _snackBarEmailAlreadInUse();
     }
   }
 
@@ -579,10 +560,9 @@ class _Sign extends State<Sign> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _signUpAuth(context);
-              UserController().setName();
-              nameController.clear();
               emailController.clear();
               passwordController.clear();
+              passwordConfirmController.clear();
             }
           },
           child: Text(
@@ -590,5 +570,26 @@ class _Sign extends State<Sign> {
             style: GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
           )),
     );
+  }
+}
+
+void _signUpAuth(context) async {
+  final AuthService auth = AuthService();
+
+  String email = emailController.text;
+  String password = passwordController.text;
+
+  User? user = await auth.signUpWithEmailAndPassword(email, password);
+
+  if (user != null) {
+    // _snackBarSignUpSucessfull();
+    // Future.delayed(const Duration(milliseconds: 2000), () {
+    //   Navigator.pushNamed(context, '/presentation');
+    // });
+    await UserController(name: nameController.text).setName();
+    nameController.clear();
+  }
+  if (authError == 'email-already-in-use') {
+    // _snackBarEmailAlreadInUse();
   }
 }

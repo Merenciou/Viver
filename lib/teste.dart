@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:viver/user_controller/user_model.dart';
+import 'package:viver/controllers/user_model.dart';
 
 class Teste extends StatefulWidget {
   const Teste({super.key});

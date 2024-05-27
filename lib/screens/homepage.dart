@@ -2,7 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:viver/user_controller/user_model.dart';
+import 'package:viver/controllers/user_model.dart';
 // import 'package:viver/notifications/notifications.dart';
 
 class HomePage extends StatefulWidget {
@@ -92,7 +92,6 @@ class _HomePageState extends State<HomePage> {
     shiftSalutation();
     futureName = UserModel().getName();
     // NotificationController().getWakeUpHour();
-    // getName();
     super.initState();
   }
 
