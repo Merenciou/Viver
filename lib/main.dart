@@ -42,7 +42,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => UserController(),
-        )
+        ),
       ],
       child: const Main(),
     ),

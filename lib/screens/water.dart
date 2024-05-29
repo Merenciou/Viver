@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/controllers/user_controller.dart';
+import 'package:viver/teste.dart';
 
 TextEditingController weightController = TextEditingController();
 
@@ -73,6 +74,7 @@ class _WaterPage extends State<WaterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    const Teste(),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: Clock(),

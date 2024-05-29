@@ -1,5 +1,3 @@
-// IMPLEMENTAR VERIFICAÇÃO DE NULO CASO NÃO
-
 import 'dart:isolate';
 import 'dart:ui';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -39,10 +37,10 @@ void initializeScheduleProperties() async {
   hourSleepRemainings = 24.0 - hourSleepMax!;
   hourDividedPerDay = hourSleepRemainings! / 9;
 
-  String hourToString = hourDividedPerDay!.toStringAsFixed(3);
-  int? hour = int.tryParse(hourToString.substring(0, 1))! * 3600;
-  int? minute = int.tryParse(hourToString.substring(2, 4))! * 60;
-  seconds = hour + minute;
+  // String hourToString = hourDividedPerDay!.toStringAsFixed(3);
+  // int? hour = int.tryParse(hourToString.substring(0, 1))! * 3600;
+  // int? minute = int.tryParse(hourToString.substring(2, 4))! * 60;
+  // seconds = hour + minute;
 }
 
 void setWaterIngestedPerDay() async {
@@ -78,9 +76,15 @@ class NotificationController {
         null,
         [
           NotificationChannel(
-            channelKey: 'viver_channel',
-            channelName: 'Viver Notificações',
-            channelDescription: 'Lembrete de Hidratação',
+            channelKey: 'hydration_channel',
+            channelName: 'Notificação de Hidratação',
+            channelDescription: 'Lembrete diário de Hidratação',
+            importance: NotificationImportance.High,
+          ),
+          NotificationChannel(
+            channelKey: 'stretching_channel',
+            channelName: 'Notificação de Alongamento',
+            channelDescription: 'Lembrete periódico de Alongamentos',
             importance: NotificationImportance.High,
           )
         ],
@@ -93,7 +97,8 @@ class NotificationController {
       ..listen(
           (silentData) => onActionReceivedImplementationMethod(silentData));
 
-    IsolateNameServer.registerPortWithName(receivePort!.sendPort, 'hidratar');
+    IsolateNameServer.registerPortWithName(
+        receivePort!.sendPort, 'confirm_hydration');
   }
 
   static Future<void> startListeningNotificationEvents() async {
@@ -108,15 +113,31 @@ class NotificationController {
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
-    if (receivedAction.buttonKeyPressed == 'hidratar') {
+    if (receivedAction.buttonKeyPressed == 'confirm_hydration') {
       initializeWaterProperties();
 
       waterIngested += waterDosage!;
       setWaterIngestedPerDay();
+      await AwesomeNotifications().dismiss(1);
     }
 
-    if (receivedAction.buttonKeyPressed == 'desativar') {
-      cancelAllSchedules();
+    if (receivedAction.buttonKeyPressed == 'late_hydration') {
+      await AwesomeNotifications().dismiss(1);
+    }
+
+    if (receivedAction.buttonKeyPressed == 'disable_hydration') {
+      await AwesomeNotifications()
+          .cancelNotificationsByChannelKey('hydration_channel');
+    }
+
+    if (receivedAction.buttonKeyPressed == 'confirm_stretching' ||
+        receivedAction.buttonKeyPressed == 'late_stretching') {
+      await AwesomeNotifications().dismiss(2);
+    }
+
+    if (receivedAction.buttonKeyPressed == 'disable_stretching') {
+      await AwesomeNotifications()
+          .cancelNotificationsByChannelKey('stretching_channel');
     }
   }
 
@@ -134,44 +155,91 @@ class NotificationController {
       return;
     }
 
-    await myNotifyScheduleInHours();
+    await notifyHydrationSchedule();
+    await notififyStretchingSchedule();
   }
 }
 
-Future<void> myNotifyScheduleInHours() async {
-  await AwesomeNotifications().createNotification(
+Future<void> notifyHydrationSchedule() async {
+  int interval = (hourDividedPerDay! * 3600).toInt();
+
+  for (int i = 0; i < 9; i++) {
+    await AwesomeNotifications().createNotification(
+      schedule: NotificationInterval(
+        interval: interval,
+        repeats: true,
+        allowWhileIdle: true,
+        timeZone: 'UTC',
+      ),
+      content: NotificationContent(
+        id: 1,
+        channelKey: 'hydration_channel',
+        title: 'É hora de se hidratar!',
+        body: 'Olá, $name! Beba $waterDosage de água.',
+        summary: 'Lembrete',
+        wakeUpScreen: true,
+        backgroundColor: const Color(0XFF79AC78),
+        category: NotificationCategory.Alarm,
+        actionType: ActionType.Default,
+        notificationLayout: NotificationLayout.BigPicture,
+        color: const Color(0xFF000000),
+        locked: true,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'confirm_hydration',
+          label: 'Hidratar-se',
+          actionType: ActionType.KeepOnTop,
+        ),
+        NotificationActionButton(
+            key: 'late_hydration',
+            label: 'Adiar',
+            actionType: ActionType.DisabledAction),
+        NotificationActionButton(
+          key: 'disable_hydration',
+          label: 'Desativar',
+          actionType: ActionType.KeepOnTop,
+        ),
+      ],
+    );
+  }
+}
+
+Future<void> notififyStretchingSchedule() async {
+  AwesomeNotifications().createNotification(
     schedule: NotificationInterval(
       interval: 60,
       repeats: true,
       allowWhileIdle: true,
     ),
     content: NotificationContent(
-      id: 1,
-      channelKey: 'viver_channel',
-      title: 'É hora de se hidratar!',
-      body: 'Olá, $name! Beba $waterDosage de água.',
+      id: 2,
+      channelKey: 'stretching_channel',
+      title: 'Hora de se alongar!',
+      body: 'Olá, $name! Alivie a tensão e dê uma esticada :)',
       summary: 'Lembrete',
       wakeUpScreen: true,
       backgroundColor: const Color(0XFF79AC78),
       category: NotificationCategory.Alarm,
-      actionType: ActionType.SilentAction,
+      actionType: ActionType.Default,
       notificationLayout: NotificationLayout.BigPicture,
       color: const Color(0xFF000000),
       locked: true,
     ),
     actionButtons: [
       NotificationActionButton(
-        key: 'hidratar',
-        label: 'Hidratar-se',
+        key: 'confirm_stretching',
+        label: 'Alongar',
+        actionType: ActionType.DisabledAction,
       ),
       NotificationActionButton(
-        key: 'Adiar',
-        label: 'Adiar',
-      ),
+          key: 'late_stretching',
+          label: 'Adiar',
+          actionType: ActionType.DisabledAction),
       NotificationActionButton(
-        key: 'desativar',
-        label: 'Desativar',
-      ),
+          key: 'disable_stretching',
+          label: 'Desativar',
+          actionType: ActionType.KeepOnTop),
     ],
   );
 }

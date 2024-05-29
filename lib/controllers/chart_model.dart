@@ -37,10 +37,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          monday = data['monday'];
+          monday = double.tryParse(data['monday']);
         } else {
           monday = 1;
         }
+
         return monday;
       });
     } else {
@@ -65,10 +66,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          tuesday = data['tuesday'];
+          tuesday = double.tryParse(data['tuesday']);
         } else {
           tuesday = 1;
         }
+
         return tuesday;
       });
     } else {
@@ -93,10 +95,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          wednesday = data['wednesday'];
+          wednesday = double.tryParse(data['wednesday']);
         } else {
           wednesday = 1;
         }
+
         return wednesday;
       });
     } else {
@@ -121,10 +124,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          thursday = data['thursday'];
+          thursday = double.tryParse(data['thursday']);
         } else {
           thursday = 1;
         }
+
         return thursday;
       });
     } else {
@@ -149,10 +153,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          friday = data['friday'];
+          friday = double.tryParse(data['friday']);
         } else {
           friday = 1;
         }
+
         return friday;
       });
     } else {
@@ -177,10 +182,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          saturday = data['saturday'];
+          saturday = double.tryParse(data['saturday']);
         } else {
           saturday = 1;
         }
+
         return saturday;
       });
     } else {
@@ -205,10 +211,11 @@ class ChartModel {
           Map<String, dynamic> data =
               documentSnapshot.data() as Map<String, dynamic>;
 
-          sunday = data['sunday'];
+          sunday = double.tryParse(data['sunday']);
         } else {
           sunday = 1;
         }
+
         return sunday;
       });
     } else {

@@ -1,6 +1,21 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:viver/custom_widgets/clock.dart';
+import 'package:viver/notifications/notifications.dart';
+
+String interval = '00:00';
+
+void setInterval() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  try {
+    await prefs.setString('interval', interval);
+  } catch (error) {
+    print('o erro foi: $error');
+  }
+}
 
 List<String> intervalStretching = <String>[
   '00:10',
@@ -83,25 +98,27 @@ class _StretchingPageState extends State<StretchingPage> {
                       onChanged: (String? value) {
                         setState(() {
                           dropDownValue = value!;
+                          interval = value;
                         });
+                        setInterval();
                       }),
-                  // secondary: Text(
-                  //   '00:40',
-                  //   style: GoogleFonts.montserrat(
-                  //       fontSize: 30,
-                  //       fontWeight: FontWeight.w700,
-                  //       color: Colors.black45),
-                  // ),
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   inactiveTrackColor: Theme.of(context).colorScheme.background,
                   trackOutlineColor:
                       const MaterialStatePropertyAll(Colors.white),
                   value: stateAlarm,
-                  onChanged: (details) {
+                  onChanged: (details) async {
                     setState(() {
                       stateAlarm = !stateAlarm;
                     });
+
+                    if (stateAlarm) {
+                      await notififyStretchingSchedule();
+                    } else {
+                      await AwesomeNotifications()
+                          .cancelSchedulesByChannelKey('stretching_channel');
+                    }
                   },
                 ),
               ),

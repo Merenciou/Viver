@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/controllers/chart_model.dart';
 import 'package:viver/controllers/user_model.dart';
-// import 'package:viver/notifications/notifications.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -53,39 +53,6 @@ class _HomePageState extends State<HomePage> {
       reportWater(),
     ];
   }
-
-  String userName = 'nome';
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // MODIFICAR O RECEBIMENTO DO NOME DO USUARIO
-  // void getName() async {
-  //   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //   final FirebaseAuth auth = FirebaseAuth.instance;
-  //   CollectionReference userCollection = firestore.collection('User');
-  //   User? user = auth.currentUser;
-
-  //   if (user != null) {
-  //     await userCollection
-  //         .doc(user.uid)
-  //         .get()
-  //         .then((DocumentSnapshot documentSnapshot) {
-  //       if (documentSnapshot.exists) {
-  //         Map<String, dynamic>? data =
-  //             documentSnapshot.data() as Map<String, dynamic>;
-
-  //         setState(() {
-  //           userName = data['name'];
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
 
   @override
   void initState() {
@@ -586,6 +553,58 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+double? sizeChart;
+double? monday;
+double? tuesday;
+double? wednesday;
+double? thursday;
+double? friday;
+double? saturday;
+double? sunday;
+
+void getDaysWater() {
+  ChartModel().getMonday().listen((value) {
+    monday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getTuesday().listen((value) {
+    tuesday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getWednesday().listen((value) {
+    wednesday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getThursday().listen((value) {
+    thursday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getFriday().listen((value) {
+    friday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getSaturday().listen((value) {
+    saturday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartModel().getSunday().listen((value) {
+    sunday = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+}
+
+void initializeChartProperties() async {
+  UserModel userModel = UserModel();
+  sizeChart = await userModel.getWaterIdeal();
+}
+
 class CustomChartBar extends StatefulWidget {
   const CustomChartBar({super.key});
 
@@ -594,6 +613,13 @@ class CustomChartBar extends StatefulWidget {
 }
 
 class _CustomChartBarState extends State<CustomChartBar> {
+  @override
+  void initState() {
+    getDaysWater();
+    initializeChartProperties();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BarChart(
@@ -604,7 +630,7 @@ class _CustomChartBarState extends State<CustomChartBar> {
           barGroups: barGroups,
           gridData: const FlGridData(show: true),
           alignment: BarChartAlignment.spaceAround,
-          maxY: 20),
+          maxY: 2.2 * 1.3),
     );
   }
 }
@@ -705,49 +731,49 @@ List<BarChartGroupData> get barGroups => [
       BarChartGroupData(
         x: 0,
         barRods: [
-          BarChartRodData(toY: 8, gradient: _barsGradient),
+          BarChartRodData(toY: monday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 1,
         barRods: [
-          BarChartRodData(toY: 9.30, gradient: _barsGradient),
+          BarChartRodData(toY: tuesday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 2,
         barRods: [
-          BarChartRodData(toY: 10, gradient: _barsGradient),
+          BarChartRodData(toY: wednesday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 3,
         barRods: [
-          BarChartRodData(toY: 8, gradient: _barsGradient),
+          BarChartRodData(toY: thursday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 4,
         barRods: [
-          BarChartRodData(toY: 6, gradient: _barsGradient),
+          BarChartRodData(toY: friday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 5,
         barRods: [
-          BarChartRodData(toY: 7, gradient: _barsGradient),
+          BarChartRodData(toY: saturday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 6,
         barRods: [
-          BarChartRodData(toY: 10, gradient: _barsGradient),
+          BarChartRodData(toY: sunday ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
