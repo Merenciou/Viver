@@ -176,7 +176,7 @@ class _Sign extends State<Sign> {
         }
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 60),
           child: Column(
@@ -340,7 +340,7 @@ class _Sign extends State<Sign> {
                   label: Text(
                     'Email',
                     style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 18),
                   ),
                   filled: true,
@@ -373,7 +373,7 @@ class _Sign extends State<Sign> {
                     label: Text(
                       'Senha',
                       style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.background,
+                          color: Theme.of(context).colorScheme.surface,
                           fontSize: 18),
                     ),
                     filled: true,
@@ -404,7 +404,7 @@ class _Sign extends State<Sign> {
                   label: Text(
                     'Nome',
                     style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 18),
                   ),
                   filled: true,
@@ -425,7 +425,7 @@ class _Sign extends State<Sign> {
                     label: Text(
                       'Email',
                       style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.background,
+                          color: Theme.of(context).colorScheme.surface,
                           fontSize: 18),
                     ),
                     filled: true,
@@ -467,7 +467,7 @@ class _Sign extends State<Sign> {
                   label: Text(
                     'Senha',
                     style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.background,
+                        color: Theme.of(context).colorScheme.surface,
                         fontSize: 18),
                   ),
                   filled: true,
@@ -507,7 +507,7 @@ class _Sign extends State<Sign> {
                     label: Text(
                       'Confirme sua senha',
                       style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.background,
+                          color: Theme.of(context).colorScheme.surface,
                           fontSize: 18),
                     ),
                     filled: true,

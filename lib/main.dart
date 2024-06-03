@@ -17,6 +17,7 @@ void main() async {
   );
 
   await NotificationController.initializeLocalNotifications();
+  await NotificationController.initializeIsolateReceivePort();
   await AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
     if (!isAllowed) {
       AwesomeNotifications().requestPermissionToSendNotifications();
@@ -24,15 +25,7 @@ void main() async {
   });
   await NotificationController.startListeningNotificationEvents();
 
-  // UserModel userModel = UserModel();
-
-  // await userModel.getName();
-  // await userModel.getWeight();
-  // await userModel.getAge();
-  // await userModel.getWakeUpHour();
-  // await userModel.getHourIdealSleepMax();
-
-  initializeWaterProperties();
+  // initializeWaterProperties();
   initializeScheduleProperties();
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -62,6 +55,7 @@ class Main extends StatefulWidget {
 class _Main extends State<Main> {
   @override
   void initState() {
+    NotificationController.startListeningNotificationEvents();
     super.initState();
   }
 
@@ -83,7 +77,7 @@ class _Main extends State<Main> {
           ),
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.green,
-            background: const Color(0xFFD2E0FB),
+            surface: const Color(0xFFD2E0FB),
             primary: const Color(0XFF79AC78),
             secondary: const Color(0XFF79AC78),
             tertiary: const Color(0xFF40A2E3),

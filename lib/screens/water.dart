@@ -1,16 +1,13 @@
-// import 'dart:async';
-
-// import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_animate/flutter_animate.dart'; CONFERIR A IMPORTÂNCIA DESSE PACOTE
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/controllers/user_controller.dart';
-import 'package:viver/teste.dart';
 
 TextEditingController weightController = TextEditingController();
 
@@ -36,12 +33,14 @@ class _WaterPage extends State<WaterPage> {
   void getHourWakeUp() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final FirebaseAuth auth = FirebaseAuth.instance;
-    CollectionReference userCollection = firestore.collection('User');
+    CollectionReference userCollection = firestore.collection('Users');
     User? user = auth.currentUser;
 
     if (user != null) {
       await userCollection
           .doc(user.uid)
+          .collection('personalDatas')
+          .doc('datas')
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
@@ -55,6 +54,79 @@ class _WaterPage extends State<WaterPage> {
     }
   }
 
+  void _snackBarWakeUpHourNull() {
+    var snackBarEmailWrong = const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(milliseconds: 5000),
+        backgroundColor: Colors.red,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error,
+              color: Colors.white,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                'Selecione o horário que você acorda todos os dias!',
+              ),
+            ),
+          ],
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
+  }
+
+  void _snackBarAgeNull() {
+    var snackBarEmailWrong = const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(milliseconds: 5000),
+        backgroundColor: Colors.red,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error,
+              color: Colors.white,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                'Selecione sua idade antes de continuar!',
+              ),
+            ),
+          ],
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
+  }
+
+// CONCLUIR TRATAMENTO DE ERRO PARA NULLS COM OS REQUISITOS DE AGENDAMENTO, INCLUIR DIRECIONAR ROTA
+  void _snackBarWeightNull() {
+    var snackBarEmailWrong = const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(milliseconds: 5000),
+        backgroundColor: Colors.red,
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error,
+              color: Colors.white,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                'Selecione o seu peso antes de continuar!',
+              ),
+            ),
+          ],
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
+  }
+
   @override
   void initState() {
     getHourWakeUp();
@@ -64,6 +136,7 @@ class _WaterPage extends State<WaterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: dialogBox
           ? calcResult()
           : SingleChildScrollView(
@@ -74,7 +147,6 @@ class _WaterPage extends State<WaterPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Teste(),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 20),
                       child: Clock(),
@@ -118,15 +190,41 @@ class _WaterPage extends State<WaterPage> {
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
                                   inactiveTrackColor:
-                                      Theme.of(context).colorScheme.background,
+                                      Theme.of(context).colorScheme.surface,
                                   trackOutlineColor:
-                                      const MaterialStatePropertyAll(
+                                      const WidgetStatePropertyAll(
                                           Colors.white),
                                   value: alarmSwitch,
                                   onChanged: (details) async {
                                     setState(() {
                                       alarmSwitch = !alarmSwitch;
                                     });
+
+                                    String? wakeUpHour =
+                                        await UserModel().getWakeUpHour();
+                                    int? hourIdealSleepMax = await UserModel()
+                                        .getHourIdealSleepMax();
+                                    double? weight =
+                                        await UserModel().getWeight();
+
+                                    if (wakeUpHour == null) {
+                                      _snackBarWakeUpHourNull();
+                                      setState(() {
+                                        alarmSwitch = false;
+                                      });
+                                    }
+                                    if (hourIdealSleepMax == null) {
+                                      _snackBarAgeNull();
+                                      setState(() {
+                                        alarmSwitch = false;
+                                      });
+                                    }
+                                    if (weight == null) {
+                                      _snackBarWeightNull();
+                                      setState(() {
+                                        alarmSwitch = false;
+                                      });
+                                    }
 
                                     if (alarmSwitch) {
                                       await NotificationController

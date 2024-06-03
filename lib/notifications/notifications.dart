@@ -4,6 +4,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:viver/main.dart';
 import 'package:viver/controllers/user_model.dart';
 
@@ -18,17 +19,19 @@ late double? waterIdeal;
 double? waterDosage;
 double waterIngested = 0;
 
-void initializeWaterProperties() async {
-  UserModel userModel = UserModel();
-  weight = await userModel.getWeight();
-  if (weight != null) {
-    waterIdeal = ((weight ?? 0) * 0.350) / 10;
+// void initializeWaterProperties() async {
+//   UserModel userModel = UserModel();
+//   weight = await userModel.getWeight();
+//   if (weight != null) {
+//     waterIdeal = ((weight ?? 0) * 0.350) / 10;
 
-    double? dosage = waterIdeal! / 9;
-    String roundedString = dosage.toStringAsFixed(3);
-    waterDosage = double.tryParse(roundedString);
-  }
-}
+//     double? dosage = waterIdeal! / 9;
+//     String roundedString = dosage.toStringAsFixed(3);
+//     waterDosage = double.tryParse(roundedString);
+//   }
+// }
+
+int? interval;
 
 void initializeScheduleProperties() async {
   name = await UserModel().getName();
@@ -36,6 +39,19 @@ void initializeScheduleProperties() async {
   hourSleepMax = await UserModel().getHourIdealSleepMax() ?? 0;
   hourSleepRemainings = 24.0 - hourSleepMax!;
   hourDividedPerDay = hourSleepRemainings! / 9;
+
+  weight = await UserModel().getWeight();
+  if (weight != null) {
+    waterIdeal = ((weight ?? 0) * 0.350) / 10;
+
+    double? dosage = waterIdeal! / 9;
+    String roundedString = dosage.toStringAsFixed(3);
+    waterDosage = double.tryParse(roundedString);
+  }
+
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  interval = int.tryParse(prefs.getString('interval') ?? '00:00');
 
   // String hourToString = hourDividedPerDay!.toStringAsFixed(3);
   // int? hour = int.tryParse(hourToString.substring(0, 1))! * 3600;
@@ -66,12 +82,6 @@ class NotificationController {
   static ReceivedAction? initialAction;
 
   static Future<void> initializeLocalNotifications() async {
-    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
-    if (!isAllowed) {
-      await AwesomeNotifications().requestPermissionToSendNotifications();
-      return;
-    }
-
     await AwesomeNotifications().initialize(
         null,
         [
@@ -114,7 +124,8 @@ class NotificationController {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == 'confirm_hydration') {
-      initializeWaterProperties();
+      // initializeWaterProperties();
+      initializeScheduleProperties();
 
       waterIngested += waterDosage!;
       setWaterIngestedPerDay();
@@ -161,6 +172,12 @@ class NotificationController {
 }
 
 Future<void> notifyHydrationSchedule() async {
+  bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+  if (!isAllowed) {
+    await AwesomeNotifications().requestPermissionToSendNotifications();
+  }
+  if (!isAllowed) return;
+
   int interval = (hourDividedPerDay! * 3600).toInt();
 
   for (int i = 0; i < 9; i++) {
@@ -206,40 +223,47 @@ Future<void> notifyHydrationSchedule() async {
 }
 
 Future<void> notififyStretchingSchedule() async {
-  AwesomeNotifications().createNotification(
-    schedule: NotificationInterval(
-      interval: 60,
-      repeats: true,
-      allowWhileIdle: true,
-    ),
-    content: NotificationContent(
-      id: 2,
-      channelKey: 'stretching_channel',
-      title: 'Hora de se alongar!',
-      body: 'Olá, $name! Alivie a tensão e dê uma esticada :)',
-      summary: 'Lembrete',
-      wakeUpScreen: true,
-      backgroundColor: const Color(0XFF79AC78),
-      category: NotificationCategory.Alarm,
-      actionType: ActionType.Default,
-      notificationLayout: NotificationLayout.BigPicture,
-      color: const Color(0xFF000000),
-      locked: true,
-    ),
-    actionButtons: [
-      NotificationActionButton(
-        key: 'confirm_stretching',
-        label: 'Alongar',
-        actionType: ActionType.DisabledAction,
+  bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+  if (!isAllowed) {
+    await AwesomeNotifications().requestPermissionToSendNotifications();
+  }
+  if (!isAllowed) return;
+  if (interval != null) {
+    AwesomeNotifications().createNotification(
+      schedule: NotificationInterval(
+        interval: interval! * 60,
+        repeats: true,
+        allowWhileIdle: true,
       ),
-      NotificationActionButton(
-          key: 'late_stretching',
-          label: 'Adiar',
-          actionType: ActionType.DisabledAction),
-      NotificationActionButton(
-          key: 'disable_stretching',
-          label: 'Desativar',
-          actionType: ActionType.KeepOnTop),
-    ],
-  );
+      content: NotificationContent(
+        id: 2,
+        channelKey: 'stretching_channel',
+        title: 'Hora de se alongar!',
+        body: 'Olá, $name! Alivie a tensão e dê uma esticada :)',
+        summary: 'Lembrete',
+        wakeUpScreen: true,
+        backgroundColor: const Color(0XFF79AC78),
+        category: NotificationCategory.Alarm,
+        actionType: ActionType.Default,
+        notificationLayout: NotificationLayout.BigPicture,
+        color: const Color(0xFF000000),
+        locked: true,
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'confirm_stretching',
+          label: 'Alongar',
+          actionType: ActionType.DisabledAction,
+        ),
+        NotificationActionButton(
+            key: 'late_stretching',
+            label: 'Adiar',
+            actionType: ActionType.DisabledAction),
+        NotificationActionButton(
+            key: 'disable_stretching',
+            label: 'Desativar',
+            actionType: ActionType.KeepOnTop),
+      ],
+    );
+  }
 }

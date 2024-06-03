@@ -188,7 +188,7 @@ class _MainPage extends State<MainPage> {
         },
         child: Scaffold(
           bottomNavigationBar: bottomButtons(context)[buttonIndex],
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: screensList(context)[buttonIndex],
         ),
       ),
@@ -202,8 +202,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.surface,
           child: Container(
               decoration: BoxDecoration(
                 boxShadow: [
@@ -321,8 +321,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.surface,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -433,8 +433,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.surface,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -545,8 +545,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.surface,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -657,8 +657,8 @@ class _MainPage extends State<MainPage> {
         width: 300,
         height: 100,
         child: BottomAppBar(
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          color: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.surface,
+          color: Theme.of(context).colorScheme.surface,
           child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,

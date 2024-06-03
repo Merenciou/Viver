@@ -58,7 +58,7 @@ class _Presentation extends State<Presentation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SizedBox(
         width: double.infinity,
         height: 900,
