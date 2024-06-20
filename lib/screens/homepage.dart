@@ -2,8 +2,11 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:viver/controllers/chart_model.dart';
+import 'package:viver/controllers/chart_hydration_model.dart';
+import 'package:viver/controllers/chart_sleep_model.dart';
 import 'package:viver/controllers/user_model.dart';
+
+bool chartIndex = true;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,6 +50,22 @@ class _HomePageState extends State<HomePage> {
 
   var screenReportIndex = 0;
 
+  void getChartIndex() {
+    if (screenReportIndex == 0) {
+      setState(() {
+        chartIndex = true;
+        print('O INDEX É: $chartIndex');
+      });
+
+      if (screenReportIndex == 1) {
+        setState(() {
+          chartIndex == false;
+          print('O INDEX É: $chartIndex');
+        });
+      }
+    }
+  }
+
   List<Widget> screenReportList(BuildContext context) {
     return [
       reportSleep(),
@@ -58,7 +77,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     shiftSalutation();
     futureName = UserModel().getName();
-    // NotificationController().getWakeUpHour();
     super.initState();
   }
 
@@ -148,26 +166,6 @@ class _HomePageState extends State<HomePage> {
                         }
                       },
                     ),
-                    // RichText(
-                    //   text: TextSpan(
-                    //     children: <TextSpan>[
-                    //       TextSpan(
-                    //         text: salutation,
-                    //         style: GoogleFonts.montserrat(
-                    //             color: Colors.black,
-                    //             fontWeight: FontWeight.w500,
-                    //             fontSize: 24),
-                    //       ),
-                    //       TextSpan(
-                    //         text: userName,
-                    //         style: GoogleFonts.montserrat(
-                    //             color: Theme.of(context).colorScheme.secondary,
-                    //             fontWeight: FontWeight.w500,
-                    //             fontSize: 24),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                   ),
                 ),
                 Padding(
@@ -553,48 +551,95 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-double? sizeChart;
-double? monday;
-double? tuesday;
-double? wednesday;
-double? thursday;
-double? friday;
-double? saturday;
-double? sunday;
+double? sizeHydrationChart;
+double? mondayHydration;
+double? tuesdayHydration;
+double? wednesdayHydration;
+double? thursdayHydration;
+double? fridayHydration;
+double? saturdayHydration;
+double? sundayHydration;
 
-void getDaysWater() {
-  ChartModel().getMonday().listen((value) {
-    monday = value;
+void getDaysHydration() {
+  ChartHydrationModel().getMonday().listen((value) {
+    mondayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getTuesday().listen((value) {
-    tuesday = value;
+  ChartHydrationModel().getTuesday().listen((value) {
+    tuesdayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getWednesday().listen((value) {
-    wednesday = value;
+  ChartHydrationModel().getWednesday().listen((value) {
+    wednesdayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getThursday().listen((value) {
-    thursday = value;
+  ChartHydrationModel().getThursday().listen((value) {
+    thursdayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getFriday().listen((value) {
-    friday = value;
+  ChartHydrationModel().getFriday().listen((value) {
+    fridayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getSaturday().listen((value) {
-    saturday = value;
+  ChartHydrationModel().getSaturday().listen((value) {
+    saturdayHydration = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
-  ChartModel().getSunday().listen((value) {
-    sunday = value;
+  ChartHydrationModel().getSunday().listen((value) {
+    sundayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+}
+
+double? sizeSleepChart;
+double? mondaySlept;
+double? tuesdaySlept;
+double? wednesdaySlept;
+double? thursdaySlept;
+double? fridaySlept;
+double? saturdaySlept;
+double? sundaySlept;
+
+void getDaysSlept() {
+  ChartSleepModel().getMonday().listen((value) {
+    mondaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getTuesday().listen((value) {
+    tuesdaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getWednesday().listen((value) {
+    wednesdaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getThursday().listen((value) {
+    thursdaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getFriday().listen((value) {
+    fridaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getSaturday().listen((value) {
+    saturdaySlept = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartSleepModel().getSunday().listen((value) {
+    sundaySlept = value;
   }, onError: (error) {
     print('ops, erro: $error');
   });
@@ -602,7 +647,7 @@ void getDaysWater() {
 
 void initializeChartProperties() async {
   UserModel userModel = UserModel();
-  sizeChart = await userModel.getWaterIdeal();
+  sizeHydrationChart = await userModel.getWaterIdeal();
 }
 
 class CustomChartBar extends StatefulWidget {
@@ -613,10 +658,18 @@ class CustomChartBar extends StatefulWidget {
 }
 
 class _CustomChartBarState extends State<CustomChartBar> {
+  void getHourIdealSleepMax() async {
+    sizeSleepChart = double.tryParse(
+        (await UserModel().getHourIdealSleepMax() ?? 0).toString());
+  }
+
   @override
   void initState() {
-    getDaysWater();
+    getDaysHydration();
+    getDaysSlept();
     initializeChartProperties();
+    // getChartIndex();
+    //
     super.initState();
   }
 
@@ -630,7 +683,9 @@ class _CustomChartBarState extends State<CustomChartBar> {
           barGroups: barGroups,
           gridData: const FlGridData(show: true),
           alignment: BarChartAlignment.spaceAround,
-          maxY: 2.2 * 1.3),
+          maxY: chartIndex
+              ? (sizeHydrationChart ?? 2.2) * 1.3
+              : (sizeSleepChart ?? 7) * 2),
     );
   }
 }
@@ -731,49 +786,50 @@ List<BarChartGroupData> get barGroups => [
       BarChartGroupData(
         x: 0,
         barRods: [
-          BarChartRodData(toY: monday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: mondayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 1,
         barRods: [
-          BarChartRodData(toY: tuesday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: tuesdayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 2,
         barRods: [
-          BarChartRodData(toY: wednesday ?? 0, gradient: _barsGradient),
+          BarChartRodData(
+              toY: wednesdayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 3,
         barRods: [
-          BarChartRodData(toY: thursday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: thursdayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 4,
         barRods: [
-          BarChartRodData(toY: friday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: fridayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 5,
         barRods: [
-          BarChartRodData(toY: saturday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: saturdayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),
       BarChartGroupData(
         x: 6,
         barRods: [
-          BarChartRodData(toY: sunday ?? 0, gradient: _barsGradient),
+          BarChartRodData(toY: sundayHydration ?? 0, gradient: _barsGradient),
         ],
         showingTooltipIndicators: [0],
       ),

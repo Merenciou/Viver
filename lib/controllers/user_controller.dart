@@ -36,7 +36,7 @@ class UserController with ChangeNotifier {
           .doc('datas')
           .set({
         'name': name,
-      });
+      }, SetOptions(merge: true));
     }
     notifyListeners();
   }
@@ -86,9 +86,9 @@ class UserController with ChangeNotifier {
           .doc(user.uid)
           .collection('personalDatas')
           .doc('datas')
-          .update({
+          .set({
         'wakeUpHour': wakeUpHour,
-      });
+      }, SetOptions(merge: true));
     }
   }
 
@@ -103,9 +103,9 @@ class UserController with ChangeNotifier {
           .doc(user.uid)
           .collection('personalDatas')
           .doc('datas')
-          .update({
+          .set({
         'hourIdealSleepMax': hourIdealSleepMax,
-      });
+      }, SetOptions(merge: true));
     }
   }
 

@@ -47,7 +47,6 @@ class UserModel with ChangeNotifier {
           documentSnapshot.data() as Map<String, dynamic>;
 
       name = data['name'];
-      // return data['name'];
     } catch (error) {
       print('Erro ao ler nome do usuário. Erro: $error');
     }

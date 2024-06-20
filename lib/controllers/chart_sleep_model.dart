@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ChartModel {
+class ChartSleepModel {
   double? monday;
   double? tuesday;
   double? wednesday;
@@ -10,7 +10,7 @@ class ChartModel {
   double? saturday;
   double? sunday;
 
-  ChartModel({
+  ChartSleepModel({
     monday,
     tuesday,
     wednesday,
@@ -29,7 +29,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -39,13 +39,13 @@ class ChartModel {
 
           monday = double.tryParse(data['monday']);
         } else {
-          monday = 1;
+          monday = 0;
         }
 
         return monday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -58,7 +58,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -68,13 +68,13 @@ class ChartModel {
 
           tuesday = double.tryParse(data['tuesday']);
         } else {
-          tuesday = 1;
+          tuesday = 0;
         }
 
         return tuesday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -87,7 +87,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -97,13 +97,13 @@ class ChartModel {
 
           wednesday = double.tryParse(data['wednesday']);
         } else {
-          wednesday = 1;
+          wednesday = 0;
         }
 
         return wednesday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -116,7 +116,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -126,13 +126,13 @@ class ChartModel {
 
           thursday = double.tryParse(data['thursday']);
         } else {
-          thursday = 1;
+          thursday = 0;
         }
 
         return thursday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -145,7 +145,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -155,13 +155,13 @@ class ChartModel {
 
           friday = double.tryParse(data['friday']);
         } else {
-          friday = 1;
+          friday = 0;
         }
 
         return friday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -174,7 +174,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -184,13 +184,13 @@ class ChartModel {
 
           saturday = double.tryParse(data['saturday']);
         } else {
-          saturday = 1;
+          saturday = 0;
         }
 
         return saturday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 
@@ -203,7 +203,7 @@ class ChartModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('waterIngestedPerDay')
+          .collection('hourSleptPerday')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -213,13 +213,13 @@ class ChartModel {
 
           sunday = double.tryParse(data['sunday']);
         } else {
-          sunday = 1;
+          sunday = 0;
         }
 
         return sunday;
       });
     } else {
-      return Stream.value(1);
+      return Stream.value(0);
     }
   }
 }

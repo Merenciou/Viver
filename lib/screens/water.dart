@@ -4,12 +4,27 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_animate/flutter_animate.dart'; CONFERIR A IMPORTÂNCIA DESSE PACOTE
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/clock.dart';
+import 'package:viver/custom_widgets/treatment_null.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/controllers/user_controller.dart';
 
 TextEditingController weightController = TextEditingController();
+bool alarmSwitch = false;
+bool nullVerifier = false;
+
+class NullVerifierProvider with ChangeNotifier {
+  bool _nullVerifier = false;
+
+  bool get nullVerifier => _nullVerifier;
+
+  void setNullVerifier(bool value) {
+    _nullVerifier = value;
+    notifyListeners();
+  }
+}
 
 class WaterPage extends StatefulWidget {
   const WaterPage({super.key});
@@ -19,7 +34,6 @@ class WaterPage extends StatefulWidget {
 }
 
 class _WaterPage extends State<WaterPage> {
-  bool alarmSwitch = false;
   bool dialogBox = false;
   final _formKey = GlobalKey<FormState>();
   double? waterIdeal;
@@ -54,79 +68,6 @@ class _WaterPage extends State<WaterPage> {
     }
   }
 
-  void _snackBarWakeUpHourNull() {
-    var snackBarEmailWrong = const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(milliseconds: 5000),
-        backgroundColor: Colors.red,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                'Selecione o horário que você acorda todos os dias!',
-              ),
-            ),
-          ],
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
-  }
-
-  void _snackBarAgeNull() {
-    var snackBarEmailWrong = const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(milliseconds: 5000),
-        backgroundColor: Colors.red,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                'Selecione sua idade antes de continuar!',
-              ),
-            ),
-          ],
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
-  }
-
-// CONCLUIR TRATAMENTO DE ERRO PARA NULLS COM OS REQUISITOS DE AGENDAMENTO, INCLUIR DIRECIONAR ROTA
-  void _snackBarWeightNull() {
-    var snackBarEmailWrong = const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(milliseconds: 5000),
-        backgroundColor: Colors.red,
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                'Selecione o seu peso antes de continuar!',
-              ),
-            ),
-          ],
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
-  }
-
   @override
   void initState() {
     getHourWakeUp();
@@ -137,179 +78,193 @@ class _WaterPage extends State<WaterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: dialogBox
-          ? calcResult()
-          : SingleChildScrollView(
-              reverse: true,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 40, vertical: 50),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 20),
-                      child: Clock(),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
+      body: Consumer<NullVerifierProvider>(
+        builder: (context, provider, child) {
+          if (provider._nullVerifier) {
+            return const TreatmentNull();
+          } else {
+            return dialogBox
+                ? calcResult()
+                : SingleChildScrollView(
+                    reverse: true,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 50),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Defina um lembrete para beber água:',
-                              style:
-                                  GoogleFonts.montserrat(color: Colors.black38),
-                            ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            child: Clock(),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(30))),
-                              width: 350,
-                              height: 90,
-                              child: Center(
-                                child: SwitchListTile(
-                                  title: Text(
-                                    alarmSwitch ? 'Ativado' : 'Desativado',
-                                    style: GoogleFonts.montserrat(),
-                                  ),
-                                  secondary: Text(
-                                    hourWakeUp,
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    'Defina um lembrete para beber água:',
                                     style: GoogleFonts.montserrat(
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w700,
-                                        color: Colors.black45),
+                                        color: Colors.black38),
                                   ),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  activeColor:
-                                      Theme.of(context).colorScheme.secondary,
-                                  inactiveTrackColor:
-                                      Theme.of(context).colorScheme.surface,
-                                  trackOutlineColor:
-                                      const WidgetStatePropertyAll(
-                                          Colors.white),
-                                  value: alarmSwitch,
-                                  onChanged: (details) async {
-                                    setState(() {
-                                      alarmSwitch = !alarmSwitch;
-                                    });
-
-                                    String? wakeUpHour =
-                                        await UserModel().getWakeUpHour();
-                                    int? hourIdealSleepMax = await UserModel()
-                                        .getHourIdealSleepMax();
-                                    double? weight =
-                                        await UserModel().getWeight();
-
-                                    if (wakeUpHour == null) {
-                                      _snackBarWakeUpHourNull();
-                                      setState(() {
-                                        alarmSwitch = false;
-                                      });
-                                    }
-                                    if (hourIdealSleepMax == null) {
-                                      _snackBarAgeNull();
-                                      setState(() {
-                                        alarmSwitch = false;
-                                      });
-                                    }
-                                    if (weight == null) {
-                                      _snackBarWeightNull();
-                                      setState(() {
-                                        alarmSwitch = false;
-                                      });
-                                    }
-
-                                    if (alarmSwitch) {
-                                      await NotificationController
-                                          .scheduleNewNotification();
-                                    } else {
-                                      await NotificationController
-                                          .cancelAllSchedules();
-                                    }
-                                  },
                                 ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Quantidade ideal de água a ser ingerida por dia:',
-                                style: GoogleFonts.montserrat(
-                                    color: Colors.black38),
-                              ),
-                            ),
-                          ),
-                          Form(
-                            key: _formKey,
-                            child: TextFormField(
-                              controller: weightController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Ops, digite o seu peso! :)';
-                                }
-                                return null;
-                              },
-                              style:
-                                  GoogleFonts.montserrat(color: Colors.black38),
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide.none),
-                                label: Text(
-                                  'Digite o seu peso:',
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black26),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 14),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  setState(() {
-                                    dialogBox = true;
-                                  });
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(30))),
+                                    width: 350,
+                                    height: 90,
+                                    child: Center(
+                                      child: SwitchListTile(
+                                        title: Text(
+                                          alarmSwitch
+                                              ? 'Ativado'
+                                              : 'Desativado',
+                                          style: GoogleFonts.montserrat(),
+                                        ),
+                                        secondary: Text(
+                                          hourWakeUp,
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black45),
+                                        ),
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        activeColor: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        inactiveTrackColor: Theme.of(context)
+                                            .colorScheme
+                                            .surface,
+                                        trackOutlineColor:
+                                            const WidgetStatePropertyAll(
+                                                Colors.white),
+                                        value: alarmSwitch,
+                                        onChanged: (details) async {
+                                          setState(() {
+                                            alarmSwitch = !alarmSwitch;
+                                          });
+                                          String? wakeUpHour =
+                                              await UserModel().getWakeUpHour();
+                                          double? age =
+                                              await UserModel().getAge();
+                                          double? weight =
+                                              await UserModel().getWeight();
 
-                                  calculator();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  minimumSize: const Size(200, 60),
-                                  backgroundColor:
-                                      Theme.of(context).colorScheme.tertiary),
-                              child: Text(
-                                'Calcular',
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 18, color: Colors.white),
-                              ),
+                                          if (wakeUpHour == null) {
+                                            setState(() {
+                                              alarmSwitch = false;
+                                              provider.setNullVerifier(true);
+                                            });
+                                          }
+                                          if (age == null) {
+                                            setState(() {
+                                              alarmSwitch = false;
+                                              provider.setNullVerifier(true);
+                                            });
+                                          }
+                                          if (weight == null) {
+                                            setState(() {
+                                              alarmSwitch = false;
+                                              provider.setNullVerifier(true);
+                                            });
+                                          }
+
+                                          if (alarmSwitch) {
+                                            await NotificationController
+                                                .scheduleNewNotification();
+                                          } else {
+                                            await NotificationController
+                                                .cancelAllSchedules();
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      'Quantidade ideal de água a ser ingerida por dia:',
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.black38),
+                                    ),
+                                  ),
+                                ),
+                                Form(
+                                  key: _formKey,
+                                  child: TextFormField(
+                                    controller: weightController,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Ops, digite o seu peso! :)';
+                                      }
+                                      return null;
+                                    },
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black38),
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                      border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10)),
+                                          borderSide: BorderSide.none),
+                                      label: Text(
+                                        'Digite o seu peso:',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black26),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 14),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        setState(() {
+                                          dialogBox = true;
+                                        });
+
+                                        calculator();
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10))),
+                                        minimumSize: const Size(200, 60),
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary),
+                                    child: Text(
+                                      'Calcular',
+                                      style: GoogleFonts.montserrat(
+                                          fontSize: 18, color: Colors.white),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
+                          )
                         ],
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ),
+                    ),
+                  );
+          }
+        },
+      ),
     );
   }
 
