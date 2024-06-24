@@ -51,6 +51,7 @@ dependencies:
   shrink_sidemenu: ^2.0.0+2-null-safety
   provider: ^6.1.2
   shared_preferences: ^2.2.3
+  dot_loader: ^0.0.1
 
 flutter_native_splash:
   color: "#d2e0fb"

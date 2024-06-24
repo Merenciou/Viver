@@ -1,0 +1,252 @@
+import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:viver/controllers/chart_hydration_model.dart';
+import 'package:viver/controllers/chart_sleep_model.dart';
+import 'package:viver/controllers/user_model.dart';
+import 'package:viver/screens/homepage.dart';
+
+double? sizeHydrationChart;
+double? mondayHydration;
+double? tuesdayHydration;
+double? wednesdayHydration;
+double? thursdayHydration;
+double? fridayHydration;
+double? saturdayHydration;
+double? sundayHydration;
+
+void getDaysHydration() {
+  ChartHydrationModel().getMonday().listen((value) {
+    mondayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getTuesday().listen((value) {
+    tuesdayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getWednesday().listen((value) {
+    wednesdayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getThursday().listen((value) {
+    thursdayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getFriday().listen((value) {
+    fridayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getSaturday().listen((value) {
+    saturdayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+  ChartHydrationModel().getSunday().listen((value) {
+    sundayHydration = value;
+  }, onError: (error) {
+    print('ops, erro: $error');
+  });
+}
+
+void initializeChartProperties() async {
+  UserModel userModel = UserModel();
+  sizeHydrationChart = await userModel.getWaterIdeal();
+}
+
+class HydrationChartBar extends StatefulWidget {
+  const HydrationChartBar({super.key});
+
+  @override
+  State<HydrationChartBar> createState() => _HydrationChartBarState();
+}
+
+class _HydrationChartBarState extends State<HydrationChartBar> {
+  @override
+  void initState() {
+    getDaysHydration();
+    initializeChartProperties();
+    // getChartIndex();
+    //
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BarChart(
+      BarChartData(
+          barTouchData: barTouchData,
+          titlesData: titlesData,
+          borderData: borderData,
+          barGroups: barGroups,
+          gridData: const FlGridData(show: true),
+          alignment: BarChartAlignment.spaceAround,
+          maxY: (sizeHydrationChart ?? 2.2) * 1.3),
+    );
+  }
+}
+
+BarTouchData get barTouchData => BarTouchData(
+      enabled: false,
+      touchTooltipData: BarTouchTooltipData(
+          getTooltipColor: (BarChartGroupData group) => Colors.transparent,
+          tooltipPadding: EdgeInsets.zero,
+          tooltipMargin: 8,
+          getTooltipItem: (
+            BarChartGroupData group,
+            int groupIndex,
+            BarChartRodData rod,
+            int rodIndex,
+          ) {
+            return BarTooltipItem(
+                rod.toY.toString(),
+                const TextStyle(
+                    color: Color(0XFF79AC78), fontWeight: FontWeight.bold));
+          }),
+    );
+
+Widget getTitles(double value, TitleMeta meta) {
+  const style = TextStyle(
+    color: Color(0XFF79AC78),
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+  );
+  String text;
+  switch (value.toInt()) {
+    case 0:
+      text = 'Seg';
+      break;
+    case 1:
+      text = 'Ter';
+      break;
+    case 2:
+      text = 'Qua';
+      break;
+    case 3:
+      text = 'Qui';
+      break;
+    case 4:
+      text = 'Sex';
+      break;
+    case 5:
+      text = 'Sáb';
+      break;
+    case 6:
+      text = 'Dom';
+      break;
+    default:
+      text = '';
+      break;
+  }
+  return SideTitleWidget(
+    axisSide: meta.axisSide,
+    space: 4,
+    child: Text(
+      text,
+      style: style,
+    ),
+  );
+}
+
+FlTitlesData get titlesData => const FlTitlesData(
+      show: true,
+      bottomTitles: AxisTitles(
+        sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 30,
+          getTitlesWidget: getTitles,
+        ),
+      ),
+      leftTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+      topTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+      rightTitles: AxisTitles(
+        sideTitles: SideTitles(showTitles: false),
+      ),
+    );
+
+FlBorderData get borderData => FlBorderData(
+      show: false,
+    );
+
+LinearGradient get _barsGradient => const LinearGradient(colors: [
+      Color(0xFFFF8080),
+      Color(0xFFFFFEC4),
+      Color(0XFF79AC78),
+    ], begin: Alignment.bottomCenter, end: Alignment.topCenter);
+
+List<BarChartGroupData> get barGroups => [
+      BarChartGroupData(
+        x: 0,
+        barRods: [
+          BarChartRodData(toY: mondayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 1,
+        barRods: [
+          BarChartRodData(toY: tuesdayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 2,
+        barRods: [
+          BarChartRodData(
+              toY: wednesdayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 3,
+        barRods: [
+          BarChartRodData(toY: thursdayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 4,
+        barRods: [
+          BarChartRodData(toY: fridayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 5,
+        barRods: [
+          BarChartRodData(toY: saturdayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+      BarChartGroupData(
+        x: 6,
+        barRods: [
+          BarChartRodData(toY: sundayHydration ?? 0, gradient: _barsGradient),
+        ],
+        showingTooltipIndicators: [0],
+      ),
+    ];
+
+class BarChartSample extends StatefulWidget {
+  const BarChartSample({super.key});
+
+  @override
+  State<BarChartSample> createState() => _BarChartSampleState();
+}
+
+class _BarChartSampleState extends State<BarChartSample> {
+  @override
+  Widget build(BuildContext context) {
+    return const AspectRatio(
+      aspectRatio: 1.6,
+      child: HydrationChartBar(),
+    );
+  }
+}

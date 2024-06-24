@@ -185,6 +185,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  dot_loader:
+    dependency: "direct main"
+    description:
+      name: dot_loader
+      sha256: "82481f4d20ce1350ed7e140b49e81fcfeeddd608e6bec44e69ed2a552ee35511"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   equatable:
     dependency: transitive
     description:

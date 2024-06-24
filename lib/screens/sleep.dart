@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:viver/custom_widgets/custom_timepicker.dart';
 import 'package:viver/controllers/user_controller.dart';
+import 'package:viver/custom_widgets/hours_slept.dart';
 
 final TextEditingController ageController = TextEditingController();
 int? hourIdealMin;
@@ -24,7 +25,8 @@ class Sleep extends StatefulWidget {
 
 class _SleepState extends State<Sleep> {
   final _formKey = GlobalKey<FormState>();
-  bool isPressed = false;
+  bool calcIsPressed = false;
+  bool defineHourSleptIsPressed = false;
   List<dynamic> hourToSleep = [];
 
   Future<void> loadJsonList() async {
@@ -120,109 +122,139 @@ class _SleepState extends State<Sleep> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Stack(
         children: [
-          isPressed
-              ? calcResult()
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: SizedBox(
-                          width: 250,
-                          height: 250,
-                          child: SvgPicture.asset(
-                              'lib/assets/images/sleeping.svg')),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Quantas horas de sono por noite você deve dormir?',
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.montserrat(color: Colors.black54),
+          defineHourSleptIsPressed
+              ? const HoursSlept()
+              : calcIsPressed
+                  ? calcResult()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: SizedBox(
+                              width: 250,
+                              height: 250,
+                              child: SvgPicture.asset(
+                                  'lib/assets/images/sleeping.svg')),
                         ),
-                      ),
-                    ),
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: ageController,
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Por favor, preencha este campo!';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.white,
-                                label: Text(
-                                  'Digite sua idade',
-                                  style: GoogleFonts.montserrat(
-                                      color: Colors.black38),
-                                ),
-                                border: const OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    borderSide: BorderSide.none),
-                                suffixIcon: Tooltip(
-                                  key: toolTipKey,
-                                  triggerMode: TooltipTriggerMode.manual,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 20),
-                                  textAlign: TextAlign.center,
-                                  textStyle: GoogleFonts.montserrat(
-                                      color: Colors.white),
-                                  message:
-                                      'Para recém nascidos insira os meses dessa maneira: \n ex.: "0,02" (2 meses).',
-                                  child: IconButton(
-                                    onPressed: () {
-                                      _onTooltipTap(toolTipKey);
-                                    },
-                                    icon: const Icon(
-                                      Icons.info,
-                                      color: Colors.black38,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Quantas horas de sono por noite você deve dormir?',
+                              textAlign: TextAlign.left,
+                              style:
+                                  GoogleFonts.montserrat(color: Colors.black54),
+                            ),
+                          ),
+                        ),
+                        Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: ageController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Por favor, preencha este campo!';
+                                  }
+                                  return null;
+                                },
+                                decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    label: Text(
+                                      'Digite sua idade',
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.black38),
                                     ),
-                                  ),
-                                )),
+                                    border: const OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10)),
+                                        borderSide: BorderSide.none),
+                                    suffixIcon: Tooltip(
+                                      key: toolTipKey,
+                                      triggerMode: TooltipTriggerMode.manual,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      textAlign: TextAlign.center,
+                                      textStyle: GoogleFonts.montserrat(
+                                          color: Colors.white),
+                                      message:
+                                          'Para recém nascidos insira os meses dessa maneira: \n ex.: "0,02" (2 meses).',
+                                      child: IconButton(
+                                        onPressed: () {
+                                          _onTooltipTap(toolTipKey);
+                                        },
+                                        icon: const Icon(
+                                          Icons.info,
+                                          color: Colors.black38,
+                                        ),
+                                      ),
+                                    )),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: CustomTimePicker(),
+                              ),
+                            ],
                           ),
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            child: CustomTimePicker(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          getIdealHour();
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              getIdealHour();
 
-                          setState(() {
-                            isPressed = true;
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(200, 50),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.tertiary),
-                      child: Text(
-                        'Calcular',
-                        style: GoogleFonts.montserrat(
-                            fontSize: 18, color: Colors.white),
-                      ),
-                    )
-                  ],
+                              setState(() {
+                                calcIsPressed = true;
+                              });
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(200, 50),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary),
+                          child: Text(
+                            'Calcular',
+                            style: GoogleFonts.montserrat(
+                                fontSize: 18, color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    defineHourSleptIsPressed = !defineHourSleptIsPressed;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: defineHourSleptIsPressed
+                        ? const Color(0xffFF6969)
+                        : Colors.white,
+                    minimumSize: const Size(80, 80)),
+                child: Icon(
+                  defineHourSleptIsPressed
+                      ? Icons.close_rounded
+                      : Icons.bedtime,
+                  color: defineHourSleptIsPressed
+                      ? Colors.white
+                      : Theme.of(context).colorScheme.primary,
+                  size: 35,
                 ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -250,7 +282,7 @@ class _SleepState extends State<Sleep> {
                       child: IconButton(
                           onPressed: () {
                             setState(() {
-                              isPressed = false;
+                              calcIsPressed = false;
                             });
                           },
                           icon: const Icon(
@@ -313,7 +345,7 @@ class _SleepState extends State<Sleep> {
                     UserController().setWakeUpHour();
                     UserController().setHourIdealSleepMax();
                     setState(() {
-                      isPressed = false;
+                      calcIsPressed = false;
                     });
                     ageController.clear();
                     wakeUpHourController.clear();
@@ -333,7 +365,7 @@ class _SleepState extends State<Sleep> {
                     ageController.clear();
                     wakeUpHourController.clear();
                     setState(() {
-                      isPressed = false;
+                      calcIsPressed = false;
                     });
                   },
                   style: ElevatedButton.styleFrom(
