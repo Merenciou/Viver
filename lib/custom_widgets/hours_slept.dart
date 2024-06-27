@@ -25,6 +25,7 @@ class _HoursSleptState extends State<HoursSlept> {
   bool showResult = false;
   int? hoursRemainings;
   int? minutesRemainings;
+  String? hoursAndMinutes;
 
   void setSleepPerDay() async {
     final auth = FirebaseAuth.instance;
@@ -37,10 +38,9 @@ class _HoursSleptState extends State<HoursSlept> {
     if (user != null) {
       await userCollection
           .doc(user.uid)
-          .collection('sleepPerDay')
+          .collection('hourSleptPerDay')
           .doc('days')
-          .set({dayNow: '$hoursRemainings:$minutesRemainings'},
-              SetOptions(merge: true));
+          .set({dayNow: hoursAndMinutes}, SetOptions(merge: true));
     }
   }
 
@@ -104,402 +104,447 @@ class _HoursSleptState extends State<HoursSlept> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Flexible(
-        child: Container(
-          width: 360,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          child: Form(
-            key: formKey,
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: SvgPicture.asset(
-                    'lib/assets/images/how_night.svg',
-                    width: 100,
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Container(
+              width: 360,
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              child: Form(
+                key: formKey,
+                child: ListView(
+                  shrinkWrap: true,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 14, right: 14),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                color: Color(0xffF6F5F5),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10, top: 10, bottom: 10),
-                                  child: FutureBuilder(
-                                      future: name,
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot asyncSnapshot) {
-                                        if (asyncSnapshot.connectionState ==
-                                            ConnectionState.done) {
-                                          if (asyncSnapshot.hasData) {
-                                            return Text(
-                                              'Olá, ${asyncSnapshot.data} que horas você foi dormir?',
-                                              style: GoogleFonts.montserrat(
-                                                  color: Colors.black38,
-                                                  fontSize: 17),
-                                            );
-                                          } else {
-                                            return Text(
-                                              'Olá, que horas você foi dormir?',
-                                              style: GoogleFonts.montserrat(
-                                                  color: Colors.black38,
-                                                  fontSize: 17),
-                                            );
-                                          }
-                                        } else {
-                                          return const CircularProgressIndicator();
-                                        }
-                                      }),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (hourSlept == '')
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 20),
-                                child: ElevatedButton(
-                                    onPressed: () async {
-                                      TimeOfDay? timeOfDay =
-                                          await showTimePicker(
-                                        context: context,
-                                        initialTime: selectedTimeSlept,
-                                        initialEntryMode:
-                                            TimePickerEntryMode.dial,
-                                        errorInvalidText:
-                                            'Selecione um horário válido',
-                                        confirmText: 'Selecionar',
-                                        cancelText: 'Cancelar',
-                                        helpText: 'Selecione a hora',
-                                        hourLabelText: 'Horas',
-                                        minuteLabelText: 'Minutos',
-                                      );
-                                      if (timeOfDay != null) {
-                                        setState(() {
-                                          selectedTimeSlept = timeOfDay;
-                                          String hour = selectedTimeSlept.hour
-                                              .toString()
-                                              .padLeft(2, '0');
-                                          String minute = selectedTimeSlept
-                                              .minute
-                                              .toString()
-                                              .padLeft(2, '0');
-                                          hourSlept = '$hour:$minute';
-                                        });
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                      minimumSize: const Size(100, 50),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      'Selecionar',
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.white),
-                                    )),
-                              ),
-                            )
-                          else
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SvgPicture.asset(
+                        'lib/assets/images/how_night.svg',
+                        width: 100,
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 14, right: 14),
+                          child: Column(
+                            children: [
+                              Padding(
                                 padding: const EdgeInsets.only(top: 20),
                                 child: Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(0),
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffF6F5F5),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Text(
-                                            hourSlept,
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.white,
-                                                fontSize: 17),
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Icons.check,
-                                          color: Colors.white,
-                                        )
-                                      ],
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 10, top: 10, bottom: 10),
+                                      child: FutureBuilder(
+                                          future: name,
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot asyncSnapshot) {
+                                            if (asyncSnapshot.connectionState ==
+                                                ConnectionState.done) {
+                                              if (asyncSnapshot.hasData) {
+                                                return Text(
+                                                  'Olá, ${asyncSnapshot.data} que horas você foi dormir?',
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Colors.black38,
+                                                      fontSize: 17),
+                                                );
+                                              } else {
+                                                return Text(
+                                                  'Olá, que horas você foi dormir?',
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Colors.black38,
+                                                      fontSize: 17),
+                                                );
+                                              }
+                                            } else {
+                                              return const CircularProgressIndicator();
+                                            }
+                                          }),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Container(
-                              width: double.infinity,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                color: Color(0xffF6F5F5),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(20),
-                                  bottomLeft: Radius.circular(20),
-                                  bottomRight: Radius.circular(20),
-                                ),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(right: 90),
-                                  child: Text(
-                                    'Que horas você acordou?',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black38, fontSize: 17),
+                              if (hourSlept == '')
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: ElevatedButton(
+                                        onPressed: () async {
+                                          TimeOfDay? timeOfDay =
+                                              await showTimePicker(
+                                            context: context,
+                                            initialTime: selectedTimeSlept,
+                                            initialEntryMode:
+                                                TimePickerEntryMode.dial,
+                                            errorInvalidText:
+                                                'Selecione um horário válido',
+                                            confirmText: 'Selecionar',
+                                            cancelText: 'Cancelar',
+                                            helpText: 'Selecione a hora',
+                                            hourLabelText: 'Horas',
+                                            minuteLabelText: 'Minutos',
+                                          );
+                                          if (timeOfDay != null) {
+                                            setState(() {
+                                              selectedTimeSlept = timeOfDay;
+                                              String hour = selectedTimeSlept
+                                                  .hour
+                                                  .toString();
+
+                                              String minute = selectedTimeSlept
+                                                  .minute
+                                                  .toString();
+
+                                              if (hour.length == 1) {
+                                                setState(() {
+                                                  hour = selectedTimeSlept.hour
+                                                      .toString()
+                                                      .padLeft(2, '0');
+                                                });
+                                              }
+
+                                              if (minute.length == 1) {
+                                                setState(() {
+                                                  minute = selectedTimeSlept
+                                                      .minute
+                                                      .toString()
+                                                      .padLeft(2, '0');
+                                                });
+                                              }
+
+                                              hourSlept = '$hour:$minute';
+                                            });
+                                          }
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                          minimumSize: const Size(100, 50),
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Selecionar',
+                                          style: GoogleFonts.montserrat(
+                                              color: Colors.white),
+                                        )),
                                   ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          if (hourWokeUp == '')
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    TimeOfDay? timeOfDay = await showTimePicker(
-                                      context: context,
-                                      initialTime: selectedTimeWokeUp,
-                                      initialEntryMode:
-                                          TimePickerEntryMode.dial,
-                                      errorInvalidText:
-                                          'Selecione um horário válido',
-                                      confirmText: 'Selecionar',
-                                      cancelText: 'Cancelar',
-                                      helpText: 'Selecione a hora',
-                                      hourLabelText: 'Horas',
-                                      minuteLabelText: 'Minutos',
-                                    );
-                                    if (timeOfDay != null) {
-                                      setState(() {
-                                        selectedTimeWokeUp = timeOfDay;
-                                        String hour = selectedTimeWokeUp.hour
-                                            .toString()
-                                            .padLeft(2, '0');
-                                        String minute = selectedTimeWokeUp
-                                            .minute
-                                            .toString()
-                                            .padLeft(2, '0');
-                                        hourWokeUp = '$hour:$minute';
-                                      });
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Theme.of(context).colorScheme.tertiary,
-                                    minimumSize: const Size(100, 50),
-                                    shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
+                                )
+                              else
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 20),
+                                    child: Container(
+                                      width: 150,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                hourSlept,
+                                                style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
+                                                    fontSize: 17),
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.check,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
-                                  child: Text(
-                                    'Selecionar',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.white),
-                                  ),
                                 ),
-                              ),
-                            )
-                          else
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Padding(
+                              Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 20),
                                 child: Container(
-                                  width: 150,
+                                  width: double.infinity,
                                   height: 40,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(0),
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffF6F5F5),
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Center(
-                                          child: Text(
-                                            hourWokeUp,
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.white,
-                                                fontSize: 17),
-                                          ),
-                                        ),
-                                        const Icon(
-                                          Icons.check,
-                                          color: Colors.white,
-                                        )
-                                      ],
+                                  child: Center(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 90),
+                                      child: Text(
+                                        'Que horas você acordou?',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black38,
+                                            fontSize: 17),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          if (isLoading == true)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: DotedLoader(
-                                count: 5,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                          if (showResult == true)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Container(
-                                width: double.infinity,
-                                height: 40,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffF6F5F5),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(0),
-                                    topRight: Radius.circular(20),
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20),
+                              if (hourWokeUp == '')
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 20),
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        TimeOfDay? timeOfDay =
+                                            await showTimePicker(
+                                          context: context,
+                                          initialTime: selectedTimeWokeUp,
+                                          initialEntryMode:
+                                              TimePickerEntryMode.dial,
+                                          errorInvalidText:
+                                              'Selecione um horário válido',
+                                          confirmText: 'Selecionar',
+                                          cancelText: 'Cancelar',
+                                          helpText: 'Selecione a hora',
+                                          hourLabelText: 'Horas',
+                                          minuteLabelText: 'Minutos',
+                                        );
+                                        if (timeOfDay != null) {
+                                          setState(() {
+                                            selectedTimeWokeUp = timeOfDay;
+                                            String hour = selectedTimeWokeUp
+                                                .hour
+                                                .toString();
+
+                                            String minute = selectedTimeWokeUp
+                                                .minute
+                                                .toString();
+
+                                            if (hour.length == 1) {
+                                              hour = selectedTimeWokeUp.hour
+                                                  .toString()
+                                                  .padLeft(2, '0');
+                                            }
+
+                                            if (minute.length == 1) {
+                                              minute = selectedTimeWokeUp.minute
+                                                  .toString()
+                                                  .padLeft(2, '0');
+                                            }
+
+                                            hourWokeUp = '$hour:$minute';
+                                          });
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                        minimumSize: const Size(100, 50),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Selecionar',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              else
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Container(
+                                      width: 150,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(20),
+                                          topRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(20),
+                                          bottomRight: Radius.circular(20),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                hourWokeUp,
+                                                style: GoogleFonts.montserrat(
+                                                    color: Colors.white,
+                                                    fontSize: 17),
+                                              ),
+                                            ),
+                                            const Icon(
+                                              Icons.check,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    'Você dormiu 08 horas e 15 minutos!',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black38, fontSize: 17),
+                              if (isLoading == true)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: DotedLoader(
+                                    count: 3,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (hourSlept != '' && hourWokeUp != '') {
-                          int? hourWokeUpInt =
-                              int.tryParse(hourWokeUp.substring(0, 2));
-                          int? minuteWokeUpInt =
-                              int.tryParse(hourWokeUp.substring(3, 5));
-                          int? hourSleptInt =
-                              int.tryParse(hourSlept.substring(0, 2));
-                          int? minuteSleptInt =
-                              int.tryParse(hourSlept.substring(3, 5));
-
-                          int? minutesWokeUp =
-                              hourWokeUpInt! * 60 + minuteWokeUpInt!;
-                          int? minutesSlept =
-                              hourSleptInt! * 60 + minuteSleptInt!;
-
-                          int? remainingMinutes = minutesWokeUp - minutesSlept;
-
-                          if (remainingMinutes < 0) {
-                            remainingMinutes += 24 * 60;
-                          }
-
-                          hoursRemainings = remainingMinutes ~/ 60;
-                          minutesRemainings = remainingMinutes % 60;
-
-                          print(
-                              'Você dormiu $hoursRemainings horas e $minutesRemainings minutos!');
-                        }
-
-                        setState(() {
-                          isLoading = true;
-                          Future.delayed(const Duration(seconds: 3), () {
-                            setState(() {
-                              isLoading = false;
-                              if (hourSlept != '' && hourWokeUp != '') {
-                                setSleepPerDay();
-                                _snackBarHourSleptSucessful();
-                                showResult = true;
-                              } else {
-                                _snackBarHoursNulls();
-                              }
-                            });
-                          });
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(double.infinity, 50),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(0),
-                                topRight: Radius.circular(0),
-                                bottomLeft: Radius.circular(10),
-                                bottomRight: Radius.circular(10)),
+                              if (showResult == true)
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 40,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffF6F5F5),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(0),
+                                        topRight: Radius.circular(20),
+                                        bottomLeft: Radius.circular(20),
+                                        bottomRight: Radius.circular(20),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Você dormiu $hoursRemainings horas e $minutesRemainings minutos!',
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.black38,
+                                            fontSize: 17),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
-                          backgroundColor:
-                              Theme.of(context).colorScheme.tertiary),
-                      child: Text(
-                        'Relatar',
-                        style: GoogleFonts.montserrat(
-                            color: Colors.white, fontSize: 18),
-                      ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (hourSlept != '' && hourWokeUp != '') {
+                              int? hourWokeUpInt =
+                                  int.tryParse(hourWokeUp.substring(0, 2));
+                              int? minuteWokeUpInt =
+                                  int.tryParse(hourWokeUp.substring(3, 5));
+                              int? hourSleptInt =
+                                  int.tryParse(hourSlept.substring(0, 2));
+                              int? minuteSleptInt =
+                                  int.tryParse(hourSlept.substring(3, 5));
+
+                              int? minutesWokeUp =
+                                  hourWokeUpInt! * 60 + minuteWokeUpInt!;
+                              int? minutesSlept =
+                                  hourSleptInt! * 60 + minuteSleptInt!;
+
+                              int? remainingMinutes =
+                                  minutesWokeUp - minutesSlept;
+
+                              if (remainingMinutes < 0) {
+                                remainingMinutes += 24 * 60;
+                              }
+
+                              hoursRemainings = remainingMinutes ~/ 60;
+                              minutesRemainings = remainingMinutes % 60;
+
+                              hoursAndMinutes =
+                                  '$hoursRemainings.$minutesRemainings';
+                            }
+
+                            setState(() {
+                              isLoading = true;
+                              Future.delayed(const Duration(seconds: 3), () {
+                                setState(() {
+                                  isLoading = false;
+                                  if (hourSlept != '' && hourWokeUp != '') {
+                                    setSleepPerDay();
+                                    _snackBarHourSleptSucessful();
+                                    showResult = true;
+                                  } else {
+                                    _snackBarHoursNulls();
+                                  }
+                                });
+                              });
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(0),
+                                    topRight: Radius.circular(0),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10)),
+                              ),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.tertiary),
+                          child: Text(
+                            'Relatar',
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white, fontSize: 18),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

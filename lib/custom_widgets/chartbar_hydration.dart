@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:viver/controllers/chart_hydration_model.dart';
-import 'package:viver/controllers/chart_sleep_model.dart';
 import 'package:viver/controllers/user_model.dart';
-import 'package:viver/screens/homepage.dart';
 
 double? sizeHydrationChart;
 double? mondayHydration;
@@ -18,41 +16,41 @@ void getDaysHydration() {
   ChartHydrationModel().getMonday().listen((value) {
     mondayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    mondayHydration = 0;
   });
   ChartHydrationModel().getTuesday().listen((value) {
     tuesdayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    tuesdayHydration = 0;
   });
   ChartHydrationModel().getWednesday().listen((value) {
     wednesdayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    wednesdayHydration = 0;
   });
   ChartHydrationModel().getThursday().listen((value) {
     thursdayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    thursdayHydration = 0;
   });
   ChartHydrationModel().getFriday().listen((value) {
     fridayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    fridayHydration = 0;
   });
   ChartHydrationModel().getSaturday().listen((value) {
     saturdayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    saturdayHydration = 0;
   });
   ChartHydrationModel().getSunday().listen((value) {
     sundayHydration = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    sundayHydration = 0;
   });
 }
 
-void initializeChartProperties() async {
+void initializeChartHydrationProperties() async {
   UserModel userModel = UserModel();
   sizeHydrationChart = await userModel.getWaterIdeal();
 }
@@ -68,7 +66,7 @@ class _HydrationChartBarState extends State<HydrationChartBar> {
   @override
   void initState() {
     getDaysHydration();
-    initializeChartProperties();
+    initializeChartHydrationProperties();
     // getChartIndex();
     //
     super.initState();

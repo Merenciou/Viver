@@ -1,10 +1,4 @@
-// Verificar pacote desatualizado datetime_picker_formfield
-// Mudar formato de horas para aceitar 24h
-
-// import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-// import 'package:intl/intl.dart';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';

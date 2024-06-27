@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/controllers/chart_sleep_model.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/chartbar_hydration.dart';
 import 'package:viver/custom_widgets/chartbar_sleep.dart';
@@ -47,6 +48,118 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  String? sleepGoalDiary;
+  String? sleepGoalWeekly;
+  double? hydrationGoalDiary;
+  double? hydrationGoalWeekly;
+
+  void _sleepGoalDiary() async {
+    double? hoursSlept;
+    int? hoursToSleep;
+
+    ChartSleepModel().getWednesday().listen((value) {
+      hoursSlept = value;
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
+
+    double? sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
+    sleepGoalDiary = sleepGoalDiaryCalc.toStringAsFixed(0);
+  }
+
+  void _sleepGoalWeekly() async {
+    double? monday = 0;
+    double? tuesday = 0;
+    double? wednesday = 0;
+    double? thursday = 0;
+    double? friday = 0;
+    double? saturday = 0;
+    double? sunday = 0;
+    int? hoursToSleepWeekly;
+
+    hoursToSleepWeekly = (await UserModel().getHourIdealSleepMax() ?? 0) * 7;
+
+    ChartSleepModel().getMonday().listen((value) {
+      setState(() {
+        monday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        monday = 0;
+      });
+    });
+    ChartSleepModel().getTuesday().listen((value) {
+      setState(() {
+        tuesday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        tuesday = 0;
+      });
+    });
+    ChartSleepModel().getWednesday().listen((value) {
+      setState(() {
+        wednesday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        wednesday = 0;
+      });
+    });
+    ChartSleepModel().getThursday().listen((value) {
+      setState(() {
+        thursday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        thursday = 0;
+      });
+    });
+    ChartSleepModel().getFriday().listen((value) {
+      setState(() {
+        friday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        friday = 0;
+      });
+    });
+    ChartSleepModel().getSaturday().listen((value) {
+      setState(() {
+        saturday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        saturday = 0;
+      });
+    });
+    ChartSleepModel().getSunday().listen((value) {
+      setState(() {
+        sunday = value;
+      });
+    }, onError: (error) {
+      setState(() {
+        sunday = 0;
+      });
+    });
+
+    double? sleepGoalWeeklyCalc = ((monday! +
+                tuesday! +
+                wednesday! +
+                thursday! +
+                friday! +
+                saturday! +
+                sunday!) /
+            hoursToSleepWeekly) *
+        100;
+
+    sleepGoalWeekly = sleepGoalWeeklyCalc.toStringAsFixed(0);
+    print('a meta foi cumprida: $sleepGoalWeekly%');
+  }
+
+  void hydrationGoal() async {}
+
   var screenReportIndex = 0;
 
   void getChartIndex() {
@@ -76,6 +189,8 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     shiftSalutation();
     futureName = UserModel().getName();
+    _sleepGoalDiary();
+    _sleepGoalWeekly();
     super.initState();
   }
 
@@ -208,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              '78%',
+                              '$sleepGoalDiary%',
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
@@ -238,7 +353,7 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              '70%',
+                              '$sleepGoalWeekly%',
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),

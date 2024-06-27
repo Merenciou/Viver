@@ -29,7 +29,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -58,7 +58,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -87,7 +87,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -116,7 +116,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -145,7 +145,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -174,7 +174,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {
@@ -203,7 +203,7 @@ class ChartSleepModel {
     if (user != null) {
       return userCollection
           .doc(user.uid)
-          .collection('hourSleptPerday')
+          .collection('hourSleptPerDay')
           .doc('days')
           .snapshots()
           .map((documentSnapshot) {

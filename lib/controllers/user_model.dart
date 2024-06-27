@@ -34,22 +34,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      name = data['name'];
-    } catch (error) {
-      print('Erro ao ler nome do usuário. Erro: $error');
-    }
+    name = data['name'];
 
     notifyListeners();
     return _name;
@@ -63,22 +58,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      weight = data['weight'];
-    } catch (error) {
-      print('Erro ao ler peso do usuário. Erro: $error');
-    }
+    weight = data['weight'];
 
     notifyListeners();
     return _weight;
@@ -92,22 +82,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      age = data['age'];
-    } catch (error) {
-      print('Erro ao ler idade do usuário. Erro: $error');
-    }
+    age = data['age'];
 
     notifyListeners();
     return _age;
@@ -121,22 +106,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      wakeUpHour = data['wakeUpHour'];
-    } catch (error) {
-      print('Erro ao ler horário de despertar do usuário. Erro: $error');
-    }
+    wakeUpHour = data['wakeUpHour'];
 
     notifyListeners();
     return _wakeUpHour;
@@ -150,22 +130,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      hourIdealSleepMax = data['hourIdealSleepMax'];
-    } catch (error) {
-      print('Erro ao ler hora ideal máxima de sono do usuário. Erro: $error');
-    }
+    hourIdealSleepMax = data['hourIdealSleepMax'];
 
     notifyListeners();
     return _hourIdealSleepMax;
@@ -179,22 +154,17 @@ class UserModel with ChangeNotifier {
 
     if (user == null) return null;
 
-    try {
-      DocumentSnapshot documentSnapshot = await userCollection
-          .doc(user.uid)
-          .collection('personalDatas')
-          .doc('datas')
-          .get();
+    DocumentSnapshot documentSnapshot = await userCollection
+        .doc(user.uid)
+        .collection('personalDatas')
+        .doc('datas')
+        .get();
 
-      if (!documentSnapshot.exists) return null;
+    if (!documentSnapshot.exists) return null;
 
-      Map<String, dynamic> data =
-          documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
 
-      waterIdeal = data['waterIdeal'];
-    } catch (error) {
-      print('Erro ao ler quantidade de água ideal do usuário. Erro: $error');
-    }
+    waterIdeal = data['waterIdeal'];
 
     notifyListeners();
     return _waterIdeal;

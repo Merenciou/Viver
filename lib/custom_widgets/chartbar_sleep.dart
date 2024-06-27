@@ -16,38 +16,46 @@ void getDaysSlept() {
   ChartSleepModel().getMonday().listen((value) {
     mondaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    mondaySlept = 0;
   });
   ChartSleepModel().getTuesday().listen((value) {
     tuesdaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    tuesdaySlept = 0;
   });
   ChartSleepModel().getWednesday().listen((value) {
     wednesdaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    wednesdaySlept = 0;
   });
   ChartSleepModel().getThursday().listen((value) {
     thursdaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    thursdaySlept = 0;
   });
   ChartSleepModel().getFriday().listen((value) {
     fridaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    fridaySlept = 0;
   });
   ChartSleepModel().getSaturday().listen((value) {
     saturdaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    saturdaySlept = 0;
   });
   ChartSleepModel().getSunday().listen((value) {
     sundaySlept = value;
   }, onError: (error) {
-    print('ops, erro: $error');
+    sundaySlept = 0;
   });
+}
+
+void initializeChartSleptProperties() async {
+  UserModel userModel = UserModel();
+
+  sizeSleepChart =
+      double.tryParse((await userModel.getHourIdealSleepMax()).toString());
+  sizeSleepChart;
 }
 
 class SleepChartBar extends StatefulWidget {
@@ -58,16 +66,12 @@ class SleepChartBar extends StatefulWidget {
 }
 
 class _SleepChartBarState extends State<SleepChartBar> {
-  void getHourIdealSleepMax() async {
-    sizeSleepChart = double.tryParse(
-        (await UserModel().getHourIdealSleepMax() ?? 0).toString());
-  }
-
   @override
   void initState() {
     getDaysSlept();
+    initializeChartSleptProperties();
     // getChartIndex();
-    //
+
     super.initState();
   }
 
