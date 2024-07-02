@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_animate/flutter_animate.dart'; CONFERIR A IMPORTÂNCIA DESSE PACOTE
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +11,7 @@ import 'package:viver/notifications/notifications.dart';
 import 'package:viver/controllers/user_controller.dart';
 
 TextEditingController weightController = TextEditingController();
-bool alarmSwitch = false;
+bool stateAlarm = false;
 bool nullVerifier = false;
 
 class NullVerifierProvider with ChangeNotifier {
@@ -122,9 +121,7 @@ class _WaterPage extends State<WaterPage> {
                                     child: Center(
                                       child: SwitchListTile(
                                         title: Text(
-                                          alarmSwitch
-                                              ? 'Ativado'
-                                              : 'Desativado',
+                                          stateAlarm ? 'Ativado' : 'Desativado',
                                           style: GoogleFonts.montserrat(),
                                         ),
                                         secondary: Text(
@@ -145,10 +142,10 @@ class _WaterPage extends State<WaterPage> {
                                         trackOutlineColor:
                                             const WidgetStatePropertyAll(
                                                 Colors.white),
-                                        value: alarmSwitch,
+                                        value: stateAlarm,
                                         onChanged: (details) async {
                                           setState(() {
-                                            alarmSwitch = !alarmSwitch;
+                                            stateAlarm = !stateAlarm;
                                           });
                                           String? wakeUpHour =
                                               await UserModel().getWakeUpHour();
@@ -159,24 +156,24 @@ class _WaterPage extends State<WaterPage> {
 
                                           if (wakeUpHour == null) {
                                             setState(() {
-                                              alarmSwitch = false;
+                                              stateAlarm = false;
                                               provider.setNullVerifier(true);
                                             });
                                           }
                                           if (age == null) {
                                             setState(() {
-                                              alarmSwitch = false;
+                                              stateAlarm = false;
                                               provider.setNullVerifier(true);
                                             });
                                           }
                                           if (weight == null) {
                                             setState(() {
-                                              alarmSwitch = false;
+                                              stateAlarm = false;
                                               provider.setNullVerifier(true);
                                             });
                                           }
 
-                                          if (alarmSwitch) {
+                                          if (stateAlarm) {
                                             await NotificationController
                                                 .scheduleNewNotification();
                                           } else {

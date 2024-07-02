@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/controllers/chart_hydration_model.dart';
 import 'package:viver/controllers/chart_sleep_model.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/chartbar_hydration.dart';
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
         salutation = dayShift[1];
       });
     }
-    if (time.hour >= 19 && time.hour <= 24) {
+    if (time.hour >= 19 && time.hour <= 23) {
       setState(() {
         salutation = dayShift[2];
       });
@@ -50,22 +51,361 @@ class _HomePageState extends State<HomePage> {
 
   String? sleepGoalDiary;
   String? sleepGoalWeekly;
-  double? hydrationGoalDiary;
-  double? hydrationGoalWeekly;
+  String? hydrationGoalDiary;
+  String? hydrationGoalWeekly;
+  String? sleepQuality;
+  String? sleepQualityMood;
+  String? hydrationQuality;
+  String? hydrationQualityMood;
+  Color? sleepColorMood;
+  Color? hydrationColorMood;
+
+  List<String> qualities = [
+    'Ótimo',
+    'Bom',
+    'Razoável',
+    'Ruim',
+  ];
+
+  List<String> qualitiesMoods = [
+    'mood_great',
+    'mood_good',
+    'mood_reasonable',
+    'mood_bad',
+  ];
+
+  List<Color> colorsMoods = [
+    const Color(0XFF79AC78),
+    const Color(0xFF40A2E3),
+    const Color(0xFFD37676),
+  ];
 
   void _sleepGoalDiary() async {
     double? hoursSlept;
     int? hoursToSleep;
+    double? sleepGoalDiaryCalc;
+    int? sleepGoalDiaryInt;
+    DateTime today = DateTime.now();
 
-    ChartSleepModel().getWednesday().listen((value) {
-      hoursSlept = value;
+    hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
+
+    ChartSleepModel().getMonday().listen((value) {
+      if (today.day == 1) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
     }, onError: (error) {
       hoursSlept = 0;
     });
-    hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
 
-    double? sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
-    sleepGoalDiary = sleepGoalDiaryCalc.toStringAsFixed(0);
+    ChartSleepModel().getTuesday().listen((value) {
+      if (today.day == 2) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    ChartSleepModel().getWednesday().listen((value) {
+      if (today.day == 3) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    ChartSleepModel().getThursday().listen((value) {
+      if (today.day == 4) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    ChartSleepModel().getFriday().listen((value) {
+      if (today.day == 5) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    ChartSleepModel().getSaturday().listen((value) {
+      if (today.day == 6) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
+    ChartSleepModel().getSunday().listen((value) {
+      if (today.day == 0) {
+        hoursSlept = value;
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+
+        switch (sleepGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              sleepQuality = qualities[3];
+              sleepQualityMood = qualitiesMoods[3];
+              sleepColorMood = colorsMoods[2];
+            });
+
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              sleepQuality = qualities[2];
+              sleepQualityMood = qualitiesMoods[2];
+              sleepColorMood = colorsMoods[1];
+            });
+
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              sleepQuality = qualities[1];
+              sleepQualityMood = qualitiesMoods[1];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              sleepQuality = qualities[0];
+              sleepQualityMood = qualitiesMoods[0];
+              sleepColorMood = colorsMoods[0];
+            });
+
+            break;
+          default:
+        }
+      }
+    }, onError: (error) {
+      hoursSlept = 0;
+    });
   }
 
   void _sleepGoalWeekly() async {
@@ -77,12 +417,24 @@ class _HomePageState extends State<HomePage> {
     double? saturday = 0;
     double? sunday = 0;
     int? hoursToSleepWeekly;
+    double? sleepGoalWeeklyCalc;
 
     hoursToSleepWeekly = (await UserModel().getHourIdealSleepMax() ?? 0) * 7;
 
     ChartSleepModel().getMonday().listen((value) {
       setState(() {
         monday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -92,6 +444,17 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getTuesday().listen((value) {
       setState(() {
         tuesday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -101,6 +464,17 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getWednesday().listen((value) {
       setState(() {
         wednesday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -110,6 +484,17 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getThursday().listen((value) {
       setState(() {
         thursday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -119,6 +504,17 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getFriday().listen((value) {
       setState(() {
         friday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -128,6 +524,17 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getSaturday().listen((value) {
       setState(() {
         saturday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
@@ -137,28 +544,496 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getSunday().listen((value) {
       setState(() {
         sunday = value;
+        sleepGoalWeeklyCalc = ((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                hoursToSleepWeekly!) *
+            100;
+
+        sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
       });
     }, onError: (error) {
       setState(() {
         sunday = 0;
       });
     });
-
-    double? sleepGoalWeeklyCalc = ((monday! +
-                tuesday! +
-                wednesday! +
-                thursday! +
-                friday! +
-                saturday! +
-                sunday!) /
-            hoursToSleepWeekly) *
-        100;
-
-    sleepGoalWeekly = sleepGoalWeeklyCalc.toStringAsFixed(0);
-    print('a meta foi cumprida: $sleepGoalWeekly%');
   }
 
-  void hydrationGoal() async {}
+  void _hydrationGoalDiary() async {
+    double? waterIngested;
+    double? waterToIngest;
+    double? hydrationGoalDiaryCalc;
+    int? hydrationGoalDiaryInt;
+    DateTime today = DateTime.now();
+
+    waterToIngest = await UserModel().getWaterIdeal() ?? 0;
+
+    ChartHydrationModel().getMonday().listen((value) {
+      if (today.day == 1) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getTuesday().listen((value) {
+      if (today.day == 2) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getWednesday().listen((value) {
+      if (today.day == 3) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getThursday().listen((value) {
+      if (today.day == 4) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getFriday().listen((value) {
+      if (today.day == 5) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getSaturday().listen((value) {
+      if (today.day == 6) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+
+    ChartHydrationModel().getSunday().listen((value) {
+      if (today.day == 0) {
+        waterIngested = value;
+        hydrationGoalDiaryCalc =
+            (((waterIngested ?? 0) / waterToIngest!) * 100);
+        hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
+        hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
+
+        switch (hydrationGoalDiaryInt!) {
+          case >= 0 && <= 25:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[2];
+            });
+            break;
+          case >= 26 && <= 50:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[1];
+            });
+            break;
+          case >= 51 && <= 75:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+          case >= 76 && <= 100:
+            setState(() {
+              hydrationQuality = qualities[3];
+              hydrationQualityMood = qualitiesMoods[3];
+              hydrationColorMood = colorsMoods[0];
+            });
+            break;
+        }
+      }
+    }, onError: (error) {
+      waterIngested = 0;
+    });
+  }
+
+  void _hydrationGoalWeekly() async {
+    double? monday = 0;
+    double? tuesday = 0;
+    double? wednesday = 0;
+    double? thursday = 0;
+    double? friday = 0;
+    double? saturday = 0;
+    double? sunday = 0;
+    double? waterToIngestWeekly;
+    double? hydrationGoalWeeklyCalc;
+
+    waterToIngestWeekly = (await UserModel().getWaterIdeal() ?? 0) * 7;
+
+    ChartHydrationModel().getMonday().listen((value) {
+      setState(() {
+        monday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        monday = 0;
+      });
+    });
+
+    ChartHydrationModel().getTuesday().listen((value) {
+      setState(() {
+        tuesday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        tuesday = 0;
+      });
+    });
+
+    ChartHydrationModel().getWednesday().listen((value) {
+      setState(() {
+        wednesday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        wednesday = 0;
+      });
+    });
+
+    ChartHydrationModel().getThursday().listen((value) {
+      setState(() {
+        thursday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        thursday = 0;
+      });
+    });
+
+    ChartHydrationModel().getFriday().listen((value) {
+      setState(() {
+        friday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        friday = 0;
+      });
+    });
+
+    ChartHydrationModel().getSaturday().listen((value) {
+      setState(() {
+        saturday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        saturday = 0;
+      });
+    });
+
+    ChartHydrationModel().getSunday().listen((value) {
+      setState(() {
+        sunday = value;
+        hydrationGoalWeeklyCalc = (((monday! +
+                    tuesday! +
+                    wednesday! +
+                    thursday! +
+                    friday! +
+                    saturday! +
+                    sunday!) /
+                waterToIngestWeekly!) *
+            100);
+        hydrationGoalWeekly =
+            hydrationGoalWeeklyCalc!.toStringAsFixed(0).toString();
+      });
+    }, onError: (error) {
+      setState(() {
+        sunday = 0;
+      });
+    });
+  }
 
   var screenReportIndex = 0;
 
@@ -191,6 +1066,8 @@ class _HomePageState extends State<HomePage> {
     futureName = UserModel().getName();
     _sleepGoalDiary();
     _sleepGoalWeekly();
+    _hydrationGoalDiary();
+    _hydrationGoalWeekly();
     super.initState();
   }
 
@@ -323,7 +1200,9 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              '$sleepGoalDiary%',
+                              sleepGoalDiary != null
+                                  ? '$sleepGoalDiary%'
+                                  : '0%',
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
@@ -380,19 +1259,24 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.mood_rounded,
-                          size: 38,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
+                        SizedBox(
+                            width: 35,
+                            height: 35,
+                            child: Image.asset(
+                                sleepQualityMood != null
+                                    ? 'lib/assets/images/icons/$sleepQualityMood.png'
+                                    : 'lib/assets/images/icons/mood_reasonable.png',
+                                color: sleepColorMood ?? colorsMoods[1])),
                         Text(
                           'Qualidade de sono',
                           style: GoogleFonts.montserrat(
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'Ótimo',
-                          textAlign: TextAlign.left,
+                          sleepQuality != null
+                              ? '$sleepQuality'
+                              : 'Você ainda não informou suas horas de sono hoje :(',
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.montserrat(fontSize: 14),
                         ),
                       ],
@@ -545,7 +1429,9 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              '89%',
+                              hydrationGoalDiary != null
+                                  ? '$hydrationGoalDiary%'
+                                  : '0%',
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
@@ -575,7 +1461,9 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              '83%',
+                              hydrationGoalWeekly != null
+                                  ? '$hydrationGoalWeekly%'
+                                  : '0%',
                               style: GoogleFonts.montserrat(
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
@@ -602,19 +1490,31 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.mood_rounded,
-                          size: 38,
-                          color: Theme.of(context).colorScheme.secondary,
+                        SizedBox(
+                          width: 35,
+                          height: 35,
+                          child: Image.asset(
+                            hydrationQualityMood != null
+                                ? 'lib/assets/images/icons/$hydrationQualityMood.png'
+                                : 'lib/assets/images/icons/mood_reasonable.png',
+                            color: hydrationColorMood ?? colorsMoods[1],
+                          ),
                         ),
+                        // Icon(
+                        //   Icons.mood_rounded,
+                        //   size: 38,
+                        //   color: Theme.of(context).colorScheme.secondary,
+                        // ),
                         Text(
                           'Nível de Hidratação',
                           style: GoogleFonts.montserrat(
                               fontSize: 30, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'Bom',
-                          textAlign: TextAlign.left,
+                          hydrationQuality != null
+                              ? '$hydrationQuality'
+                              : 'Você ainda não nos informou o quanto bebeu de água! :(',
+                          textAlign: TextAlign.center,
                           style: GoogleFonts.montserrat(fontSize: 14),
                         ),
                       ],

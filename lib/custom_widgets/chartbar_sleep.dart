@@ -12,44 +12,6 @@ double? fridaySlept;
 double? saturdaySlept;
 double? sundaySlept;
 
-void getDaysSlept() {
-  ChartSleepModel().getMonday().listen((value) {
-    mondaySlept = value;
-  }, onError: (error) {
-    mondaySlept = 0;
-  });
-  ChartSleepModel().getTuesday().listen((value) {
-    tuesdaySlept = value;
-  }, onError: (error) {
-    tuesdaySlept = 0;
-  });
-  ChartSleepModel().getWednesday().listen((value) {
-    wednesdaySlept = value;
-  }, onError: (error) {
-    wednesdaySlept = 0;
-  });
-  ChartSleepModel().getThursday().listen((value) {
-    thursdaySlept = value;
-  }, onError: (error) {
-    thursdaySlept = 0;
-  });
-  ChartSleepModel().getFriday().listen((value) {
-    fridaySlept = value;
-  }, onError: (error) {
-    fridaySlept = 0;
-  });
-  ChartSleepModel().getSaturday().listen((value) {
-    saturdaySlept = value;
-  }, onError: (error) {
-    saturdaySlept = 0;
-  });
-  ChartSleepModel().getSunday().listen((value) {
-    sundaySlept = value;
-  }, onError: (error) {
-    sundaySlept = 0;
-  });
-}
-
 void initializeChartSleptProperties() async {
   UserModel userModel = UserModel();
 
@@ -66,6 +28,58 @@ class SleepChartBar extends StatefulWidget {
 }
 
 class _SleepChartBarState extends State<SleepChartBar> {
+  void getDaysSlept() {
+    ChartSleepModel().getMonday().listen((value) {
+      setState(() {
+        mondaySlept = value;
+      });
+    }, onError: (error) {
+      mondaySlept = 0;
+    });
+    ChartSleepModel().getTuesday().listen((value) {
+      setState(() {
+        tuesdaySlept = value;
+      });
+    }, onError: (error) {
+      tuesdaySlept = 0;
+    });
+    ChartSleepModel().getWednesday().listen((value) {
+      setState(() {
+        wednesdaySlept = value;
+      });
+    }, onError: (error) {
+      wednesdaySlept = 0;
+    });
+    ChartSleepModel().getThursday().listen((value) {
+      setState(() {
+        thursdaySlept = value;
+      });
+    }, onError: (error) {
+      thursdaySlept = 0;
+    });
+    ChartSleepModel().getFriday().listen((value) {
+      setState(() {
+        fridaySlept = value;
+      });
+    }, onError: (error) {
+      fridaySlept = 0;
+    });
+    ChartSleepModel().getSaturday().listen((value) {
+      setState(() {
+        saturdaySlept = value;
+      });
+    }, onError: (error) {
+      saturdaySlept = 0;
+    });
+    ChartSleepModel().getSunday().listen((value) {
+      setState(() {
+        sundaySlept = value;
+      });
+    }, onError: (error) {
+      sundaySlept = 0;
+    });
+  }
+
   @override
   void initState() {
     getDaysSlept();
