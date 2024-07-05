@@ -345,10 +345,12 @@ class _Sign extends State<Sign> {
               decoration: InputDecoration(
                   label: Text(
                     'Email',
-                    style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontSize: 18),
+                    style: GoogleFonts.montserrat(fontSize: 18),
                   ),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  floatingLabelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
                   filled: true,
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(
@@ -378,10 +380,12 @@ class _Sign extends State<Sign> {
                         )),
                     label: Text(
                       'Senha',
-                      style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.surface,
-                          fontSize: 18),
+                      style: GoogleFonts.montserrat(fontSize: 18),
                     ),
+                    labelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.surface),
+                    floatingLabelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     filled: true,
                     fillColor: Colors.white,
                     border: const OutlineInputBorder(
@@ -409,10 +413,12 @@ class _Sign extends State<Sign> {
               decoration: InputDecoration(
                   label: Text(
                     'Nome',
-                    style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontSize: 18),
+                    style: GoogleFonts.montserrat(fontSize: 18),
                   ),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  floatingLabelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
                   filled: true,
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(
@@ -430,10 +436,12 @@ class _Sign extends State<Sign> {
                 decoration: InputDecoration(
                     label: Text(
                       'Email',
-                      style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.surface,
-                          fontSize: 18),
+                      style: GoogleFonts.montserrat(fontSize: 18),
                     ),
+                    labelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.surface),
+                    floatingLabelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     filled: true,
                     fillColor: Colors.white,
                     border: const OutlineInputBorder(
@@ -472,10 +480,12 @@ class _Sign extends State<Sign> {
                       )),
                   label: Text(
                     'Senha',
-                    style: GoogleFonts.montserrat(
-                        color: Theme.of(context).colorScheme.surface,
-                        fontSize: 18),
+                    style: GoogleFonts.montserrat(fontSize: 18),
                   ),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  floatingLabelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
                   filled: true,
                   fillColor: Colors.white,
                   border: const OutlineInputBorder(
@@ -512,10 +522,12 @@ class _Sign extends State<Sign> {
                         )),
                     label: Text(
                       'Confirme sua senha',
-                      style: GoogleFonts.montserrat(
-                          color: Theme.of(context).colorScheme.surface,
-                          fontSize: 18),
+                      style: GoogleFonts.montserrat(fontSize: 18),
                     ),
+                    labelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.surface),
+                    floatingLabelStyle:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
                     filled: true,
                     fillColor: Colors.white,
                     border: const OutlineInputBorder(
