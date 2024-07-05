@@ -84,8 +84,6 @@ class _SleepChartBarState extends State<SleepChartBar> {
   void initState() {
     getDaysSlept();
     initializeChartSleptProperties();
-    // getChartIndex();
-
     super.initState();
   }
 

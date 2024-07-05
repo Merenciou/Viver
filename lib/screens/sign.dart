@@ -212,6 +212,9 @@ class _Sign extends State<Sign> {
   }
 
   Widget signIn() {
+    var deviceData = MediaQuery.of(context);
+    var screenSize = deviceData.size;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
@@ -223,7 +226,7 @@ class _Sign extends State<Sign> {
               right: 1,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(180, 50),
+                    minimumSize: Size(screenSize.width * 0.380, 50),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(10),
@@ -247,7 +250,7 @@ class _Sign extends State<Sign> {
               left: 1,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(180, 50),
+                    minimumSize: Size(screenSize.width * 0.380, 50),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
                     backgroundColor: Theme.of(context).colorScheme.tertiary),
@@ -269,6 +272,9 @@ class _Sign extends State<Sign> {
   }
 
   Widget signUp() {
+    var deviceData = MediaQuery.of(context);
+    var screenSize = deviceData.size;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
@@ -280,7 +286,7 @@ class _Sign extends State<Sign> {
               left: 1,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(180, 50),
+                    minimumSize: Size(screenSize.width * 0.380, 50),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
@@ -301,7 +307,7 @@ class _Sign extends State<Sign> {
               right: 1,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(180, 50),
+                    minimumSize: Size(screenSize.width * 0.380, 50),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(20),

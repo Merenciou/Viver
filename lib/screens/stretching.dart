@@ -93,6 +93,7 @@ class _StretchingPageState extends State<StretchingPage> {
         dropDownValue = value;
       });
     });
+
     super.initState();
   }
 
@@ -220,7 +221,8 @@ class _StretchingPageState extends State<StretchingPage> {
                     await prefs.setBool('stateAlarm', stateAlarm);
 
                     if (stateAlarm) {
-                      await notififyStretchingSchedule();
+                      await NotificationController
+                          .scheduleStretchingNotification();
                     } else {
                       await AwesomeNotifications()
                           .cancelSchedulesByChannelKey('stretching_channel');

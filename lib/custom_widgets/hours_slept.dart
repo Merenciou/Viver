@@ -507,16 +507,18 @@ class _HoursSleptState extends State<HoursSlept> {
                             setState(() {
                               isLoading = true;
                               Future.delayed(const Duration(seconds: 3), () {
-                                setState(() {
-                                  isLoading = false;
-                                  if (hourSlept != '' && hourWokeUp != '') {
-                                    setSleepPerDay();
-                                    _snackBarHourSleptSucessful();
-                                    showResult = true;
-                                  } else {
-                                    _snackBarHoursNulls();
-                                  }
-                                });
+                                if (mounted) {
+                                  setState(() {
+                                    isLoading = false;
+                                    if (hourSlept != '' && hourWokeUp != '') {
+                                      setSleepPerDay();
+                                      _snackBarHourSleptSucessful();
+                                      showResult = true;
+                                    } else {
+                                      _snackBarHoursNulls();
+                                    }
+                                  });
+                                }
                               });
                             });
                           },

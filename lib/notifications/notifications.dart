@@ -19,20 +19,6 @@ late double? waterIdeal;
 double? waterDosage;
 double waterIngested = 0;
 
-// void initializeWaterProperties() async {
-//   UserModel userModel = UserModel();
-//   weight = await userModel.getWeight();
-//   if (weight != null) {
-//     waterIdeal = ((weight ?? 0) * 0.350) / 10;
-
-//     double? dosage = waterIdeal! / 9;
-//     String roundedString = dosage.toStringAsFixed(3);
-//     waterDosage = double.tryParse(roundedString);
-//   }
-// }
-
-int? interval;
-
 void initializeScheduleProperties() async {
   name = await UserModel().getName();
   wakeUpHour = await UserModel().getWakeUpHour();
@@ -48,15 +34,6 @@ void initializeScheduleProperties() async {
     String roundedString = dosage.toStringAsFixed(3);
     waterDosage = double.tryParse(roundedString);
   }
-
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-  interval = int.tryParse(prefs.getString('interval') ?? '00:00');
-
-  // String hourToString = hourDividedPerDay!.toStringAsFixed(3);
-  // int? hour = int.tryParse(hourToString.substring(0, 1))! * 3600;
-  // int? minute = int.tryParse(hourToString.substring(2, 4))! * 60;
-  // seconds = hour + minute;
 }
 
 void setWaterIngestedPerDay() async {
@@ -116,15 +93,10 @@ class NotificationController {
         .setListeners(onActionReceivedMethod: onActionReceivedMethod);
   }
 
-  static Future<void> cancelAllSchedules() async {
-    await AwesomeNotifications().cancelAllSchedules();
-  }
-
   @pragma('vm:entry-point')
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == 'confirm_hydration') {
-      // initializeWaterProperties();
       initializeScheduleProperties();
 
       waterIngested += waterDosage!;
@@ -139,6 +111,10 @@ class NotificationController {
     if (receivedAction.buttonKeyPressed == 'disable_hydration') {
       await AwesomeNotifications()
           .cancelNotificationsByChannelKey('hydration_channel');
+
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.setBool('stateAlarmHydration', false);
     }
 
     if (receivedAction.buttonKeyPressed == 'confirm_stretching' ||
@@ -149,6 +125,9 @@ class NotificationController {
     if (receivedAction.buttonKeyPressed == 'disable_stretching') {
       await AwesomeNotifications()
           .cancelNotificationsByChannelKey('stretching_channel');
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.setBool('stateAlarm', false);
     }
   }
 
@@ -159,7 +138,7 @@ class NotificationController {
         arguments: receivedAction);
   }
 
-  static Future<void> scheduleNewNotification() async {
+  static Future<void> scheduleHydrationNotification() async {
     bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
     if (!isAllowed) {
       await AwesomeNotifications().requestPermissionToSendNotifications();
@@ -167,6 +146,15 @@ class NotificationController {
     }
 
     await notifyHydrationSchedule();
+  }
+
+  static Future<void> scheduleStretchingNotification() async {
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+      return;
+    }
+
     await notififyStretchingSchedule();
   }
 }
@@ -178,12 +166,12 @@ Future<void> notifyHydrationSchedule() async {
   }
   if (!isAllowed) return;
 
-  int interval = (hourDividedPerDay! * 3600).toInt();
+  int intervalHydration = (hourDividedPerDay! * 3600).toInt();
 
   for (int i = 0; i < 9; i++) {
     await AwesomeNotifications().createNotification(
       schedule: NotificationInterval(
-        interval: interval,
+        interval: intervalHydration,
         repeats: true,
         allowWhileIdle: true,
         timeZone: 'UTC',
@@ -222,16 +210,29 @@ Future<void> notifyHydrationSchedule() async {
   }
 }
 
+Future<String?> getIntervalStretching() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  String? intervalStretchingString = prefs.getString('intervalStretching');
+
+  return intervalStretchingString;
+}
+
 Future<void> notififyStretchingSchedule() async {
   bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
   if (!isAllowed) {
     await AwesomeNotifications().requestPermissionToSendNotifications();
   }
+
+  String? intervalStretching = await getIntervalStretching();
+  int intervalInMinutes = int.parse(intervalStretching!.split(':')[1]);
+  int intervalInSeconds = intervalInMinutes * 60;
+
   if (!isAllowed) return;
-  if (interval != null) {
+  if (intervalInSeconds != 0) {
     AwesomeNotifications().createNotification(
       schedule: NotificationInterval(
-        interval: interval! * 60,
+        interval: intervalInSeconds,
         repeats: true,
         allowWhileIdle: true,
       ),

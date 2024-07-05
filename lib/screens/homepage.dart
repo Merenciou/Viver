@@ -7,8 +7,6 @@ import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/chartbar_hydration.dart';
 import 'package:viver/custom_widgets/chartbar_sleep.dart';
 
-bool chartIndex = true;
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -84,7 +82,6 @@ class _HomePageState extends State<HomePage> {
     double? hoursSlept;
     int? hoursToSleep;
     double? sleepGoalDiaryCalc;
-    int? sleepGoalDiaryInt;
     DateTime today = DateTime.now();
 
     hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
@@ -94,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
-        sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -141,6 +138,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -186,6 +184,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -229,8 +228,9 @@ class _HomePageState extends State<HomePage> {
     ChartSleepModel().getThursday().listen((value) {
       if (today.day == 4) {
         hoursSlept = value;
-        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
+        sleepGoalDiaryCalc = (((hoursSlept ?? 0) / (hoursToSleep ?? 0)) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -276,6 +276,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -321,6 +322,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -366,6 +368,7 @@ class _HomePageState extends State<HomePage> {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep!) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
+        int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
           case >= 0 && <= 25:
@@ -1037,26 +1040,10 @@ class _HomePageState extends State<HomePage> {
 
   var screenReportIndex = 0;
 
-  void getChartIndex() {
-    if (screenReportIndex == 0) {
-      setState(() {
-        chartIndex = true;
-        print('O INDEX É: $chartIndex');
-      });
-
-      if (screenReportIndex == 1) {
-        setState(() {
-          chartIndex == false;
-          print('O INDEX É: $chartIndex');
-        });
-      }
-    }
-  }
-
   List<Widget> screenReportList(BuildContext context) {
     return [
       reportSleep(),
-      reportWater(),
+      reportHydration(),
     ];
   }
 
@@ -1077,6 +1064,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget reportSleep() {
+    var deviceData = MediaQuery.of(context);
+    var screenSize = deviceData.size;
+
     return Stack(
       children: [
         Positioned(
@@ -1105,8 +1095,8 @@ class _HomePageState extends State<HomePage> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
-                    width: 150,
-                    height: 150,
+                    width: screenSize.height * 0.192,
+                    height: screenSize.height * 0.192,
                     child: SvgPicture.asset('lib/assets/images/sun.svg'),
                   ),
                 ),
@@ -1164,7 +1154,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Relatório semanal do seu sono:',
+                      'Relatório sono (semanal):',
                       style: GoogleFonts.montserrat(fontSize: 16),
                     ),
                   ),
@@ -1173,7 +1163,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Container(
                     width: double.infinity,
-                    height: 200,
+                    height: screenSize.height * 0.186,
                     decoration: const BoxDecoration(
                         color: Colors.white38,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1184,8 +1174,8 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 152,
-                      height: 150,
+                      width: screenSize.width * 0.35,
+                      height: screenSize.height * 0.15,
                       decoration: const BoxDecoration(
                           color: Colors.white38,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1207,7 +1197,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              'Meta de\nsono\n(diário)',
+                              'Meta de sono\n(diário)',
                               textAlign: TextAlign.left,
                               style: GoogleFonts.montserrat(fontSize: 14),
                             ),
@@ -1216,8 +1206,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      width: 152,
-                      height: 150,
+                      width: screenSize.width * 0.35,
+                      height: screenSize.height * 0.15,
                       decoration: const BoxDecoration(
                           color: Colors.white38,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1237,7 +1227,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              'Meta de\nsono\n(semanal)',
+                              'Meta de sono\n(semanal)',
                               textAlign: TextAlign.left,
                               style: GoogleFonts.montserrat(fontSize: 14),
                             ),
@@ -1251,7 +1241,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(top: 8),
                   child: Container(
                     width: double.infinity,
-                    height: 130,
+                    height: screenSize.height * 0.14,
                     decoration: const BoxDecoration(
                         color: Colors.white38,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1270,15 +1260,24 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Qualidade de sono',
                           style: GoogleFonts.montserrat(
-                              fontSize: 30, fontWeight: FontWeight.w500),
+                              fontSize: screenSize.width * 0.055,
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text(
-                          sleepQuality != null
-                              ? '$sleepQuality'
-                              : 'Você ainda não informou suas horas de sono hoje :(',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.montserrat(fontSize: 14),
-                        ),
+                        sleepQuality != null
+                            ? Text(
+                                '$sleepQuality',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: screenSize.width * 0.04,
+                                ),
+                              )
+                            : Text(
+                                'Você não informou suas horas de sono hoje',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: screenSize.width * 0.028,
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -1326,7 +1325,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget reportWater() {
+  Widget reportHydration() {
+    var deviceData = MediaQuery.of(context);
+    var screenSize = deviceData.size;
+
     return Stack(
       children: [
         Positioned(
@@ -1355,8 +1357,8 @@ class _HomePageState extends State<HomePage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: SizedBox(
-                    width: 150,
-                    height: 150,
+                    width: screenSize.height * 0.190,
+                    height: screenSize.height * 0.190,
                     child: SvgPicture.asset(
                       'lib/assets/images/water.svg',
                     ),
@@ -1393,7 +1395,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Relatório semanal de sua hidratação:',
+                      'Relatório hidratação (semanal):',
                       style: GoogleFonts.montserrat(fontSize: 16),
                     ),
                   ),
@@ -1402,7 +1404,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Container(
                     width: double.infinity,
-                    height: 200,
+                    height: screenSize.height * 0.186,
                     decoration: const BoxDecoration(
                         color: Colors.white38,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1413,8 +1415,8 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 152,
-                      height: 150,
+                      width: screenSize.width * 0.35,
+                      height: screenSize.height * 0.15,
                       decoration: const BoxDecoration(
                           color: Colors.white38,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1436,7 +1438,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              'Meta de\nhidratação\n(diária)',
+                              'Meta hidratação\n(diária)',
                               textAlign: TextAlign.left,
                               style: GoogleFonts.montserrat(fontSize: 14),
                             ),
@@ -1445,8 +1447,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     Container(
-                      width: 152,
-                      height: 150,
+                      width: screenSize.width * 0.35,
+                      height: screenSize.height * 0.15,
                       decoration: const BoxDecoration(
                           color: Colors.white38,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1468,7 +1470,7 @@ class _HomePageState extends State<HomePage> {
                                   fontSize: 30, fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              'Meta de\nhidratação\n(semanal)',
+                              'Meta hidratação\n(semanal)',
                               textAlign: TextAlign.left,
                               style: GoogleFonts.montserrat(fontSize: 14),
                             ),
@@ -1482,7 +1484,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.only(top: 8),
                   child: Container(
                     width: double.infinity,
-                    height: 130,
+                    height: screenSize.height * 0.14,
                     decoration: const BoxDecoration(
                         color: Colors.white38,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -1500,23 +1502,27 @@ class _HomePageState extends State<HomePage> {
                             color: hydrationColorMood ?? colorsMoods[1],
                           ),
                         ),
-                        // Icon(
-                        //   Icons.mood_rounded,
-                        //   size: 38,
-                        //   color: Theme.of(context).colorScheme.secondary,
-                        // ),
                         Text(
                           'Nível de Hidratação',
                           style: GoogleFonts.montserrat(
-                              fontSize: 30, fontWeight: FontWeight.w500),
+                              fontSize: screenSize.width * 0.055,
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text(
-                          hydrationQuality != null
-                              ? '$hydrationQuality'
-                              : 'Você ainda não nos informou o quanto bebeu de água! :(',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.montserrat(fontSize: 14),
-                        ),
+                        hydrationQuality != null
+                            ? Text(
+                                '$sleepQuality',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: screenSize.width * 0.04,
+                                ),
+                              )
+                            : Text(
+                                'Você não informou o quanto bebeu hoje',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  fontSize: screenSize.width * 0.028,
+                                ),
+                              ),
                       ],
                     ),
                   ),

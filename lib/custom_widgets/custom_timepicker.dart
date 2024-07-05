@@ -69,7 +69,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
           setState(() {
             selectedTime = timeOfDay;
             wakeUpHourController.text =
-                '${selectedTime.hour}:${selectedTime.minute}';
+                '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
           });
 
           // if (selectedTime.hour.toString().length < 2) {

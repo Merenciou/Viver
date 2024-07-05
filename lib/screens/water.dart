@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,18 @@ import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/custom_widgets/treatment_null.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/controllers/user_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 TextEditingController weightController = TextEditingController();
 bool stateAlarm = false;
 bool nullVerifier = false;
+
+Future<bool> getStateAlarm() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  bool stateAlarm = prefs.getBool('stateAlarmHydration') ?? false;
+  return stateAlarm;
+}
 
 class NullVerifierProvider with ChangeNotifier {
   bool _nullVerifier = false;
@@ -70,6 +79,11 @@ class _WaterPage extends State<WaterPage> {
   @override
   void initState() {
     getHourWakeUp();
+    getStateAlarm().then((value) {
+      setState(() {
+        stateAlarm = value;
+      });
+    });
     super.initState();
   }
 
@@ -147,6 +161,15 @@ class _WaterPage extends State<WaterPage> {
                                           setState(() {
                                             stateAlarm = !stateAlarm;
                                           });
+
+                                          final SharedPreferences prefs =
+                                              await SharedPreferences
+                                                  .getInstance();
+
+                                          await prefs.setBool(
+                                              'stateAlarmHydration',
+                                              stateAlarm);
+
                                           String? wakeUpHour =
                                               await UserModel().getWakeUpHour();
                                           double? age =
@@ -175,10 +198,11 @@ class _WaterPage extends State<WaterPage> {
 
                                           if (stateAlarm) {
                                             await NotificationController
-                                                .scheduleNewNotification();
+                                                .scheduleHydrationNotification();
                                           } else {
-                                            await NotificationController
-                                                .cancelAllSchedules();
+                                            await AwesomeNotifications()
+                                                .cancelNotificationsByChannelKey(
+                                                    'hydration_channel');
                                           }
                                         },
                                       ),
