@@ -154,6 +154,7 @@ class _MainPage extends State<MainPage> {
           });
         },
         child: const Scaffold(
+          resizeToAvoidBottomInset: false,
           body: CustomNavigationBar(),
         ),
       ),

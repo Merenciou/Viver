@@ -332,139 +332,37 @@ class _Sign extends State<Sign> {
   }
 
   Widget signInForms() {
-    return SingleChildScrollView(
-      reverse: true,
-      child: Column(
-        children: [
-          SizedBox(
+    return Column(
+      children: [
+        SizedBox(
+          height: 60,
+          child: TextFormField(
+            cursorColor: Theme.of(context).colorScheme.secondary,
+            textInputAction: TextInputAction.next,
+            controller: emailController,
+            decoration: InputDecoration(
+                label: Text(
+                  'Email',
+                  style: GoogleFonts.montserrat(fontSize: 18),
+                ),
+                labelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.surface),
+                floatingLabelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
+                filled: true,
+                fillColor: Colors.white,
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: SizedBox(
             height: 60,
             child: TextFormField(
-              cursorColor: Theme.of(context).colorScheme.secondary,
-              textInputAction: TextInputAction.next,
-              controller: emailController,
-              decoration: InputDecoration(
-                  label: Text(
-                    'Email',
-                    style: GoogleFonts.montserrat(fontSize: 18),
-                  ),
-                  labelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.surface),
-                  floatingLabelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(10)))),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: SizedBox(
-              height: 60,
-              child: TextFormField(
-                controller: passwordController,
-                obscureText: showPassword,
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                        icon: Icon(
-                          showPassword
-                              ? Icons.remove_red_eye
-                              : Icons.remove_red_eye_outlined,
-                          color: Colors.black38,
-                        )),
-                    label: Text(
-                      'Senha',
-                      style: GoogleFonts.montserrat(fontSize: 18),
-                    ),
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.surface),
-                    floatingLabelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.primary),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(10)))),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget signUpForms() {
-    return SingleChildScrollView(
-      reverse: true,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 60,
-            child: TextFormField(
-              controller: nameController,
-              textCapitalization: TextCapitalization.words,
-              textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
-                  label: Text(
-                    'Nome',
-                    style: GoogleFonts.montserrat(fontSize: 18),
-                  ),
-                  labelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.surface),
-                  floatingLabelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(10)))),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: SizedBox(
-              height: 60,
-              child: TextFormField(
-                textInputAction: TextInputAction.next,
-                controller: emailController,
-                decoration: InputDecoration(
-                    label: Text(
-                      'Email',
-                      style: GoogleFonts.montserrat(fontSize: 18),
-                    ),
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.surface),
-                    floatingLabelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.primary),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(10)))),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 60,
-            child: TextFormField(
-              textInputAction: TextInputAction.next,
               controller: passwordController,
               obscureText: showPassword,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Preencha este campo!';
-                }
-                if (value.length < 6) {
-                  return 'Sua senha deve conter, no minímo, 6 caracteres!';
-                }
-                return null;
-              },
               decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
@@ -493,51 +391,147 @@ class _Sign extends State<Sign> {
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: SizedBox(
-              height: 60,
-              child: TextFormField(
-                controller: passwordConfirmController,
-                textInputAction: TextInputAction.go,
-                obscureText: showPassword,
-                validator: (value) {
-                  if (value != passwordController.text) {
-                    return 'As senhas não coincidem!';
-                  }
-                  return null;
-                },
-                decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            showPassword = !showPassword;
-                          });
-                        },
-                        icon: Icon(
-                          showPassword
-                              ? Icons.remove_red_eye
-                              : Icons.remove_red_eye_outlined,
-                          color: Colors.black38,
-                        )),
-                    label: Text(
-                      'Confirme sua senha',
-                      style: GoogleFonts.montserrat(fontSize: 18),
-                    ),
-                    labelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.surface),
-                    floatingLabelStyle:
-                        TextStyle(color: Theme.of(context).colorScheme.primary),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: const OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.all(Radius.circular(10)))),
-              ),
+        ),
+      ],
+    );
+  }
+
+  Widget signUpForms() {
+    return Column(
+      children: [
+        SizedBox(
+          height: 60,
+          child: TextFormField(
+            controller: nameController,
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecoration(
+                label: Text(
+                  'Nome',
+                  style: GoogleFonts.montserrat(fontSize: 18),
+                ),
+                labelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.surface),
+                floatingLabelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
+                filled: true,
+                fillColor: Colors.white,
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15),
+          child: SizedBox(
+            height: 60,
+            child: TextFormField(
+              textInputAction: TextInputAction.next,
+              controller: emailController,
+              decoration: InputDecoration(
+                  label: Text(
+                    'Email',
+                    style: GoogleFonts.montserrat(fontSize: 18),
+                  ),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  floatingLabelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
             ),
           ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 60,
+          child: TextFormField(
+            textInputAction: TextInputAction.next,
+            controller: passwordController,
+            obscureText: showPassword,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Preencha este campo!';
+              }
+              if (value.length < 6) {
+                return 'Sua senha deve conter, no minímo, 6 caracteres!';
+              }
+              return null;
+            },
+            decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showPassword = !showPassword;
+                      });
+                    },
+                    icon: Icon(
+                      showPassword
+                          ? Icons.remove_red_eye
+                          : Icons.remove_red_eye_outlined,
+                      color: Colors.black38,
+                    )),
+                label: Text(
+                  'Senha',
+                  style: GoogleFonts.montserrat(fontSize: 18),
+                ),
+                labelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.surface),
+                floatingLabelStyle:
+                    TextStyle(color: Theme.of(context).colorScheme.primary),
+                filled: true,
+                fillColor: Colors.white,
+                border: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.all(Radius.circular(10)))),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 15),
+          child: SizedBox(
+            height: 60,
+            child: TextFormField(
+              controller: passwordConfirmController,
+              textInputAction: TextInputAction.go,
+              obscureText: showPassword,
+              validator: (value) {
+                if (value != passwordController.text) {
+                  return 'As senhas não coincidem!';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          showPassword = !showPassword;
+                        });
+                      },
+                      icon: Icon(
+                        showPassword
+                            ? Icons.remove_red_eye
+                            : Icons.remove_red_eye_outlined,
+                        color: Colors.black38,
+                      )),
+                  label: Text(
+                    'Confirme sua senha',
+                    style: GoogleFonts.montserrat(fontSize: 18),
+                  ),
+                  labelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.surface),
+                  floatingLabelStyle:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.all(Radius.circular(10)))),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

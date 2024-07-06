@@ -1060,7 +1060,17 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return screenReportList(context)[screenReportIndex];
+    var deviceData = MediaQuery.of(context);
+    var screenSize = deviceData.size;
+
+    return ListView(
+      children: [
+        SizedBox(
+            width: 300,
+            height: screenSize.height * 0.85,
+            child: screenReportList(context)[screenReportIndex]),
+      ],
+    );
   }
 
   Widget reportSleep() {
@@ -1245,40 +1255,43 @@ class _HomePageState extends State<HomePage> {
                     decoration: const BoxDecoration(
                         color: Colors.white38,
                         borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: 35,
-                            height: 35,
-                            child: Image.asset(
-                                sleepQualityMood != null
-                                    ? 'lib/assets/images/icons/$sleepQualityMood.png'
-                                    : 'lib/assets/images/icons/mood_reasonable.png',
-                                color: sleepColorMood ?? colorsMoods[1])),
-                        Text(
-                          'Qualidade de sono',
-                          style: GoogleFonts.montserrat(
-                              fontSize: screenSize.width * 0.055,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        sleepQuality != null
-                            ? Text(
-                                '$sleepQuality',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: screenSize.width * 0.04,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: 35,
+                              height: 35,
+                              child: Image.asset(
+                                  sleepQualityMood != null
+                                      ? 'lib/assets/images/icons/$sleepQualityMood.png'
+                                      : 'lib/assets/images/icons/mood_reasonable.png',
+                                  color: sleepColorMood ?? colorsMoods[1])),
+                          Text(
+                            'Qualidade de sono',
+                            style: GoogleFonts.montserrat(
+                                fontSize: screenSize.width * 0.055,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          sleepQuality != null
+                              ? Text(
+                                  '$sleepQuality',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: screenSize.width * 0.04,
+                                  ),
+                                )
+                              : Text(
+                                  'Você não informou suas horas de sono hoje',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: screenSize.width * 0.028,
+                                  ),
                                 ),
-                              )
-                            : Text(
-                                'Você não informou suas horas de sono hoje',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  fontSize: screenSize.width * 0.028,
-                                ),
-                              ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
