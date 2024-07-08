@@ -40,12 +40,6 @@ class _BreathePage extends State<BreathePage> {
     FlutterTts flutterTts = FlutterTts();
     await flutterTts.setVolume(0.5);
     await flutterTts.setLanguage('pt-BR');
-    // await flutterTts.setVoice({
-    //   'name': 'pt-br-x-ptd-network',
-    //   'locale': 'pt-BR',
-    // });
-
-    // CONFERIR SE O ERRO DE NULO DEU CERTOOOOOOOO
     await flutterTts.setSpeechRate(pitch);
     await flutterTts.speak(text);
     Map<String, String> voiceSettings = {

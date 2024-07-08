@@ -30,51 +30,65 @@ class SleepChartBar extends StatefulWidget {
 class _SleepChartBarState extends State<SleepChartBar> {
   void getDaysSlept() {
     ChartSleepModel().getMonday().listen((value) {
-      setState(() {
-        mondaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          mondaySlept = value;
+        });
+      }
     }, onError: (error) {
       mondaySlept = 0;
     });
     ChartSleepModel().getTuesday().listen((value) {
-      setState(() {
-        tuesdaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          tuesdaySlept = value;
+        });
+      }
     }, onError: (error) {
       tuesdaySlept = 0;
     });
     ChartSleepModel().getWednesday().listen((value) {
-      setState(() {
-        wednesdaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          wednesdaySlept = value;
+        });
+      }
     }, onError: (error) {
       wednesdaySlept = 0;
     });
     ChartSleepModel().getThursday().listen((value) {
-      setState(() {
-        thursdaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          thursdaySlept = value;
+        });
+      }
     }, onError: (error) {
       thursdaySlept = 0;
     });
     ChartSleepModel().getFriday().listen((value) {
-      setState(() {
-        fridaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          fridaySlept = value;
+        });
+      }
     }, onError: (error) {
       fridaySlept = 0;
     });
     ChartSleepModel().getSaturday().listen((value) {
-      setState(() {
-        saturdaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          saturdaySlept = value;
+        });
+      }
     }, onError: (error) {
       saturdaySlept = 0;
     });
     ChartSleepModel().getSunday().listen((value) {
-      setState(() {
-        sundaySlept = value;
-      });
+      if (mounted) {
+        setState(() {
+          sundaySlept = value;
+        });
+      }
     }, onError: (error) {
       sundaySlept = 0;
     });

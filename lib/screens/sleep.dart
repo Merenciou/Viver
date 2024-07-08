@@ -29,10 +29,11 @@ class _SleepState extends State<Sleep> {
     Map<String, dynamic> jsonResponse = jsonDecode(jsonString);
 
     List<dynamic> hourToSleepList = jsonResponse['hourtosleep'];
-
-    setState(() {
-      hourToSleep = hourToSleepList;
-    });
+    if (mounted) {
+      setState(() {
+        hourToSleep = hourToSleepList;
+      });
+    }
   }
 
   void getIdealHour() {

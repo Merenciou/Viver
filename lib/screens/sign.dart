@@ -30,10 +30,10 @@ class _Sign extends State<Sign> {
     User? user = await auth.signInWithEmailAndPassword(email, password);
 
     if (user != null) {
-      // _snackBarLoginSucessful();
-      // Future.delayed(const Duration(milliseconds: 4000), () {
-      //   Navigator.pushNamed(context, '/mainpage');
-      // });
+      _snackBarLoginSucessful();
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        Navigator.pushNamed(context, '/mainpage');
+      });
     } else if (authError == 'invalid-email') {
       _snackBarEmailWrong();
     } else if (authError == 'invalid-credential') {
@@ -117,6 +117,27 @@ class _Sign extends State<Sign> {
   }
 
   // SignUp
+
+  void _signUpAuth(context) async {
+    final AuthService auth = AuthService();
+
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await auth.signUpWithEmailAndPassword(email, password);
+
+    if (user != null) {
+      _snackBarSignUpSucessfull();
+      Future.delayed(const Duration(milliseconds: 2000), () {
+        Navigator.pushNamed(context, '/presentation');
+      });
+      await UserController(name: nameController.text).setName();
+      nameController.clear();
+    }
+    if (authError == 'email-already-in-use') {
+      _snackBarEmailAlreadInUse();
+    }
+  }
 
   void _snackBarSignUpSucessfull() {
     var snackBarSucess = const SnackBar(
@@ -582,26 +603,5 @@ class _Sign extends State<Sign> {
             style: GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
           )),
     );
-  }
-}
-
-void _signUpAuth(context) async {
-  final AuthService auth = AuthService();
-
-  String email = emailController.text;
-  String password = passwordController.text;
-
-  User? user = await auth.signUpWithEmailAndPassword(email, password);
-
-  if (user != null) {
-    // _snackBarSignUpSucessfull();
-    // Future.delayed(const Duration(milliseconds: 2000), () {
-    //   Navigator.pushNamed(context, '/presentation');
-    // });
-    await UserController(name: nameController.text).setName();
-    nameController.clear();
-  }
-  if (authError == 'email-already-in-use') {
-    // _snackBarEmailAlreadInUse();
   }
 }
