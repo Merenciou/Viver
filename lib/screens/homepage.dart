@@ -1378,12 +1378,18 @@ class _HomePageState extends State<HomePage> {
                               text: TextSpan(
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: salutation,
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 24),
-                                  ),
+                                      text: salutation,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium
+                                      // GoogleFonts.montserrat(
+                                      //     color:
+                                      //      Theme.of(context)
+                                      //         .colorScheme
+                                      //         .primaryContainer,
+                                      //     fontWeight: FontWeight.w500,
+                                      //     fontSize: 24),
+                                      ),
                                   TextSpan(
                                     text: asyncSnapshot.data,
                                     style: GoogleFonts.montserrat(
@@ -1397,13 +1403,14 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           } else {
-                            return Text(
-                              salutation,
-                              style: GoogleFonts.montserrat(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 24),
-                            );
+                            return Text(salutation,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium
+                                // GoogleFonts.montserrat(
+                                //     color: Colors.black,
+                                //     fontWeight: FontWeight.w500,
+                                //     fontSize: 24),
+                                );
                           }
                         } else {
                           return const CircularProgressIndicator();
@@ -1418,7 +1425,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Relatório sono (semanal):',
-                      style: GoogleFonts.montserrat(fontSize: 16),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ),
@@ -1427,9 +1434,10 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     width: double.infinity,
                     height: screenSize.height * 0.186,
-                    decoration: const BoxDecoration(
-                        color: Colors.white38,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                     child: const SleepChartBar(),
                   ),
                 ),
@@ -1439,9 +1447,11 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: screenSize.width * 0.35,
                       height: screenSize.height * 0.15,
-                      decoration: const BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Column(
@@ -1456,13 +1466,12 @@ class _HomePageState extends State<HomePage> {
                               sleepGoalDiary != null
                                   ? '$sleepGoalDiary%'
                                   : '0%',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 30, fontWeight: FontWeight.w500),
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
                               'Meta de sono\n(diário)',
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
                         ),
@@ -1471,9 +1480,11 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: screenSize.width * 0.35,
                       height: screenSize.height * 0.15,
-                      decoration: const BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Column(
@@ -1488,13 +1499,12 @@ class _HomePageState extends State<HomePage> {
                               sleepGoalWeekly != null
                                   ? '0%'
                                   : '$sleepGoalWeekly%',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 30, fontWeight: FontWeight.w500),
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
                               'Meta de sono\n(semanal)',
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
                         ),
@@ -1507,9 +1517,10 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     width: double.infinity,
                     height: screenSize.height * 0.14,
-                    decoration: const BoxDecoration(
-                        color: Colors.white38,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1642,12 +1653,18 @@ class _HomePageState extends State<HomePage> {
                     child: RichText(
                       text: TextSpan(
                         children: <TextSpan>[
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+                          // ALTERAR O BOM DIA
+
                           TextSpan(
                             text: 'Bom dia, ',
-                            style: GoogleFonts.montserrat(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24),
+                            style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           TextSpan(
                             text: 'Vitor',
@@ -1667,7 +1684,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Relatório hidratação (semanal):',
-                      style: GoogleFonts.montserrat(fontSize: 16),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ),
@@ -1688,9 +1705,11 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: screenSize.width * 0.35,
                       height: screenSize.height * 0.15,
-                      decoration: const BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Column(
@@ -1705,13 +1724,12 @@ class _HomePageState extends State<HomePage> {
                               hydrationGoalDiary != null
                                   ? '$hydrationGoalDiary%'
                                   : '0%',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 30, fontWeight: FontWeight.w500),
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
                               'Meta hidratação\n(diária)',
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
                         ),
@@ -1720,9 +1738,11 @@ class _HomePageState extends State<HomePage> {
                     Container(
                       width: screenSize.width * 0.35,
                       height: screenSize.height * 0.15,
-                      decoration: const BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      decoration: BoxDecoration(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10))),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 16),
                         child: Column(
@@ -1737,13 +1757,12 @@ class _HomePageState extends State<HomePage> {
                               hydrationGoalWeekly != null
                                   ? '0%'
                                   : '$hydrationGoalWeekly%',
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 30, fontWeight: FontWeight.w500),
+                              style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
                               'Meta hidratação\n(semanal)',
                               textAlign: TextAlign.left,
-                              style: GoogleFonts.montserrat(fontSize: 14),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],
                         ),
@@ -1756,9 +1775,10 @@ class _HomePageState extends State<HomePage> {
                   child: Container(
                     width: double.infinity,
                     height: screenSize.height * 0.14,
-                    decoration: const BoxDecoration(
-                        color: Colors.white38,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.secondaryContainer,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

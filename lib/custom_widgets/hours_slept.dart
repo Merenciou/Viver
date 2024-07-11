@@ -236,8 +236,9 @@ class _HoursSleptState extends State<HoursSlept> {
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .tertiary,
+                                              .buttonTheme
+                                              .colorScheme!
+                                              .primary,
                                           minimumSize: const Size(100, 50),
                                           shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
@@ -247,8 +248,9 @@ class _HoursSleptState extends State<HoursSlept> {
                                         ),
                                         child: Text(
                                           'Selecionar',
-                                          style: GoogleFonts.montserrat(
-                                              color: Colors.white),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineLarge,
                                         )),
                                   ),
                                 )
@@ -374,8 +376,9 @@ class _HoursSleptState extends State<HoursSlept> {
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary,
+                                            .buttonTheme
+                                            .colorScheme!
+                                            .primary,
                                         minimumSize: const Size(100, 50),
                                         shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.all(
@@ -385,8 +388,9 @@ class _HoursSleptState extends State<HoursSlept> {
                                       ),
                                       child: Text(
                                         'Selecionar',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.white),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineLarge,
                                       ),
                                     ),
                                   ),
@@ -534,12 +538,13 @@ class _HoursSleptState extends State<HoursSlept> {
                                     bottomLeft: Radius.circular(10),
                                     bottomRight: Radius.circular(10)),
                               ),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.tertiary),
+                              backgroundColor: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme!
+                                  .primary),
                           child: Text(
                             'Relatar',
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white, fontSize: 18),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                         ),
                       ],

@@ -46,7 +46,6 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       bottomNavigationBar: bottomButtons(context)[buttonIndex],
       body: screensList(context)[buttonIndex],
     );
@@ -70,7 +69,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                       blurRadius: 20,
                       offset: const Offset(0, 3))
                 ],
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.primaryContainer,
                 borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
@@ -93,15 +92,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         },
                         icon: Image.asset(
                           'lib/assets/images/icons/water.png',
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         )),
                   ),
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -116,9 +116,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -133,9 +134,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -150,9 +152,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -181,9 +184,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           surfaceTintColor: Theme.of(context).colorScheme.surface,
           color: Theme.of(context).colorScheme.surface,
           child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
               ),
@@ -193,9 +196,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -222,15 +226,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         },
                         icon: Image.asset(
                           'lib/assets/images/icons/breathe.png',
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         )),
                   ),
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -245,9 +250,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -262,9 +268,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -293,9 +300,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           surfaceTintColor: Theme.of(context).colorScheme.surface,
           color: Theme.of(context).colorScheme.surface,
           child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
               ),
@@ -305,9 +312,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -322,9 +330,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -351,15 +360,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         },
                         icon: Image.asset(
                           'lib/assets/images/icons/home.png',
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         )),
                   ),
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -374,9 +384,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -405,9 +416,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           surfaceTintColor: Theme.of(context).colorScheme.surface,
           color: Theme.of(context).colorScheme.surface,
           child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
               ),
@@ -417,9 +428,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -434,9 +446,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -451,9 +464,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -480,15 +494,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         },
                         icon: Image.asset(
                           'lib/assets/images/icons/sleep.png',
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         )),
                   ),
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -517,9 +532,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           surfaceTintColor: Theme.of(context).colorScheme.surface,
           color: Theme.of(context).colorScheme.surface,
           child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(30),
                 ),
               ),
@@ -529,9 +544,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -546,9 +562,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -563,9 +580,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -580,9 +598,10 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                   Container(
                     width: 55,
                     height: 55,
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onSecondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(50))),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -609,7 +628,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         },
                         icon: Image.asset(
                           'lib/assets/images/icons/stretching.png',
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primaryContainer,
                         )),
                   ),
                 ],

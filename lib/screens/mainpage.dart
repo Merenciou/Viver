@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:viver/authentication/auth_service.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/custom_widgets/bottom_navbar.dart';
 import 'package:shrink_sidemenu/shrink_sidemenu.dart';
 import 'package:viver/controllers/user_model.dart';
@@ -117,7 +118,28 @@ class _MainPage extends State<MainPage> {
                     style: GoogleFonts.montserrat(
                         color: Colors.white, fontSize: 20),
                   ),
-                )
+                ),
+                Switch(
+                  value: DarkThemeController.instance.isDarkTheme,
+                  trackOutlineColor:
+                      const WidgetStatePropertyAll(Colors.transparent),
+                  inactiveTrackColor: Theme.of(context).colorScheme.surface,
+                  activeTrackColor: Theme.of(context).colorScheme.onPrimary,
+                  activeColor: Colors.red,
+                  thumbIcon: WidgetStateProperty.all(Icon(
+                    DarkThemeController.instance.isDarkTheme
+                        ? Icons.nightlight_round_outlined
+                        : Icons.sunny,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white
+                        : Colors.yellow,
+                  )),
+                  thumbColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.primary),
+                  onChanged: (value) {
+                    DarkThemeController.instance.changeTheme();
+                  },
+                ),
               ],
             ),
             Text(

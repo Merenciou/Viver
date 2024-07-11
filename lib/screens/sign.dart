@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:viver/authentication/auth_service.dart';
 import 'package:viver/controllers/user_controller.dart';
 
@@ -255,7 +254,7 @@ class _Sign extends State<Sign> {
                             topRight: Radius.circular(20),
                             bottomRight: Radius.circular(20))),
                     backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer),
+                        Theme.of(context).buttonTheme.colorScheme!.secondary),
                 onPressed: () {
                   setState(() {
                     signSwitch = false;
@@ -263,7 +262,7 @@ class _Sign extends State<Sign> {
                 },
                 child: Text(
                   'Cadastrar',
-                  style: GoogleFonts.montserrat(color: Colors.white),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),
@@ -274,7 +273,8 @@ class _Sign extends State<Sign> {
                     minimumSize: Size(screenSize.width * 0.380, 50),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20))),
-                    backgroundColor: Theme.of(context).colorScheme.tertiary),
+                    backgroundColor:
+                        Theme.of(context).buttonTheme.colorScheme!.primary),
                 onPressed: () {
                   setState(() {
                     signSwitch = true;
@@ -282,7 +282,7 @@ class _Sign extends State<Sign> {
                 },
                 child: Text(
                   'Entrar',
-                  style: GoogleFonts.montserrat(color: Colors.white),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),
@@ -312,7 +312,8 @@ class _Sign extends State<Sign> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20))),
-                    backgroundColor: Theme.of(context).colorScheme.tertiary),
+                    backgroundColor:
+                        Theme.of(context).buttonTheme.colorScheme!.primary),
                 onPressed: () {
                   setState(() {
                     signSwitch = true;
@@ -320,7 +321,7 @@ class _Sign extends State<Sign> {
                 },
                 child: Text(
                   'Entrar',
-                  style: GoogleFonts.montserrat(color: Colors.white),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),
@@ -336,13 +337,13 @@ class _Sign extends State<Sign> {
                             topRight: Radius.circular(20),
                             bottomRight: Radius.circular(20))),
                     backgroundColor:
-                        Theme.of(context).colorScheme.secondaryContainer),
+                        Theme.of(context).buttonTheme.colorScheme!.secondary),
                 onPressed: () {
                   signSwitch = false;
                 },
                 child: Text(
                   'Cadastrar',
-                  style: GoogleFonts.montserrat(color: Colors.white),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ),
             ),
@@ -361,17 +362,18 @@ class _Sign extends State<Sign> {
             cursorColor: Theme.of(context).colorScheme.secondary,
             textInputAction: TextInputAction.next,
             controller: emailController,
+            style: Theme.of(context).textTheme.labelSmall,
             decoration: InputDecoration(
                 label: Text(
                   'Email',
-                  style: GoogleFonts.montserrat(fontSize: 18),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
                 labelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.surface),
                 floatingLabelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.primary),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.primaryContainer,
                 border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -384,6 +386,7 @@ class _Sign extends State<Sign> {
             child: TextFormField(
               controller: passwordController,
               obscureText: showPassword,
+              style: Theme.of(context).textTheme.labelSmall,
               decoration: InputDecoration(
                   suffixIcon: IconButton(
                       onPressed: () {
@@ -399,14 +402,14 @@ class _Sign extends State<Sign> {
                       )),
                   label: Text(
                     'Senha',
-                    style: GoogleFonts.montserrat(fontSize: 18),
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                   labelStyle:
                       TextStyle(color: Theme.of(context).colorScheme.surface),
                   floatingLabelStyle:
                       TextStyle(color: Theme.of(context).colorScheme.primary),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).colorScheme.primaryContainer,
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -426,17 +429,18 @@ class _Sign extends State<Sign> {
             controller: nameController,
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.next,
+            style: Theme.of(context).textTheme.labelSmall,
             decoration: InputDecoration(
                 label: Text(
                   'Nome',
-                  style: GoogleFonts.montserrat(fontSize: 18),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
                 labelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.surface),
                 floatingLabelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.primary),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.primaryContainer,
                 border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -449,17 +453,18 @@ class _Sign extends State<Sign> {
             child: TextFormField(
               textInputAction: TextInputAction.next,
               controller: emailController,
+              style: Theme.of(context).textTheme.labelSmall,
               decoration: InputDecoration(
                   label: Text(
                     'Email',
-                    style: GoogleFonts.montserrat(fontSize: 18),
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                   labelStyle:
                       TextStyle(color: Theme.of(context).colorScheme.surface),
                   floatingLabelStyle:
                       TextStyle(color: Theme.of(context).colorScheme.primary),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).colorScheme.primaryContainer,
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -472,6 +477,7 @@ class _Sign extends State<Sign> {
             textInputAction: TextInputAction.next,
             controller: passwordController,
             obscureText: showPassword,
+            style: Theme.of(context).textTheme.labelSmall,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Preencha este campo!';
@@ -496,14 +502,14 @@ class _Sign extends State<Sign> {
                     )),
                 label: Text(
                   'Senha',
-                  style: GoogleFonts.montserrat(fontSize: 18),
+                  style: Theme.of(context).textTheme.labelSmall,
                 ),
                 labelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.surface),
                 floatingLabelStyle:
                     TextStyle(color: Theme.of(context).colorScheme.primary),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.primaryContainer,
                 border: const OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -517,6 +523,7 @@ class _Sign extends State<Sign> {
               controller: passwordConfirmController,
               textInputAction: TextInputAction.go,
               obscureText: showPassword,
+              style: Theme.of(context).textTheme.labelSmall,
               validator: (value) {
                 if (value != passwordController.text) {
                   return 'As senhas não coincidem!';
@@ -538,14 +545,13 @@ class _Sign extends State<Sign> {
                       )),
                   label: Text(
                     'Confirme sua senha',
-                    style: GoogleFonts.montserrat(fontSize: 18),
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                   labelStyle:
                       TextStyle(color: Theme.of(context).colorScheme.surface),
-                  floatingLabelStyle:
-                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                  floatingLabelStyle: const TextStyle(color: Colors.red),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Theme.of(context).colorScheme.primaryContainer,
                   border: const OutlineInputBorder(
                       borderSide: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
@@ -564,7 +570,8 @@ class _Sign extends State<Sign> {
               minimumSize: const Size(200, 60),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-              backgroundColor: Theme.of(context).colorScheme.tertiary),
+              backgroundColor:
+                  Theme.of(context).buttonTheme.colorScheme!.primary),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _signInAuth(context);
@@ -575,7 +582,7 @@ class _Sign extends State<Sign> {
           },
           child: Text(
             'Entrar',
-            style: GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+            style: Theme.of(context).textTheme.headlineLarge,
           )),
     );
   }
@@ -589,7 +596,7 @@ class _Sign extends State<Sign> {
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               backgroundColor:
-                  Theme.of(context).colorScheme.secondaryContainer),
+                  Theme.of(context).buttonTheme.colorScheme!.secondary),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _signUpAuth(context);
@@ -600,7 +607,7 @@ class _Sign extends State<Sign> {
           },
           child: Text(
             'Cadastrar',
-            style: GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+            style: Theme.of(context).textTheme.headlineLarge,
           )),
     );
   }

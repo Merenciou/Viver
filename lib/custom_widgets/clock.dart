@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 
 class Clock extends StatefulWidget {
   const Clock({super.key});
@@ -55,29 +56,43 @@ class ClockPainter extends CustomPainter {
     var center = Offset(centerX, centerY);
     var radius = min(centerX, centerY);
 
-    var fillBrush = Paint()..color = Colors.white38;
+    var fillBrush = Paint()
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white38;
 
     var outLineBrush = Paint()
-      ..color = const Color(0XFFFFFFFF)
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
-    var centerFillBrush = Paint()..color = const Color(0XFFFFFFFF);
+    var centerFillBrush = Paint()
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white;
 
     var hoursHandBrush = Paint()
-      ..color = const Color(0xFFFFFFFF)
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
     var minutesHandBrush = Paint()
-      ..color = const Color(0xFFFFFFFF)
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;
 
     var secondsHandBrush = Paint()
-      ..color = const Color(0xFFFFFFFF)
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
@@ -85,7 +100,9 @@ class ClockPainter extends CustomPainter {
     var dashBrush = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round
-      ..color = const Color(0XFFFFFFFF)
+      ..color = DarkThemeController.instance.isDarkTheme
+          ? Colors.white24
+          : Colors.white
       ..strokeWidth = 10;
 
     canvas.drawCircle(center, radius + 10, fillBrush);

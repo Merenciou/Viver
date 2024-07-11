@@ -119,7 +119,7 @@ class _Presentation extends State<Presentation> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
             'Olá, $userName',
-            style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Padding(
@@ -202,8 +202,7 @@ class _Presentation extends State<Presentation> {
             },
             child: Text(
               'Avançar',
-              style:
-                  GoogleFonts.montserrat(fontSize: 20, color: Colors.black45),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
         ),
@@ -227,7 +226,7 @@ class _Presentation extends State<Presentation> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
             'Hidrate-se',
-            style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Padding(
@@ -315,8 +314,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Voltar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 TextButton(
@@ -327,8 +325,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Avançar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -355,7 +352,7 @@ class _Presentation extends State<Presentation> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
             'Respire e Inspire',
-            style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Padding(
@@ -443,8 +440,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Voltar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 TextButton(
@@ -455,8 +451,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Avançar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -483,7 +478,7 @@ class _Presentation extends State<Presentation> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
             'Durma melhor',
-            style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Padding(
@@ -571,8 +566,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Voltar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 TextButton(
@@ -583,8 +577,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Avançar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ],
@@ -611,7 +604,7 @@ class _Presentation extends State<Presentation> {
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
             'Alongamentos',
-            style: GoogleFonts.montserrat(fontSize: 30, color: Colors.black54),
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         Padding(
@@ -699,8 +692,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Voltar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
                 TextButton(
@@ -709,8 +701,7 @@ class _Presentation extends State<Presentation> {
                   },
                   child: Text(
                     'Continuar',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 20, color: Colors.black45),
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
               ],

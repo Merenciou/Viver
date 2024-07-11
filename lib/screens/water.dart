@@ -68,9 +68,11 @@ class _WaterPage extends State<WaterPage> {
         if (documentSnapshot.exists) {
           Map<String, dynamic>? data =
               documentSnapshot.data() as Map<String, dynamic>;
-          setState(() {
-            hourWakeUp = data['wakeUpHour'] ?? '00:00';
-          });
+          if (mounted) {
+            setState(() {
+              hourWakeUp = data['wakeUpHour'] ?? '00:00';
+            });
+          }
         }
       });
     }
@@ -90,7 +92,6 @@ class _WaterPage extends State<WaterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Consumer<NullVerifierProvider>(
         builder: (context, provider, child) {
           if (provider._nullVerifier) {
@@ -118,17 +119,19 @@ class _WaterPage extends State<WaterPage> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     'Defina um lembrete para beber água:',
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black38),
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 10),
                                   child: Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        borderRadius: const BorderRadius.all(
                                             Radius.circular(30))),
                                     width: 350,
                                     height: 90,
@@ -136,15 +139,17 @@ class _WaterPage extends State<WaterPage> {
                                       child: SwitchListTile(
                                         title: Text(
                                           stateAlarm ? 'Ativado' : 'Desativado',
-                                          style: GoogleFonts.montserrat(),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
                                         ),
-                                        secondary: Text(
-                                          hourWakeUp,
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.w700,
-                                              color: Colors.black45),
-                                        ),
+                                        secondary: Text(hourWakeUp,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium),
+                                        inactiveThumbColor: Theme.of(context)
+                                            .colorScheme
+                                            .onSecondary,
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: Theme.of(context)
@@ -155,7 +160,7 @@ class _WaterPage extends State<WaterPage> {
                                             .surface,
                                         trackOutlineColor:
                                             const WidgetStatePropertyAll(
-                                                Colors.white),
+                                                Colors.transparent),
                                         value: stateAlarm,
                                         onChanged: (details) async {
                                           setState(() {
@@ -216,8 +221,9 @@ class _WaterPage extends State<WaterPage> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       'Quantidade ideal de água a ser ingerida por dia:',
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.black38),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),
@@ -231,20 +237,23 @@ class _WaterPage extends State<WaterPage> {
                                       }
                                       return null;
                                     },
-                                    style: GoogleFonts.montserrat(
-                                        color: Colors.black38),
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                       filled: true,
-                                      fillColor: Colors.white,
+                                      fillColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
                                       border: const OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10)),
                                           borderSide: BorderSide.none),
                                       label: Text(
                                         'Digite o seu peso:',
-                                        style: GoogleFonts.montserrat(
-                                            color: Colors.black26),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall,
                                       ),
                                     ),
                                   ),
@@ -267,12 +276,14 @@ class _WaterPage extends State<WaterPage> {
                                                 Radius.circular(10))),
                                         minimumSize: const Size(200, 60),
                                         backgroundColor: Theme.of(context)
-                                            .colorScheme
-                                            .tertiary),
+                                            .buttonTheme
+                                            .colorScheme!
+                                            .primary),
                                     child: Text(
                                       'Calcular',
-                                      style: GoogleFonts.montserrat(
-                                          fontSize: 18, color: Colors.white),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineLarge,
                                     ),
                                   ),
                                 ),
@@ -340,21 +351,20 @@ class _WaterPage extends State<WaterPage> {
                 Text(
                   'Você deve ingerir',
                   textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  '${waterIdeal?.toStringAsFixed(2)} litros'
-                      .replaceAll('.', ','),
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 18, color: Colors.yellow),
-                ),
+                    '${waterIdeal?.toStringAsFixed(2)} litros'
+                        .replaceAll('.', ','),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge
+                    // GoogleFonts.montserrat(
+                    //     fontSize: 18, color: Colors.yellow),
+                    ),
                 Text(
                   'de água por dia!',
                   textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -366,7 +376,7 @@ class _WaterPage extends State<WaterPage> {
                     'Este é o seu peso?',
                     style: GoogleFonts.lato(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -382,11 +392,11 @@ class _WaterPage extends State<WaterPage> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(),
-                      backgroundColor: const Color(0xFFA2D5F2)),
+                      backgroundColor:
+                          Theme.of(context).buttonTheme.colorScheme!.onPrimary),
                   child: Text(
                     'Sim',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 18, color: Colors.white),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 ElevatedButton(
@@ -403,11 +413,13 @@ class _WaterPage extends State<WaterPage> {
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                       ),
-                      backgroundColor: const Color(0xFFF38BA0)),
+                      backgroundColor: Theme.of(context)
+                          .buttonTheme
+                          .colorScheme!
+                          .onSecondary),
                   child: Text(
                     'Não',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 18, color: Colors.white),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ],

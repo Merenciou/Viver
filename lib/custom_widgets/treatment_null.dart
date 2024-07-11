@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/controllers/user_controller.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/custom_timepicker.dart';
@@ -94,10 +94,7 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                 ),
                 Text(
                   'Antes de continuar,\n responda algumas perguntas:',
-                  style: GoogleFonts.montserrat(
-                      color: Colors.black54,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
+                  style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 Padding(
@@ -129,6 +126,9 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                                               const EdgeInsets.only(bottom: 10),
                                           child: TextFormField(
                                             controller: _ageController,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall,
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty) {
@@ -139,11 +139,14 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                                             keyboardType: TextInputType.number,
                                             decoration: InputDecoration(
                                               filled: true,
-                                              fillColor: Colors.white,
+                                              fillColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .primaryContainer,
                                               label: Text(
                                                 'Qual a sua idade?',
-                                                style: GoogleFonts.montserrat(
-                                                    color: Colors.black38),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .labelSmall,
                                               ),
                                               border: const OutlineInputBorder(
                                                 borderSide: BorderSide.none,
@@ -157,6 +160,9 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                                       if (isWeightNull == true)
                                         TextFormField(
                                           controller: _weightController,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -170,8 +176,9 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                                             fillColor: Colors.white,
                                             label: Text(
                                               'Qual o seu peso?',
-                                              style: GoogleFonts.montserrat(
-                                                  color: Colors.black38),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall,
                                             ),
                                             border: const OutlineInputBorder(
                                               borderSide: BorderSide.none,
@@ -204,28 +211,32 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.tertiary,
+                          backgroundColor: Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .primary,
                           minimumSize: const Size(200, 60),
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10)))),
                       child: Text(
                         'Continuar',
-                        style: GoogleFonts.montserrat(
-                            color: Colors.white, fontSize: 18),
+                        style: Theme.of(context).textTheme.headlineLarge,
                       )),
                 ),
                 Container(
-                  width: 300,
-                  height: 150,
-                  decoration: const BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.all(
+                  width: 340,
+                  height: 174,
+                  decoration: BoxDecoration(
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? const Color(0xFFFEC260)
+                        : Colors.yellow,
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Padding(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -234,10 +245,13 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                           color: Colors.black45,
                         ),
                       ),
-                      Text(
-                        'Estas informações serão utilizadas somente para cálculos internos, como por exemplo a quantidade de água ingerida, intervalo e etc...',
-                        style: GoogleFonts.montserrat(color: Colors.black45),
-                        textAlign: TextAlign.center,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Estas informações serão utilizadas somente para cálculos internos, como por exemplo a quantidade de água ingerida, intervalo e etc...',
+                          style: Theme.of(context).textTheme.titleLarge,
+                          textAlign: TextAlign.justify,
+                        ),
                       ),
                     ],
                   ),

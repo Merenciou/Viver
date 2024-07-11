@@ -131,7 +131,9 @@ BarTouchData get barTouchData => BarTouchData(
             return BarTooltipItem(
                 rod.toY.toString(),
                 const TextStyle(
-                    color: Color(0XFF79AC78), fontWeight: FontWeight.bold));
+                    fontSize: 14,
+                    color: Color(0XFF79AC78),
+                    fontWeight: FontWeight.bold));
           }),
     );
 

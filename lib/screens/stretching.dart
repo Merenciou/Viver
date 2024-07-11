@@ -114,21 +114,21 @@ class _StretchingPageState extends State<StretchingPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(
                 'Defina um intervalo de tempo para se alongar frequentemente:',
-                style: GoogleFonts.montserrat(color: Colors.black38),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             Container(
               width: 350,
               height: 90,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Center(
                 child: SwitchListTile(
                   title: Text(
                     stateAlarm ? 'Ligado' : 'Desligado',
-                    style: GoogleFonts.montserrat(color: Colors.black38),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   secondary: DropdownButton<String>(
                       value: dropDownValue,
@@ -142,6 +142,7 @@ class _StretchingPageState extends State<StretchingPage> {
                         color: Colors.black45,
                         size: 30,
                       ),
+                      dropdownColor: Colors.white,
                       underline: Container(
                         height: 2,
                         color: Theme.of(context).colorScheme.surface,
@@ -201,10 +202,12 @@ class _StretchingPageState extends State<StretchingPage> {
                         }
                         setInterval(value!);
                       }),
+                  inactiveThumbColor: Theme.of(context).colorScheme.onSecondary,
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   inactiveTrackColor: Theme.of(context).colorScheme.surface,
-                  trackOutlineColor: const WidgetStatePropertyAll(Colors.white),
+                  trackOutlineColor:
+                      const WidgetStatePropertyAll(Colors.transparent),
                   value: stateAlarm,
                   onChanged: (details) async {
                     setState(() {

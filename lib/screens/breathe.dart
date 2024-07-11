@@ -7,9 +7,9 @@ import 'dart:async';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BreathePage extends StatefulWidget {
   const BreathePage({super.key});
@@ -112,7 +112,7 @@ class _BreathePage extends State<BreathePage> {
     timer17?.cancel();
     timer18?.cancel();
     timer19?.cancel();
-    startBreathe();
+    // startBreathe();
     super.dispose();
   }
 
@@ -425,9 +425,9 @@ class _BreathePage extends State<BreathePage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 150),
             child: Text(
-              'Encontre um lugar\n tranquilo e\n silencioso...',
+              'Encontre um lugar tranquilo e\n silencioso...',
               textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(fontSize: 29),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           Align(
@@ -440,8 +440,7 @@ class _BreathePage extends State<BreathePage> {
                 },
                 child: Text(
                   'Continuar',
-                  style: GoogleFonts.montserrat(
-                      color: Colors.black54, fontSize: 20),
+                  style: Theme.of(context).textTheme.bodySmall,
                 )),
           )
         ],
@@ -465,7 +464,7 @@ class _BreathePage extends State<BreathePage> {
             child: Text(
               'Sente-se ou deite-se, se acomode como preferir...',
               textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(fontSize: 29),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           SizedBox(
@@ -481,8 +480,7 @@ class _BreathePage extends State<BreathePage> {
                     },
                     child: Text(
                       'Voltar',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.black54, fontSize: 20),
+                      style: Theme.of(context).textTheme.bodySmall,
                     )),
                 TextButton(
                     onPressed: () {
@@ -492,8 +490,7 @@ class _BreathePage extends State<BreathePage> {
                     },
                     child: Text(
                       'Continuar',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.black54, fontSize: 20),
+                      style: Theme.of(context).textTheme.bodySmall,
                     )),
               ],
             ),
@@ -510,8 +507,8 @@ class _BreathePage extends State<BreathePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            width: 300,
-            height: 300,
+            width: 256,
+            height: 256,
             child: SvgPicture.asset('lib/assets/images/headphones.svg'),
           ),
           Padding(
@@ -519,7 +516,7 @@ class _BreathePage extends State<BreathePage> {
             child: Text(
               'Para uma melhor experiência, utilize fones de ouvido...',
               textAlign: TextAlign.center,
-              style: GoogleFonts.montserrat(fontSize: 29),
+              style: Theme.of(context).textTheme.displaySmall,
             ),
           ),
           SizedBox(
@@ -530,13 +527,12 @@ class _BreathePage extends State<BreathePage> {
                 TextButton(
                     onPressed: () {
                       setState(() {
-                        screensIndex = 0;
+                        screensIndex = 1;
                       });
                     },
                     child: Text(
                       'Voltar',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.black54, fontSize: 20),
+                      style: Theme.of(context).textTheme.bodySmall,
                     )),
                 TextButton(
                     onPressed: () {
@@ -546,8 +542,7 @@ class _BreathePage extends State<BreathePage> {
                     },
                     child: Text(
                       'Continuar',
-                      style: GoogleFonts.montserrat(
-                          color: Colors.black54, fontSize: 20),
+                      style: Theme.of(context).textTheme.bodySmall,
                     )),
               ],
             ),
@@ -572,10 +567,11 @@ class _BreathePage extends State<BreathePage> {
         style: ElevatedButton.styleFrom(
             shape: const CircleBorder(),
             minimumSize: const Size(250, 250),
-            backgroundColor: Theme.of(context).colorScheme.tertiary),
+            backgroundColor:
+                Theme.of(context).buttonTheme.colorScheme!.primary),
         child: Text(
           'Iniciar',
-          style: GoogleFonts.montserrat(fontSize: 30, color: Colors.white),
+          style: Theme.of(context).textTheme.displayLarge,
         ),
       ),
     );
@@ -651,7 +647,8 @@ class _BreathePage extends State<BreathePage> {
                 timer19.cancel();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFE97777),
+                backgroundColor:
+                    Theme.of(context).buttonTheme.colorScheme!.onSecondary,
                 minimumSize: const Size(200, 60),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
@@ -661,10 +658,7 @@ class _BreathePage extends State<BreathePage> {
               ),
               child: Text(
                 'Parar',
-                style: GoogleFonts.montserrat(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white),
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
             ),
           ),

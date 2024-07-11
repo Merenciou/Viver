@@ -139,8 +139,7 @@ class _SleepState extends State<Sleep> {
                             child: Text(
                               'Quantas horas de sono por noite você deve dormir?',
                               textAlign: TextAlign.left,
-                              style:
-                                  GoogleFonts.montserrat(color: Colors.black54),
+                              style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
                         ),
@@ -152,6 +151,7 @@ class _SleepState extends State<Sleep> {
                                 controller: ageController,
                                 textInputAction: TextInputAction.next,
                                 keyboardType: TextInputType.number,
+                                style: Theme.of(context).textTheme.labelSmall,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Por favor, preencha este campo!';
@@ -160,11 +160,14 @@ class _SleepState extends State<Sleep> {
                                 },
                                 decoration: InputDecoration(
                                     filled: true,
-                                    fillColor: Colors.white,
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                     label: Text(
                                       'Digite sua idade',
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.black38),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
                                     ),
                                     border: const OutlineInputBorder(
                                         borderRadius: BorderRadius.all(
@@ -176,17 +179,20 @@ class _SleepState extends State<Sleep> {
                                       margin: const EdgeInsets.symmetric(
                                           horizontal: 20),
                                       textAlign: TextAlign.center,
-                                      textStyle: GoogleFonts.montserrat(
-                                          color: Colors.white),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall,
                                       message:
                                           'Para recém nascidos insira os meses dessa maneira: \n ex.: "0,02" (2 meses).',
                                       child: IconButton(
                                         onPressed: () {
                                           _onTooltipTap(toolTipKey);
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.info,
-                                          color: Colors.black38,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
                                         ),
                                       ),
                                     )),
@@ -213,12 +219,13 @@ class _SleepState extends State<Sleep> {
                               shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10))),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.tertiary),
+                              backgroundColor: Theme.of(context)
+                                  .buttonTheme
+                                  .colorScheme!
+                                  .primary),
                           child: Text(
                             'Calcular',
-                            style: GoogleFonts.montserrat(
-                                fontSize: 18, color: Colors.white),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                         ),
                       ],
@@ -235,16 +242,14 @@ class _SleepState extends State<Sleep> {
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: defineHourSleptIsPressed
-                        ? const Color(0xffFF6969)
-                        : Colors.white,
+                        ? Theme.of(context).buttonTheme.colorScheme!.onSecondary
+                        : Theme.of(context).buttonTheme.colorScheme!.onPrimary,
                     minimumSize: const Size(80, 80)),
                 child: Icon(
                   defineHourSleptIsPressed
                       ? Icons.close_rounded
                       : Icons.bedtime,
-                  color: defineHourSleptIsPressed
-                      ? Colors.white
-                      : Theme.of(context).colorScheme.primary,
+                  color: defineHourSleptIsPressed ? Colors.white : Colors.white,
                   size: 35,
                 ),
               ),
@@ -305,20 +310,18 @@ class _SleepState extends State<Sleep> {
                 Text(
                   'Você deve dormir',
                   textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Text(
-                  '$hourIdealMin a $hourIdealMax',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.montserrat(
-                      fontSize: 18, color: Colors.yellow),
-                ),
+                Text('$hourIdealMin a $hourIdealMax',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleLarge
+                    // GoogleFonts.montserrat(
+                    //     fontSize: 18, color: Colors.yellow),
+                    ),
                 Text(
                   'por noite!',
                   textAlign: TextAlign.center,
-                  style:
-                      GoogleFonts.montserrat(fontSize: 18, color: Colors.white),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
@@ -348,11 +351,11 @@ class _SleepState extends State<Sleep> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(),
-                      backgroundColor: const Color(0xFFA2D5F2)),
+                      backgroundColor:
+                          Theme.of(context).buttonTheme.colorScheme!.onPrimary),
                   child: Text(
                     'Sim',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 18, color: Colors.white),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
                 ElevatedButton(
@@ -370,11 +373,13 @@ class _SleepState extends State<Sleep> {
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                       ),
-                      backgroundColor: const Color(0xFFF38BA0)),
+                      backgroundColor: Theme.of(context)
+                          .buttonTheme
+                          .colorScheme!
+                          .onSecondary),
                   child: Text(
                     'Não',
-                    style: GoogleFonts.montserrat(
-                        fontSize: 18, color: Colors.white),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               ],
