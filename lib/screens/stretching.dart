@@ -61,7 +61,7 @@ class _StretchingPageState extends State<StretchingPage> {
     var snackBarEmailWrong = const SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 3000),
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFFF38BA0),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -202,7 +202,7 @@ class _StretchingPageState extends State<StretchingPage> {
                         }
                         setInterval(value!);
                       }),
-                  inactiveThumbColor: Theme.of(context).colorScheme.onSecondary,
+                  inactiveThumbColor: Colors.black38,
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   inactiveTrackColor: Theme.of(context).colorScheme.surface,

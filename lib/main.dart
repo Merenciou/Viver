@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:viver/authentication/auth_screen.dart';
 import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/custom_widgets/treatment_null.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/presentation.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'package:viver/controllers/user_controller.dart';
-import 'package:viver/screens/sign.dart';
 import 'package:viver/screens/water.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -221,7 +220,7 @@ class _Main extends State<Main> {
                       : const Color(0x62FFFFFF),
                 ),
               ),
-              home: const Sign(),
+              home: const CheckAuth(),
             );
           }),
     );

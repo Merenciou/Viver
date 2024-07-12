@@ -1381,15 +1381,7 @@ class _HomePageState extends State<HomePage> {
                                       text: salutation,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headlineMedium
-                                      // GoogleFonts.montserrat(
-                                      //     color:
-                                      //      Theme.of(context)
-                                      //         .colorScheme
-                                      //         .primaryContainer,
-                                      //     fontWeight: FontWeight.w500,
-                                      //     fontSize: 24),
-                                      ),
+                                          .headlineMedium),
                                   TextSpan(
                                     text: asyncSnapshot.data,
                                     style: GoogleFonts.montserrat(
@@ -1405,12 +1397,7 @@ class _HomePageState extends State<HomePage> {
                           } else {
                             return Text(salutation,
                                 style:
-                                    Theme.of(context).textTheme.headlineMedium
-                                // GoogleFonts.montserrat(
-                                //     color: Colors.black,
-                                //     fontWeight: FontWeight.w500,
-                                //     fontSize: 24),
-                                );
+                                    Theme.of(context).textTheme.headlineMedium);
                           }
                         } else {
                           return const CircularProgressIndicator();
@@ -1650,31 +1637,42 @@ class _HomePageState extends State<HomePage> {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    child: RichText(
-                      text: TextSpan(
-                        children: <TextSpan>[
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-                          // ALTERAR O BOM DIA
-
-                          TextSpan(
-                            text: 'Bom dia, ',
-                            style: Theme.of(context).textTheme.headlineMedium,
-                          ),
-                          TextSpan(
-                            text: 'Vitor',
-                            style: GoogleFonts.montserrat(
-                                color: Theme.of(context).colorScheme.secondary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 24),
-                          ),
-                        ],
-                      ),
+                    child: FutureBuilder(
+                      future: futureName,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<String?> asyncSnapshot) {
+                        if (asyncSnapshot.connectionState ==
+                            ConnectionState.done) {
+                          if (asyncSnapshot.hasData) {
+                            return RichText(
+                              text: TextSpan(
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: salutation,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineMedium),
+                                  TextSpan(
+                                    text: asyncSnapshot.data,
+                                    style: GoogleFonts.montserrat(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 24),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return Text(salutation,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium);
+                          }
+                        } else {
+                          return const CircularProgressIndicator();
+                        }
+                      },
                     ),
                   ),
                 ),

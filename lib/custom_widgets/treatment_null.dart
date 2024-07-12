@@ -173,7 +173,9 @@ class _TreatmentNullState extends State<TreatmentNull> with ChangeNotifier {
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             filled: true,
-                                            fillColor: Colors.white,
+                                            fillColor: Theme.of(context)
+                                                .colorScheme
+                                                .primaryContainer,
                                             label: Text(
                                               'Qual o seu peso?',
                                               style: Theme.of(context)

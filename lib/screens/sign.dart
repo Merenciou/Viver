@@ -30,9 +30,6 @@ class _Sign extends State<Sign> {
 
     if (user != null) {
       _snackBarLoginSucessful();
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.pushNamed(context, '/mainpage');
-      });
     } else if (authError == 'invalid-email') {
       _snackBarEmailWrong();
     } else if (authError == 'invalid-credential') {
@@ -45,8 +42,8 @@ class _Sign extends State<Sign> {
   void _snackBarLoginSucessful() {
     var snackBarLoginSucessful = const SnackBar(
       behavior: SnackBarBehavior.floating,
-      duration: Duration(milliseconds: 1700),
-      backgroundColor: Colors.green,
+      duration: Duration(milliseconds: 1400),
+      backgroundColor: Color(0XFF79AC78),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -64,14 +61,16 @@ class _Sign extends State<Sign> {
         ],
       ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBarLoginSucessful);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(snackBarLoginSucessful);
+    }
   }
 
   void _snackBarEmailWrong() {
     var snackBarEmailWrong = const SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 3000),
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFFF38BA0),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,7 +94,7 @@ class _Sign extends State<Sign> {
     var snackBarPasswordWrong = const SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 3000),
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFFF38BA0),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,9 +126,6 @@ class _Sign extends State<Sign> {
 
     if (user != null) {
       _snackBarSignUpSucessfull();
-      Future.delayed(const Duration(milliseconds: 2000), () {
-        Navigator.pushNamed(context, '/presentation');
-      });
       await UserController(name: nameController.text).setName();
       nameController.clear();
     }
@@ -142,7 +138,7 @@ class _Sign extends State<Sign> {
     var snackBarSucess = const SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 1700),
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0XFF79AC78),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -166,7 +162,7 @@ class _Sign extends State<Sign> {
     var snackBarSucess = const SnackBar(
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 3000),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Color(0xFFF38BA0),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -147,9 +147,7 @@ class _WaterPage extends State<WaterPage> {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .labelMedium),
-                                        inactiveThumbColor: Theme.of(context)
-                                            .colorScheme
-                                            .onSecondary,
+                                        inactiveThumbColor: Colors.black38,
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: Theme.of(context)

@@ -10,6 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:io';
+import 'package:deepgram_speech_to_text/deepgram_speech_to_text.dart';
 
 class BreathePage extends StatefulWidget {
   const BreathePage({super.key});
@@ -43,9 +45,10 @@ class _BreathePage extends State<BreathePage> {
     await flutterTts.setSpeechRate(pitch);
     await flutterTts.speak(text);
     Map<String, String> voiceSettings = {
-      'name': 'pt-br-x-ptd-network',
+      'name': 'pt-br-x-ptd-local',
       'locale': 'pt-BR',
     };
+    await flutterTts.awaitSpeakCompletion(false);
 
     await flutterTts.setVoice(voiceSettings);
   }
@@ -89,6 +92,7 @@ class _BreathePage extends State<BreathePage> {
   dynamic timer17;
   dynamic timer18;
   dynamic timer19;
+  dynamic timer20;
 
   @override
   void dispose() {
@@ -112,6 +116,7 @@ class _BreathePage extends State<BreathePage> {
     timer17?.cancel();
     timer18?.cancel();
     timer19?.cancel();
+    timer20?.cancel();
     // startBreathe();
     super.dispose();
   }
@@ -123,7 +128,7 @@ class _BreathePage extends State<BreathePage> {
       });
 
       Future.delayed(const Duration(seconds: 5), () {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 21; i++) {
           if (stopCounter == true) {
             break;
           }
@@ -387,6 +392,19 @@ class _BreathePage extends State<BreathePage> {
               });
 
               break;
+            case 20:
+              setState(() {
+                timer20 = Timer(const Duration(seconds: 103), () {
+                  setState(() {
+                    changeFillColor = const Color(0XFF79AC78).withOpacity(0.4);
+                    changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                    changedText = 'Respire normalmente';
+                    speak('Para finalizar, respire normalmente', 0.30);
+                  });
+                });
+              });
+
+              break;
 
             default:
           }
@@ -625,26 +643,69 @@ class _BreathePage extends State<BreathePage> {
                   changedWidth = 10;
                 });
 
-                timer0.cancel();
-                timer1.cancel();
-                timer2.cancel();
-                timer3.cancel();
-                timer4.cancel();
-                timer5.cancel();
-                timer6.cancel();
-                timer7.cancel();
-                timer8.cancel();
-                timer9.cancel();
-                timer10.cancel();
-                timer11.cancel();
-                timer12.cancel();
-                timer13.cancel();
-                timer14.cancel();
-                timer15.cancel();
-                timer16.cancel();
-                timer17.cancel();
-                timer18.cancel();
-                timer19.cancel();
+                if (timer0 != null) {
+                  timer0.cancel();
+                }
+                if (timer1 != null) {
+                  timer1.cancel();
+                }
+                if (timer2 != null) {
+                  timer2.cancel();
+                }
+                if (timer3 != null) {
+                  timer3.cancel();
+                }
+                if (timer4 != null) {
+                  timer4.cancel();
+                }
+                if (timer5 != null) {
+                  timer5.cancel();
+                }
+                if (timer6 != null) {
+                  timer6.cancel();
+                }
+                if (timer7 != null) {
+                  timer7.cancel();
+                }
+                if (timer8 != null) {
+                  timer8.cancel();
+                }
+                if (timer9 != null) {
+                  timer9.cancel();
+                }
+                if (timer10 != null) {
+                  timer10.cancel();
+                }
+                if (timer11 != null) {
+                  timer11.cancel();
+                }
+                if (timer12 != null) {
+                  timer12.cancel();
+                }
+                if (timer13 != null) {
+                  timer13.cancel();
+                }
+                if (timer14 != null) {
+                  timer14.cancel();
+                }
+                if (timer15 != null) {
+                  timer15.cancel();
+                }
+                if (timer16 != null) {
+                  timer16.cancel();
+                }
+                if (timer17 != null) {
+                  timer17.cancel();
+                }
+                if (timer18 != null) {
+                  timer18.cancel();
+                }
+                if (timer19 != null) {
+                  timer19.cancel();
+                }
+                if (timer20 != null) {
+                  timer20.cancel();
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:

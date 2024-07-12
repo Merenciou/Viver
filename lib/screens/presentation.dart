@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:viver/controllers/first_time_sign.dart';
 
 int presentationIndex = 0;
 
@@ -25,12 +26,12 @@ class _Presentation extends State<Presentation> {
     ];
   }
 
-  String userName = 'padrão';
+  String userName = 'Usuário';
 
   void getName() async {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     final FirebaseAuth auth = FirebaseAuth.instance;
-    CollectionReference userCollection = firestore.collection('User');
+    CollectionReference userCollection = firestore.collection('Users');
     User? user = auth.currentUser;
 
     if (user != null) {
@@ -58,7 +59,6 @@ class _Presentation extends State<Presentation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SizedBox(
         width: double.infinity,
         height: 900,
@@ -697,7 +697,7 @@ class _Presentation extends State<Presentation> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/mainpage');
+                    FirstTimeSign.instance.changeFirstTime();
                   },
                   child: Text(
                     'Continuar',

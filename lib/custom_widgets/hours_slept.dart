@@ -45,11 +45,11 @@ class _HoursSleptState extends State<HoursSlept> {
   }
 
   void _snackBarHourSleptSucessful() {
-    var snackBarLoginSucessful = const SnackBar(
+    var snackBarHoursSleptSucessful = const SnackBar(
       margin: EdgeInsets.only(bottom: 30),
       behavior: SnackBarBehavior.floating,
       duration: Duration(milliseconds: 1700),
-      backgroundColor: Colors.green,
+      backgroundColor: Color(0XFF79AC78),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,15 +67,15 @@ class _HoursSleptState extends State<HoursSlept> {
         ],
       ),
     );
-    ScaffoldMessenger.of(context).showSnackBar(snackBarLoginSucessful);
+    ScaffoldMessenger.of(context).showSnackBar(snackBarHoursSleptSucessful);
   }
 
   void _snackBarHoursNulls() {
-    var snackBarEmailWrong = const SnackBar(
+    var snackBarHoursNulls = const SnackBar(
         margin: EdgeInsets.only(bottom: 30),
         behavior: SnackBarBehavior.floating,
         duration: Duration(milliseconds: 3000),
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFFF38BA0),
         content: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +92,7 @@ class _HoursSleptState extends State<HoursSlept> {
             ),
           ],
         ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
+    ScaffoldMessenger.of(context).showSnackBar(snackBarHoursNulls);
   }
 
   @override
