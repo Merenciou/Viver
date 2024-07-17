@@ -44,4 +44,11 @@ class AuthService {
     final FirebaseAuth auth = FirebaseAuth.instance;
     auth.signOut();
   }
+
+  void deleteUser() async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+
+    await user?.delete();
+  }
 }

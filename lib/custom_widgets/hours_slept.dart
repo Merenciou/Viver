@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dot_loader/dot_loader.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:intl/intl.dart';
+import 'package:viver/warnings/warnings.dart';
 
 class HoursSlept extends StatefulWidget {
   const HoursSlept({super.key});
@@ -42,57 +43,6 @@ class _HoursSleptState extends State<HoursSlept> {
           .doc('days')
           .set({dayNow: hoursAndMinutes}, SetOptions(merge: true));
     }
-  }
-
-  void _snackBarHourSleptSucessful() {
-    var snackBarHoursSleptSucessful = const SnackBar(
-      margin: EdgeInsets.only(bottom: 30),
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(milliseconds: 1700),
-      backgroundColor: Color(0XFF79AC78),
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.verified,
-            color: Colors.white,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 4),
-            child: Text(
-              'Seu relatório já está disponível!',
-            ),
-          ),
-        ],
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBarHoursSleptSucessful);
-  }
-
-  void _snackBarHoursNulls() {
-    var snackBarHoursNulls = const SnackBar(
-        margin: EdgeInsets.only(bottom: 30),
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(milliseconds: 3000),
-        backgroundColor: Color(0xFFF38BA0),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                'Ops, selecione os horários!',
-              ),
-            ),
-          ],
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarHoursNulls);
   }
 
   @override
@@ -520,10 +470,16 @@ class _HoursSleptState extends State<HoursSlept> {
                                   isLoading = false;
                                   if (hourSlept != '' && hourWokeUp != '') {
                                     setSleepPerDay();
-                                    _snackBarHourSleptSucessful();
+                                    if (mounted) {
+                                      Warnings.snackBarHourSleptSucessful(
+                                          context);
+                                    }
+
                                     showResult = true;
                                   } else {
-                                    _snackBarHoursNulls();
+                                    if (mounted) {
+                                      Warnings.snackBarHoursNulls(context);
+                                    }
                                   }
                                 });
                               }

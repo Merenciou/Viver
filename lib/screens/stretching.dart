@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
+import 'package:viver/warnings/warnings.dart';
 
 String interval = '00:00';
 bool stateAlarm = false;
@@ -56,30 +57,6 @@ class StretchingPage extends StatefulWidget {
 
 class _StretchingPageState extends State<StretchingPage> {
   String dropDownValue = '00:00';
-
-  void _snackBarIntervalNull() {
-    var snackBarEmailWrong = const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(milliseconds: 3000),
-        backgroundColor: Color(0xFFF38BA0),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error,
-              color: Colors.white,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                'Selecione um intervalo primeiro',
-              ),
-            ),
-          ],
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBarEmailWrong);
-  }
 
   @override
   void initState() {
@@ -214,7 +191,9 @@ class _StretchingPageState extends State<StretchingPage> {
                       stateAlarm = !stateAlarm;
                       if (dropDownValue == '00:00') {
                         stateAlarm = false;
-                        _snackBarIntervalNull();
+                        if (mounted) {
+                          Warnings.snackBarIntervalNull(context);
+                        }
                       }
                     });
 

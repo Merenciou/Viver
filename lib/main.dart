@@ -6,10 +6,12 @@ import 'package:viver/authentication/auth_screen.dart';
 import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/custom_widgets/treatment_null.dart';
 import 'package:viver/notifications/notifications.dart';
+import 'package:viver/screens/delete_user.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/presentation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:viver/controllers/user_controller.dart';
+import 'package:viver/screens/sign.dart';
 import 'package:viver/screens/water.dart';
 import 'firebase_options.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -87,9 +89,11 @@ class _Main extends State<Main> {
               debugShowCheckedModeBanner: false,
               initialRoute: '/',
               routes: {
+                '/signpage': (context) => const Sign(),
                 '/presentation': (context) => const Presentation(),
                 '/mainpage': (context) => const MainPage(),
                 '/treatmentnullspage': (context) => const TreatmentNull(),
+                '/deleteuserpage': (context) => const DeleteUserPage(),
               },
               theme: ThemeData(
                 textTheme: TextTheme(

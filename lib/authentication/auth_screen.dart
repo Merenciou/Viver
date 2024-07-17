@@ -1,20 +1,3 @@
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-// CORRIGIR AUTENTICAÇÃO
-
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:viver/screens/mainpage.dart';
 import 'package:viver/screens/sign.dart';
@@ -30,26 +13,21 @@ class CheckAuth extends StatefulWidget {
 class _CheckAuthState extends State<CheckAuth> {
   bool userIsAuthenticated = false;
 
-  Future<User?> keepConnected() {
-    Completer<User?> completer = Completer<User?>();
-
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user == null) {
-        setState(() {
-          userIsAuthenticated = false;
-        });
-      } else {
-        setState(() {
-          userIsAuthenticated = true;
-        });
-      }
-    });
-    return completer.future;
-  }
-
   @override
   void initState() {
-    keepConnected();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (mounted) {
+        setState(() {
+          userIsAuthenticated = user != null;
+        });
+        if (user != null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainPage()),
+          );
+        }
+      }
+    });
     super.initState();
   }
 

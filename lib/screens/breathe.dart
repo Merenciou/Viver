@@ -10,8 +10,40 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:io';
-import 'package:deepgram_speech_to_text/deepgram_speech_to_text.dart';
+// import 'dart:io';
+// import 'package:deepgram_speech_to_text/deepgram_speech_to_text.dart';
+
+// void tts() async {
+//   String apiKey = "dffabc0c004db35c034e1b4756c5486fa29cbca9";
+
+//   Map<String, dynamic> params = {
+//     'model': 'nova-2-general',
+//     'detect_language': true,
+//     'filler_words': false,
+//     'punctuation': true,
+//   };
+// Deepgram deepgram = Deepgram(apiKey, baseQueryParams: {
+//   'model': 'aura-asteria-en',
+//   'encoding': "linear16",
+//   'container': "wav",
+//   // options here: https://developers.deepgram.com/reference/text-to-speech-api
+
+//   final  res = await deepgram.speakFromText('Hello world');
+//   print(res.data); // raw audio data that you can use as you wish. Check flutter example for a simple player
+// });
+
+//   // check if the API key is valid
+//   final isValid = await deepgram.isApiKeyValid();
+//   print('API key is valid: $isValid');
+
+//   final dg = Deepgram(apiKey);
+//   final res3 = await dg.speakFromText('Hello, how are you?');
+//   // then use res as you like
+//   res3.data; // Uint8List of audio data
+//   res3.contentType; // 'audio/wav'
+//   print(res3.contentType);
+
+// }
 
 class BreathePage extends StatefulWidget {
   const BreathePage({super.key});
@@ -119,6 +151,12 @@ class _BreathePage extends State<BreathePage> {
     timer20?.cancel();
     // startBreathe();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // tts();
+    super.initState();
   }
 
   void changeDetails() {

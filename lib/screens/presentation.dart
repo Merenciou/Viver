@@ -698,6 +698,7 @@ class _Presentation extends State<Presentation> {
                 TextButton(
                   onPressed: () {
                     FirstTimeSign.instance.changeFirstTime();
+                    Navigator.of(context).pushNamed('/mainpage');
                   },
                   child: Text(
                     'Continuar',

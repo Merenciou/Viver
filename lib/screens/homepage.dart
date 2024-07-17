@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
     _sundaySleepSubscription?.cancel();
 
     _mondaySleepSubscription = ChartSleepModel().getMonday().listen((value) {
-      if (today.day == 1 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 1 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartSleepModel().getTuesday().listen((value) {
-      if (today.day == 2 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 2 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -247,8 +247,9 @@ class _HomePageState extends State<HomePage> {
     }, onError: (error) {
       hoursSlept = 0;
     });
+
     ChartSleepModel().getWednesday().listen((value) {
-      if (today.day == 3 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 3 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -299,7 +300,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getThursday().listen((value) {
-      if (today.day == 4 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 4 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / (hoursToSleep)) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -353,7 +354,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getFriday().listen((value) {
-      if (today.day == 5 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 5 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -407,7 +408,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getSaturday().listen((value) {
-      if (today.day == 6 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 6 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -461,7 +462,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getSunday().listen((value) {
-      if (today.day == 0 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 0 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -709,7 +710,9 @@ class _HomePageState extends State<HomePage> {
     waterToIngest = await UserModel().getWaterIdeal() ?? 0;
 
     ChartHydrationModel().getMonday().listen((value) {
-      if (today.day == 1 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 1 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -763,7 +766,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getTuesday().listen((value) {
-      if (today.day == 2 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 2 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -817,7 +822,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getWednesday().listen((value) {
-      if (today.day == 3 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 3 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -871,7 +878,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getThursday().listen((value) {
-      if (today.day == 4 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 4 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -925,7 +934,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getFriday().listen((value) {
-      if (today.day == 5 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 5 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -979,7 +990,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getSaturday().listen((value) {
-      if (today.day == 6 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 6 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -1033,7 +1046,9 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartHydrationModel().getSunday().listen((value) {
-      if (today.day == 0 && waterToIngest != null && waterIngested != null) {
+      if (today.weekday == 0 &&
+          waterToIngest != null &&
+          waterIngested != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
