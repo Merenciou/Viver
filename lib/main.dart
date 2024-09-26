@@ -81,152 +81,150 @@ class _Main extends State<Main> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: AnimatedBuilder(
-          animation: DarkThemeController.instance,
-          builder: (context, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              initialRoute: '/',
-              routes: {
-                '/signpage': (context) => const Sign(),
-                '/presentation': (context) => const Presentation(),
-                '/mainpage': (context) => const MainPage(),
-                '/treatmentnullspage': (context) => const TreatmentNull(),
-                '/deleteuserpage': (context) => const DeleteUserPage(),
-              },
-              theme: ThemeData(
-                textTheme: TextTheme(
-                  titleSmall: GoogleFonts.montserrat(
-                      fontSize: 14,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black87),
-                  titleMedium: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black87),
-                  titleLarge: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black87),
-                  bodySmall: GoogleFonts.montserrat(
-                      fontSize: 20,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black45,
-                      fontWeight: FontWeight.w500),
-                  bodyMedium: GoogleFonts.montserrat(
-                      fontSize: 14,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black87,
-                      fontWeight: FontWeight.w500),
-                  bodyLarge: GoogleFonts.montserrat(
-                    fontSize: 24,
-                    color: DarkThemeController.instance.isDarkTheme
-                        ? Colors.white70
-                        : Colors.black87,
-                  ),
-                  headlineSmall: GoogleFonts.montserrat(
+    return AnimatedBuilder(
+        animation: DarkThemeController.instance,
+        builder: (context, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: '/',
+            routes: {
+              '/signpage': (context) => const SignPage(),
+              '/presentation': (context) => const Presentation(),
+              '/mainpage': (context) => const MainPage(),
+              '/treatmentnullspage': (context) => const TreatmentNull(),
+              '/deleteuserpage': (context) => const DeleteUserPage(),
+            },
+            theme: ThemeData(
+              textTheme: TextTheme(
+                titleSmall: GoogleFonts.montserrat(
                     fontSize: 14,
                     color: DarkThemeController.instance.isDarkTheme
                         ? Colors.white70
-                        : Colors.white70,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  headlineMedium: GoogleFonts.montserrat(
-                      fontSize: 24,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black54,
-                      fontWeight: FontWeight.w500),
-                  headlineLarge: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w500),
-                  labelSmall: GoogleFonts.montserrat(
-                      fontSize: 18,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black38,
-                      fontWeight: FontWeight.w500),
-                  labelMedium: GoogleFonts.montserrat(
-                      fontSize: 30,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black54,
-                      fontWeight: FontWeight.w700),
-                  labelLarge: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black54,
-                      fontWeight: FontWeight.w700),
-                  displaySmall: GoogleFonts.montserrat(
+                        : Colors.black87),
+                titleMedium: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black87),
+                titleLarge: GoogleFonts.montserrat(
+                    fontSize: 18,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black87),
+                bodySmall: GoogleFonts.montserrat(
+                    fontSize: 20,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black45,
+                    fontWeight: FontWeight.w500),
+                bodyMedium: GoogleFonts.montserrat(
+                    fontSize: 14,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black87,
+                    fontWeight: FontWeight.w500),
+                bodyLarge: GoogleFonts.montserrat(
+                  fontSize: 24,
+                  color: DarkThemeController.instance.isDarkTheme
+                      ? Colors.white70
+                      : Colors.black87,
+                ),
+                headlineSmall: GoogleFonts.montserrat(
+                  fontSize: 14,
+                  color: DarkThemeController.instance.isDarkTheme
+                      ? Colors.white70
+                      : Colors.white70,
+                  fontWeight: FontWeight.w500,
+                ),
+                headlineMedium: GoogleFonts.montserrat(
+                    fontSize: 24,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black54,
+                    fontWeight: FontWeight.w500),
+                headlineLarge: GoogleFonts.montserrat(
+                    fontSize: 18,
+                    color: Colors.white70,
+                    fontWeight: FontWeight.w500),
+                labelSmall: GoogleFonts.montserrat(
+                    fontSize: 18,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black38,
+                    fontWeight: FontWeight.w500),
+                labelMedium: GoogleFonts.montserrat(
+                    fontSize: 30,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black54,
+                    fontWeight: FontWeight.w700),
+                labelLarge: GoogleFonts.montserrat(
+                    fontSize: 16,
+                    color: DarkThemeController.instance.isDarkTheme
+                        ? Colors.white70
+                        : Colors.black54,
+                    fontWeight: FontWeight.w700),
+                displaySmall: GoogleFonts.montserrat(
+                  fontSize: 30,
+                  color: DarkThemeController.instance.isDarkTheme
+                      ? Colors.white70
+                      : Colors.black87,
+                ),
+                displayMedium: GoogleFonts.montserrat(
                     fontSize: 30,
                     color: DarkThemeController.instance.isDarkTheme
                         ? Colors.white70
                         : Colors.black87,
-                  ),
-                  displayMedium: GoogleFonts.montserrat(
-                      fontSize: 30,
-                      color: DarkThemeController.instance.isDarkTheme
-                          ? Colors.white70
-                          : Colors.black87,
-                      fontWeight: FontWeight.w500),
-                  displayLarge: GoogleFonts.montserrat(
-                    fontSize: 30,
-                    color: Colors.white70,
-                  ),
+                    fontWeight: FontWeight.w500),
+                displayLarge: GoogleFonts.montserrat(
+                  fontSize: 30,
+                  color: Colors.white70,
                 ),
-                buttonTheme: ButtonThemeData(
-                  colorScheme: ColorScheme(
-                    brightness: Brightness.light,
-                    primary: DarkThemeController.instance.isDarkTheme
-                        ? const Color(0xFF2F58CD)
-                        : const Color(0xFF40A2E3),
-                    onPrimary: const Color(0xFFA2D5F2),
-                    secondary: DarkThemeController.instance.isDarkTheme
-                        ? const Color(0XFF5C8374)
-                        : const Color(0XFF79AC78),
-                    onSecondary: const Color(0xFFF38BA0),
-                    error: Colors.red,
-                    onError: Colors.red,
-                    surface: Colors.grey,
-                    onSurface: Colors.green,
-                  ),
-                ),
+              ),
+              buttonTheme: ButtonThemeData(
                 colorScheme: ColorScheme(
                   brightness: Brightness.light,
-                  primary: const Color(0XFF79AC78),
-                  onPrimary: const Color(0xFF31363F),
+                  primary: DarkThemeController.instance.isDarkTheme
+                      ? const Color(0xFF2F58CD)
+                      : const Color(0xFF40A2E3),
+                  onPrimary: const Color(0xFFA2D5F2),
                   secondary: DarkThemeController.instance.isDarkTheme
                       ? const Color(0XFF5C8374)
                       : const Color(0XFF79AC78),
-                  onSecondary: DarkThemeController.instance.isDarkTheme
-                      ? const Color(0xFF686D76)
-                      : const Color(0xB3FFFFFF),
-                  tertiary: const Color(0xFFF6B17A),
+                  onSecondary: const Color(0xFFF38BA0),
                   error: Colors.red,
-                  onError: Colors.redAccent,
-                  surface: DarkThemeController.instance.isDarkTheme
-                      ? const Color(0xFF1A2130)
-                      : const Color(0xFFD2E0FB),
-                  onSurface: const Color(0xFFFFFFFF),
-                  primaryContainer: DarkThemeController.instance.isDarkTheme
-                      ? const Color(0x3DFFFFFF)
-                      : const Color(0xB3FFFFFF),
-                  secondaryContainer: DarkThemeController.instance.isDarkTheme
-                      ? const Color(0x3DFFFFFF)
-                      : const Color(0x62FFFFFF),
+                  onError: Colors.red,
+                  surface: Colors.grey,
+                  onSurface: Colors.green,
                 ),
               ),
-              home: const CheckAuth(),
-            );
-          }),
-    );
+              colorScheme: ColorScheme(
+                brightness: Brightness.light,
+                primary: const Color(0XFF79AC78),
+                onPrimary: const Color(0xFF31363F),
+                secondary: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0XFF5C8374)
+                    : const Color(0XFF79AC78),
+                onSecondary: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0xFF686D76)
+                    : const Color(0xB3FFFFFF),
+                tertiary: const Color(0xFFF6B17A),
+                error: Colors.red,
+                onError: Colors.redAccent,
+                surface: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0xFF1A2130)
+                    : const Color(0xFFD2E0FB),
+                onSurface: const Color(0xFFFFFFFF),
+                primaryContainer: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0x3DFFFFFF)
+                    : const Color(0xB3FFFFFF),
+                secondaryContainer: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0x3DFFFFFF)
+                    : const Color(0x62FFFFFF),
+              ),
+            ),
+            home: const CheckAuth(),
+          );
+        });
   }
 }

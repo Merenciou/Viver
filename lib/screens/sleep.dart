@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/custom_timepicker.dart';
 import 'package:viver/controllers/user_controller.dart';
 import 'package:viver/custom_widgets/hours_slept.dart';
+import 'package:viver/warnings/warnings.dart';
 
 final TextEditingController ageController = TextEditingController();
 int? hourIdealMin;
@@ -22,6 +24,11 @@ class _SleepState extends State<Sleep> {
   bool calcIsPressed = false;
   bool defineHourSleptIsPressed = false;
   List<dynamic> hourToSleep = [];
+  double? age;
+
+  void _getAge() async {
+    age = await UserModel().getAge() ?? 0;
+  }
 
   Future<void> loadJsonList() async {
     String jsonString = await DefaultAssetBundle.of(context)
@@ -236,9 +243,14 @@ class _SleepState extends State<Sleep> {
               alignment: Alignment.bottomRight,
               child: ElevatedButton(
                 onPressed: () {
-                  setState(() {
-                    defineHourSleptIsPressed = !defineHourSleptIsPressed;
-                  });
+                  _getAge();
+                  if (age != null || age != 0) {
+                    setState(() {
+                      defineHourSleptIsPressed = !defineHourSleptIsPressed;
+                    });
+                  } else {
+                    Warnings.snackBarAgeNull(context);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: defineHourSleptIsPressed

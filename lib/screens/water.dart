@@ -99,196 +99,203 @@ class _WaterPage extends State<WaterPage> {
           } else {
             return dialogBox
                 ? calcResult()
-                : SingleChildScrollView(
-                    reverse: true,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 50),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20),
-                            child: Clock(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20),
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    'Defina um lembrete para beber água:',
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(30))),
-                                    width: 350,
-                                    height: 90,
-                                    child: Center(
-                                      child: SwitchListTile(
-                                        title: Text(
-                                          stateAlarm ? 'Ativado' : 'Desativado',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelSmall,
-                                        ),
-                                        secondary: Text(hourWakeUp,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium),
-                                        inactiveThumbColor: Colors.black38,
-                                        controlAffinity:
-                                            ListTileControlAffinity.leading,
-                                        activeColor: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        inactiveTrackColor: Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                        trackOutlineColor:
-                                            const WidgetStatePropertyAll(
-                                                Colors.transparent),
-                                        value: stateAlarm,
-                                        onChanged: (details) async {
-                                          setState(() {
-                                            stateAlarm = !stateAlarm;
-                                          });
-
-                                          final SharedPreferences prefs =
-                                              await SharedPreferences
-                                                  .getInstance();
-
-                                          await prefs.setBool(
-                                              'stateAlarmHydration',
-                                              stateAlarm);
-
-                                          String? wakeUpHour =
-                                              await UserModel().getWakeUpHour();
-                                          double? age =
-                                              await UserModel().getAge();
-                                          double? weight =
-                                              await UserModel().getWeight();
-
-                                          if (wakeUpHour == null) {
-                                            setState(() {
-                                              stateAlarm = false;
-                                              provider.setNullVerifier(true);
-                                            });
-                                          }
-                                          if (age == null) {
-                                            setState(() {
-                                              stateAlarm = false;
-                                              provider.setNullVerifier(true);
-                                            });
-                                          }
-                                          if (weight == null) {
-                                            setState(() {
-                                              stateAlarm = false;
-                                              provider.setNullVerifier(true);
-                                            });
-                                          }
-
-                                          if (stateAlarm) {
-                                            await NotificationController
-                                                .scheduleHydrationNotification();
-                                          } else {
-                                            await AwesomeNotifications()
-                                                .cancelNotificationsByChannelKey(
-                                                    'hydration_channel');
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Align(
+                : Center(
+                    child: SingleChildScrollView(
+                      reverse: true,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 50),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Clock(),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Column(
+                                children: [
+                                  Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      'Quantidade ideal de água a ser ingerida por dia:',
+                                      'Defina um lembrete para beber água:',
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium,
                                     ),
                                   ),
-                                ),
-                                Form(
-                                  key: _formKey,
-                                  child: TextFormField(
-                                    controller: weightController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Ops, digite o seu peso! :)';
-                                      }
-                                      return null;
-                                    },
-                                    style:
-                                        Theme.of(context).textTheme.labelSmall,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                      filled: true,
-                                      fillColor: Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      border: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          borderSide: BorderSide.none),
-                                      label: Text(
-                                        'Digite o seu peso:',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primaryContainer,
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(30))),
+                                      width: 350,
+                                      height: 90,
+                                      child: Center(
+                                        child: SwitchListTile(
+                                          title: Text(
+                                            stateAlarm
+                                                ? 'Ativado'
+                                                : 'Desativado',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelSmall,
+                                          ),
+                                          secondary: Text(hourWakeUp,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelMedium),
+                                          inactiveThumbColor: Colors.black38,
+                                          controlAffinity:
+                                              ListTileControlAffinity.leading,
+                                          activeColor: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                          inactiveTrackColor: Theme.of(context)
+                                              .colorScheme
+                                              .surface,
+                                          trackOutlineColor:
+                                              const WidgetStatePropertyAll(
+                                                  Colors.transparent),
+                                          value: stateAlarm,
+                                          onChanged: (details) async {
+                                            setState(() {
+                                              stateAlarm = !stateAlarm;
+                                            });
+
+                                            final SharedPreferences prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+
+                                            await prefs.setBool(
+                                                'stateAlarmHydration',
+                                                stateAlarm);
+
+                                            String? wakeUpHour =
+                                                await UserModel()
+                                                    .getWakeUpHour();
+                                            double? age =
+                                                await UserModel().getAge();
+                                            double? weight =
+                                                await UserModel().getWeight();
+
+                                            if (wakeUpHour == null) {
+                                              setState(() {
+                                                stateAlarm = false;
+                                                provider.setNullVerifier(true);
+                                              });
+                                            }
+                                            if (age == null) {
+                                              setState(() {
+                                                stateAlarm = false;
+                                                provider.setNullVerifier(true);
+                                              });
+                                            }
+                                            if (weight == null) {
+                                              setState(() {
+                                                stateAlarm = false;
+                                                provider.setNullVerifier(true);
+                                              });
+                                            }
+
+                                            if (stateAlarm) {
+                                              await NotificationController
+                                                  .scheduleHydrationNotification();
+                                            } else {
+                                              await AwesomeNotifications()
+                                                  .cancelNotificationsByChannelKey(
+                                                      'hydration_channel');
+                                            }
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 14),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      if (_formKey.currentState!.validate()) {
-                                        setState(() {
-                                          dialogBox = true;
-                                        });
-
-                                        calculator();
-                                      }
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10))),
-                                        minimumSize: const Size(200, 60),
-                                        backgroundColor: Theme.of(context)
-                                            .buttonTheme
-                                            .colorScheme!
-                                            .primary),
-                                    child: Text(
-                                      'Calcular',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineLarge,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        'Quantidade ideal de água a ser ingerida por dia:',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
+                                  Form(
+                                    key: _formKey,
+                                    child: TextFormField(
+                                      controller: weightController,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Ops, digite o seu peso! :)';
+                                        }
+                                        return null;
+                                      },
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall,
+                                      keyboardType: TextInputType.number,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        border: const OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10)),
+                                            borderSide: BorderSide.none),
+                                        label: Text(
+                                          'Digite o seu peso:',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 14),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          setState(() {
+                                            dialogBox = true;
+                                          });
+
+                                          calculator();
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10))),
+                                          minimumSize: const Size(200, 60),
+                                          backgroundColor: Theme.of(context)
+                                              .buttonTheme
+                                              .colorScheme!
+                                              .primary),
+                                      child: Text(
+                                        'Calcular',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineLarge,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );

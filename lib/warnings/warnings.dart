@@ -222,4 +222,29 @@ class Warnings {
 
     ScaffoldMessenger.of(context).showSnackBar(snackBarUserDeletedSucessful);
   }
+
+  static void snackBarAgeNull(context) {
+    var snackBarAgeNull = const SnackBar(
+        margin: EdgeInsets.only(bottom: 30),
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(milliseconds: 3000),
+        backgroundColor: Color(0xFFF38BA0),
+        content: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.error,
+              color: Colors.white,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                'Informe sua idade antes de continuar! :)',
+              ),
+            ),
+          ],
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackBarAgeNull);
+  }
 }

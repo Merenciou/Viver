@@ -97,7 +97,8 @@ class _DeleteUserPageState extends State<DeleteUserPage> {
                       Warnings.snackBarUserDeletedSucessful(context);
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Sign()),
+                        MaterialPageRoute(
+                            builder: (context) => const SignPage()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

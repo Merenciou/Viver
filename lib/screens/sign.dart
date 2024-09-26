@@ -10,14 +10,14 @@ TextEditingController passwordController = TextEditingController();
 TextEditingController passwordConfirmController = TextEditingController();
 TextEditingController nameController = TextEditingController();
 
-class Sign extends StatefulWidget {
-  const Sign({super.key});
+class SignPage extends StatefulWidget {
+  const SignPage({super.key});
 
   @override
-  State<Sign> createState() => _Sign();
+  State<SignPage> createState() => _SignPage();
 }
 
-class _Sign extends State<Sign> {
+class _SignPage extends State<SignPage> {
   final _formKey = GlobalKey<FormState>();
   bool signSwitch = true;
   bool showPassword = true;

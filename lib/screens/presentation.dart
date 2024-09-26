@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:viver/controllers/first_time_sign.dart';
+import 'package:viver/controllers/user_model.dart';
 
 int presentationIndex = 0;
 
@@ -26,33 +25,11 @@ class _Presentation extends State<Presentation> {
     ];
   }
 
-  String userName = 'Usuário';
-
-  void getName() async {
-    final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    final FirebaseAuth auth = FirebaseAuth.instance;
-    CollectionReference userCollection = firestore.collection('Users');
-    User? user = auth.currentUser;
-
-    if (user != null) {
-      await userCollection.doc(user.uid).get().then(
-        (DocumentSnapshot documentSnapshot) {
-          if (documentSnapshot.exists) {
-            Map<String, dynamic>? data =
-                documentSnapshot.data() as Map<String, dynamic>;
-
-            setState(() {
-              userName = data['name'];
-            });
-          }
-        },
-      );
-    }
-  }
+  late Future<String?> futureName;
 
   @override
   void initState() {
-    getName();
+    futureName = UserModel().getName();
     super.initState();
   }
 
@@ -117,10 +94,25 @@ class _Presentation extends State<Presentation> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            'Olá, $userName',
-            style: Theme.of(context).textTheme.displaySmall,
-          ),
+          child: FutureBuilder(
+              future: futureName,
+              builder: (BuildContext context, AsyncSnapshot asyncSnapshot) {
+                if (asyncSnapshot.connectionState == ConnectionState.done) {
+                  if (asyncSnapshot.hasData) {
+                    return Text(
+                      'Olá, ${asyncSnapshot.data}',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    );
+                  } else {
+                    return Text(
+                      'Olá, Usuário',
+                      style: Theme.of(context).textTheme.displaySmall,
+                    );
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              }),
         ),
         Padding(
           padding: const EdgeInsets.only(bottom: 40),

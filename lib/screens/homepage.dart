@@ -114,13 +114,13 @@ class _HomePageState extends State<HomePage> {
     const Color(0xFFD37676),
   ];
 
-  StreamSubscription? _mondaySleepSubscription;
-  StreamSubscription? _tuesdaySleepSubscription;
-  StreamSubscription? _wednesdaySleepSubscription;
-  StreamSubscription? _thursdaySleepSubscription;
-  StreamSubscription? _fridaySleepSubscription;
-  StreamSubscription? _saturdaySleepSubscription;
-  StreamSubscription? _sundaySleepSubscription;
+  StreamSubscription? _mondaySleepDiarySubscription;
+  StreamSubscription? _tuesdaySleepDiarySubscription;
+  StreamSubscription? _wednesdaySleepDiarySubscription;
+  StreamSubscription? _thursdaySleepDiarySubscription;
+  StreamSubscription? _fridaySleepDiarySubscription;
+  StreamSubscription? _saturdaySleepDiarySubscription;
+  StreamSubscription? _sundaySleepDiarySubscription;
 
   void _sleepGoalDiary() async {
     double? hoursSlept;
@@ -130,15 +130,16 @@ class _HomePageState extends State<HomePage> {
 
     hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
 
-    _mondaySleepSubscription?.cancel();
-    _tuesdaySleepSubscription?.cancel();
-    _wednesdaySleepSubscription?.cancel();
-    _thursdaySleepSubscription?.cancel();
-    _fridaySleepSubscription?.cancel();
-    _saturdaySleepSubscription?.cancel();
-    _sundaySleepSubscription?.cancel();
+    _mondaySleepDiarySubscription?.cancel();
+    _tuesdaySleepDiarySubscription?.cancel();
+    _wednesdaySleepDiarySubscription?.cancel();
+    _thursdaySleepDiarySubscription?.cancel();
+    _fridaySleepDiarySubscription?.cancel();
+    _saturdaySleepDiarySubscription?.cancel();
+    _sundaySleepDiarySubscription?.cancel();
 
-    _mondaySleepSubscription = ChartSleepModel().getMonday().listen((value) {
+    _mondaySleepDiarySubscription =
+        ChartSleepModel().getMonday().listen((value) {
       if (today.weekday == 1 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -517,6 +518,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  StreamSubscription? _mondaySleepWeeklySubscription;
+  StreamSubscription? _tuesdaySleepWeeklySubscription;
+  StreamSubscription? _wednesdaySleepWeeklySubscription;
+  StreamSubscription? _thursdaySleepWeeklySubscription;
+  StreamSubscription? _fridaySleepWeeklySubscription;
+  StreamSubscription? _saturdaySleepWeeklySubscription;
+  StreamSubscription? _sundaySleepWeeklySubscription;
+
   void _sleepGoalWeekly() async {
     double? monday = 0;
     double? tuesday = 0;
@@ -530,7 +539,16 @@ class _HomePageState extends State<HomePage> {
 
     hoursToSleepWeekly = (await UserModel().getHourIdealSleepMax() ?? 0) * 7;
 
-    ChartSleepModel().getMonday().listen((value) {
+    _mondaySleepWeeklySubscription?.cancel();
+    _tuesdaySleepWeeklySubscription?.cancel();
+    _wednesdaySleepWeeklySubscription?.cancel();
+    _thursdaySleepWeeklySubscription?.cancel();
+    _fridaySleepWeeklySubscription?.cancel();
+    _saturdaySleepWeeklySubscription?.cancel();
+    _sundaySleepWeeklySubscription?.cancel();
+
+    _mondaySleepWeeklySubscription =
+        ChartSleepModel().getMonday().listen((value) {
       if (mounted) {
         setState(() {
           monday = value;
@@ -554,7 +572,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getTuesday().listen((value) {
+    _tuesdaySleepWeeklySubscription =
+        ChartSleepModel().getTuesday().listen((value) {
       if (mounted) {
         setState(() {
           tuesday = value;
@@ -578,7 +597,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getWednesday().listen((value) {
+    _wednesdaySleepWeeklySubscription =
+        ChartSleepModel().getWednesday().listen((value) {
       if (mounted) {
         setState(() {
           wednesday = value;
@@ -602,7 +622,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getThursday().listen((value) {
+    _thursdaySleepWeeklySubscription =
+        ChartSleepModel().getThursday().listen((value) {
       if (mounted) {
         setState(() {
           thursday = value;
@@ -617,6 +638,7 @@ class _HomePageState extends State<HomePage> {
               100;
 
           sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
+          print("sleepGoalWeekly é ::::::::: $sleepGoalWeekly");
         });
       }
     }, onError: (error) {
@@ -626,7 +648,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getFriday().listen((value) {
+    _fridaySleepWeeklySubscription =
+        ChartSleepModel().getFriday().listen((value) {
       if (mounted) {
         setState(() {
           friday = value;
@@ -650,7 +673,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getSaturday().listen((value) {
+    _saturdaySleepWeeklySubscription =
+        ChartSleepModel().getSaturday().listen((value) {
       if (mounted) {
         setState(() {
           saturday = value;
@@ -674,7 +698,8 @@ class _HomePageState extends State<HomePage> {
         });
       }
     });
-    ChartSleepModel().getSunday().listen((value) {
+    _sundaySleepWeeklySubscription =
+        ChartSleepModel().getSunday().listen((value) {
       if (mounted) {
         setState(() {
           sunday = value;
@@ -700,6 +725,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  StreamSubscription? _mondayHydrationDiarySubscription;
+  StreamSubscription? _tuesdayHydrationDiarySubscription;
+  StreamSubscription? _wednesdayHydrationDiarySubscription;
+  StreamSubscription? _thursdayHydrationDiarySubscription;
+  StreamSubscription? _fridayHydrationDiarySubscription;
+  StreamSubscription? _saturdayHydrationDiarySubscription;
+  StreamSubscription? _sundayHydrationDiarySubscription;
+
   void _hydrationGoalDiary() async {
     double? waterIngested;
     double? waterToIngest;
@@ -709,7 +742,16 @@ class _HomePageState extends State<HomePage> {
 
     waterToIngest = await UserModel().getWaterIdeal() ?? 0;
 
-    ChartHydrationModel().getMonday().listen((value) {
+    _mondayHydrationDiarySubscription?.cancel();
+    _tuesdayHydrationDiarySubscription?.cancel();
+    _wednesdayHydrationDiarySubscription?.cancel();
+    _thursdayHydrationDiarySubscription?.cancel();
+    _fridayHydrationDiarySubscription?.cancel();
+    _saturdayHydrationDiarySubscription?.cancel();
+    _sundayHydrationDiarySubscription?.cancel();
+
+    _mondayHydrationDiarySubscription =
+        ChartHydrationModel().getMonday().listen((value) {
       if (today.weekday == 1 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -765,7 +807,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getTuesday().listen((value) {
+    _tuesdayHydrationDiarySubscription =
+        ChartHydrationModel().getTuesday().listen((value) {
       if (today.weekday == 2 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -821,7 +864,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getWednesday().listen((value) {
+    _wednesdayHydrationDiarySubscription =
+        ChartHydrationModel().getWednesday().listen((value) {
       if (today.weekday == 3 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -877,7 +921,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getThursday().listen((value) {
+    _thursdayHydrationDiarySubscription =
+        ChartHydrationModel().getThursday().listen((value) {
       if (today.weekday == 4 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -933,7 +978,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getFriday().listen((value) {
+    _fridayHydrationDiarySubscription =
+        ChartHydrationModel().getFriday().listen((value) {
       if (today.weekday == 5 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -989,7 +1035,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getSaturday().listen((value) {
+    _saturdayHydrationDiarySubscription =
+        ChartHydrationModel().getSaturday().listen((value) {
       if (today.weekday == 6 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -1045,7 +1092,8 @@ class _HomePageState extends State<HomePage> {
       waterIngested = 0;
     });
 
-    ChartHydrationModel().getSunday().listen((value) {
+    _sundayHydrationDiarySubscription =
+        ChartHydrationModel().getSunday().listen((value) {
       if (today.weekday == 0 &&
           waterToIngest != null &&
           waterIngested != null) {
@@ -1102,6 +1150,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  StreamSubscription? _mondayHydrationWeeklySubscription;
+  StreamSubscription? _tuesdayHydrationWeeklySubscription;
+  StreamSubscription? _wednesdayHydrationWeeklySubscription;
+  StreamSubscription? _thursdayHydrationWeeklySubscription;
+  StreamSubscription? _fridayHydrationWeeklySubscription;
+  StreamSubscription? _saturdayHydrationWeeklySubscription;
+  StreamSubscription? _sundayHydrationWeeklySubscription;
+
   void _hydrationGoalWeekly() async {
     double? monday = 0;
     double? tuesday = 0;
@@ -1115,7 +1171,16 @@ class _HomePageState extends State<HomePage> {
 
     waterToIngestWeekly = (await UserModel().getWaterIdeal() ?? 0) * 7;
 
-    ChartHydrationModel().getMonday().listen((value) {
+    _mondayHydrationWeeklySubscription?.cancel();
+    _tuesdayHydrationWeeklySubscription?.cancel();
+    _wednesdayHydrationWeeklySubscription?.cancel();
+    _thursdayHydrationWeeklySubscription?.cancel();
+    _fridayHydrationWeeklySubscription?.cancel();
+    _saturdayHydrationWeeklySubscription?.cancel();
+    _sundayHydrationWeeklySubscription?.cancel();
+
+    _mondayHydrationWeeklySubscription =
+        ChartHydrationModel().getMonday().listen((value) {
       if (mounted) {
         setState(() {
           monday = value;
@@ -1140,7 +1205,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getTuesday().listen((value) {
+    _tuesdayHydrationWeeklySubscription =
+        ChartHydrationModel().getTuesday().listen((value) {
       if (mounted) {
         setState(() {
           tuesday = value;
@@ -1165,7 +1231,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getWednesday().listen((value) {
+    _wednesdayHydrationWeeklySubscription =
+        ChartHydrationModel().getWednesday().listen((value) {
       if (mounted) {
         setState(() {
           wednesday = value;
@@ -1190,7 +1257,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getThursday().listen((value) {
+    _thursdayHydrationWeeklySubscription =
+        ChartHydrationModel().getThursday().listen((value) {
       if (mounted) {
         setState(() {
           thursday = value;
@@ -1215,7 +1283,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getFriday().listen((value) {
+    _fridayHydrationWeeklySubscription =
+        ChartHydrationModel().getFriday().listen((value) {
       if (mounted) {
         setState(() {
           friday = value;
@@ -1240,7 +1309,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getSaturday().listen((value) {
+    _saturdayHydrationWeeklySubscription =
+        ChartHydrationModel().getSaturday().listen((value) {
       if (mounted) {
         setState(() {
           saturday = value;
@@ -1265,7 +1335,8 @@ class _HomePageState extends State<HomePage> {
       }
     });
 
-    ChartHydrationModel().getSunday().listen((value) {
+    _sundayHydrationWeeklySubscription =
+        ChartHydrationModel().getSunday().listen((value) {
       if (mounted) {
         setState(() {
           sunday = value;
@@ -1314,13 +1385,37 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    _mondaySleepSubscription?.cancel();
-    _tuesdaySleepSubscription?.cancel();
-    _wednesdaySleepSubscription?.cancel();
-    _thursdaySleepSubscription?.cancel();
-    _fridaySleepSubscription?.cancel();
-    _saturdaySleepSubscription?.cancel();
-    _sundaySleepSubscription?.cancel();
+    _mondaySleepDiarySubscription?.cancel();
+    _tuesdaySleepDiarySubscription?.cancel();
+    _wednesdaySleepDiarySubscription?.cancel();
+    _thursdaySleepDiarySubscription?.cancel();
+    _fridaySleepDiarySubscription?.cancel();
+    _saturdaySleepDiarySubscription?.cancel();
+    _sundaySleepDiarySubscription?.cancel();
+
+    _mondaySleepWeeklySubscription?.cancel();
+    _tuesdaySleepWeeklySubscription?.cancel();
+    _wednesdaySleepWeeklySubscription?.cancel();
+    _thursdaySleepWeeklySubscription?.cancel();
+    _fridaySleepWeeklySubscription?.cancel();
+    _saturdaySleepWeeklySubscription?.cancel();
+    _sundaySleepWeeklySubscription?.cancel();
+
+    _mondayHydrationDiarySubscription?.cancel();
+    _tuesdayHydrationDiarySubscription?.cancel();
+    _wednesdayHydrationDiarySubscription?.cancel();
+    _thursdayHydrationDiarySubscription?.cancel();
+    _fridayHydrationDiarySubscription?.cancel();
+    _saturdayHydrationDiarySubscription?.cancel();
+    _sundayHydrationDiarySubscription?.cancel();
+
+    _mondayHydrationWeeklySubscription?.cancel();
+    _tuesdayHydrationWeeklySubscription?.cancel();
+    _wednesdayHydrationWeeklySubscription?.cancel();
+    _thursdayHydrationWeeklySubscription?.cancel();
+    _fridayHydrationWeeklySubscription?.cancel();
+    _saturdayHydrationWeeklySubscription?.cancel();
+    _sundayHydrationWeeklySubscription?.cancel();
     super.dispose();
   }
 
@@ -1499,8 +1594,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Text(
                               sleepGoalWeekly != null
-                                  ? '0%'
-                                  : '$sleepGoalWeekly%',
+                                  ? '$sleepGoalWeekly%'
+                                  : '0%',
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
