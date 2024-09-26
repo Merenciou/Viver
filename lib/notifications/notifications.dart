@@ -347,9 +347,9 @@ Future<void> notififyResetDatasSchedule() async {
   if (!isAllowed) return;
   AwesomeNotifications().createNotification(
     schedule: NotificationCalendar(
-      weekday: 4,
-      hour: 20,
-      minute: 14,
+      weekday: 1,
+      hour: 00,
+      minute: 00,
       repeats: false,
       allowWhileIdle: true,
     ),
