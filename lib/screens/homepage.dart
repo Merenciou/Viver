@@ -638,7 +638,6 @@ class _HomePageState extends State<HomePage> {
               100;
 
           sleepGoalWeekly = sleepGoalWeeklyCalc!.toStringAsFixed(0);
-          print("sleepGoalWeekly é ::::::::: $sleepGoalWeekly");
         });
       }
     }, onError: (error) {

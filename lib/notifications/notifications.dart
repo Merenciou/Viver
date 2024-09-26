@@ -13,7 +13,6 @@ late String? wakeUpHour;
 late int? hourSleepMax;
 late double? hourSleepRemainings;
 late double? hourDividedPerDay;
-late int? seconds;
 late double? weight;
 late double? waterIdeal;
 double? waterDosage;
@@ -55,9 +54,44 @@ void setWaterIngestedPerDay() async {
   }
 }
 
-class NotificationController {
-  static ReceivedAction? initialAction;
+void resetDiaryAndWeeklyDatas() async {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  User? user = auth.currentUser;
+  CollectionReference userCollection = firestore.collection('Users');
 
+  if (user != null) {
+    await userCollection
+        .doc(user.uid)
+        .collection('waterIngestedPerDay')
+        .doc('days')
+        .set({
+      'monday': '0',
+      'tuesday': '0',
+      'wednesday': '0',
+      'thursday': '0',
+      'friday': '0',
+      'saturday': '0',
+      'sunday': '0',
+    }, SetOptions(merge: true));
+
+    await userCollection
+        .doc(user.uid)
+        .collection('hourSleptPerDay')
+        .doc('days')
+        .set({
+      'monday': '0',
+      'tuesday': '0',
+      'wednesday': '0',
+      'thursday': '0',
+      'friday': '0',
+      'saturday': '0',
+      'sunday': '0',
+    }, SetOptions(merge: true));
+  }
+}
+
+class NotificationController {
   static Future<void> initializeLocalNotifications() async {
     await AwesomeNotifications().initialize(
         null,
@@ -73,24 +107,41 @@ class NotificationController {
             channelName: 'Notificação de Alongamento',
             channelDescription: 'Lembrete periódico de Alongamentos',
             importance: NotificationImportance.High,
+          ),
+          NotificationChannel(
+            channelKey: 'reset_data_channel',
+            channelName: 'Notificação de Resete de Dados',
+            channelDescription:
+                'Aviso de reinicialização de dados do relatório',
+            importance: NotificationImportance.High,
           )
         ],
         debug: true);
   }
 
-  static ReceivePort? receivePort;
+  static ReceivePort? receivePortHydration;
+  static ReceivePort? receivePortReset;
   static Future<void> initializeIsolateReceivePort() async {
-    receivePort = ReceivePort('Notification action port in main isolate')
+    receivePortHydration =
+        ReceivePort('Notification action port in main isolate')
+          ..listen(
+              (silentData) => onActionReceivedImplementationMethod(silentData));
+
+    IsolateNameServer.registerPortWithName(
+        receivePortHydration!.sendPort, 'confirm_hydration');
+
+    receivePortReset = ReceivePort('Notification action port in main isolate')
       ..listen(
           (silentData) => onActionReceivedImplementationMethod(silentData));
 
     IsolateNameServer.registerPortWithName(
-        receivePort!.sendPort, 'confirm_hydration');
+        receivePortReset!.sendPort, 'confirm_reset');
   }
 
   static Future<void> startListeningNotificationEvents() async {
-    AwesomeNotifications()
-        .setListeners(onActionReceivedMethod: onActionReceivedMethod);
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: onActionReceivedMethod,
+    );
   }
 
   @pragma('vm:entry-point')
@@ -129,10 +180,18 @@ class NotificationController {
 
       await prefs.setBool('stateAlarm', false);
     }
+
+    if (receivedAction.channelKey == 'reset_data_channel' &&
+        receivedAction.buttonKeyPressed.isEmpty) {
+      resetDiaryAndWeeklyDatas();
+    }
   }
 
   static Future<void> onActionReceivedImplementationMethod(
       ReceivedAction receivedAction) async {
+    if (receivedAction.channelKey == 'confirm_reset') {
+      resetDiaryAndWeeklyDatas();
+    }
     Main.navigatorKey.currentState?.pushNamedAndRemoveUntil('/mainpage',
         (route) => (route.settings.name != '/mainpage') || route.isFirst,
         arguments: receivedAction);
@@ -156,6 +215,16 @@ class NotificationController {
     }
 
     await notififyStretchingSchedule();
+  }
+
+  static Future<void> scheduleResetDataNotification() async {
+    bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+    if (!isAllowed) {
+      await AwesomeNotifications().requestPermissionToSendNotifications();
+      return;
+    }
+
+    await notififyResetDatasSchedule();
   }
 }
 
@@ -267,4 +336,44 @@ Future<void> notififyStretchingSchedule() async {
       ],
     );
   }
+}
+
+Future<void> notififyResetDatasSchedule() async {
+  bool isAllowed = await AwesomeNotifications().isNotificationAllowed();
+  if (!isAllowed) {
+    await AwesomeNotifications().requestPermissionToSendNotifications();
+  }
+
+  if (!isAllowed) return;
+  AwesomeNotifications().createNotification(
+    schedule: NotificationCalendar(
+      weekday: 4,
+      hour: 20,
+      minute: 14,
+      repeats: false,
+      allowWhileIdle: true,
+    ),
+    content: NotificationContent(
+      id: 3,
+      channelKey: 'reset_data_channel',
+      title: 'Relatórios zerados',
+      body:
+          'Olá, $name! Foi uma semana em tanto, estaremos reiniciando seus relatórios! :)',
+      summary: 'Aviso',
+      wakeUpScreen: true,
+      backgroundColor: const Color(0XFF79AC78),
+      category: NotificationCategory.Message,
+      actionType: ActionType.Default,
+      notificationLayout: NotificationLayout.BigPicture,
+      color: const Color(0xFF000000),
+      locked: true,
+    ),
+    actionButtons: [
+      NotificationActionButton(
+        key: 'confirm_reset',
+        label: 'Ok',
+        actionType: ActionType.KeepOnTop,
+      ),
+    ],
+  );
 }
