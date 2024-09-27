@@ -68,6 +68,7 @@ class _Main extends State<Main> {
 
   @override
   void initState() {
+    initializeScheduleProperties();
     NotificationController.startListeningNotificationEvents();
     DarkThemeController.instance.addListener(_updatedStatusBarColor);
     NotificationController.scheduleResetDataNotification();

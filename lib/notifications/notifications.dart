@@ -148,7 +148,7 @@ class NotificationController {
   static Future<void> onActionReceivedMethod(
       ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == 'confirm_hydration') {
-      initializeScheduleProperties();
+      // initializeScheduleProperties();
 
       waterIngested += waterDosage!;
       setWaterIngestedPerDay();
