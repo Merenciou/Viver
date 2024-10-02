@@ -1592,7 +1592,7 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              sleepGoalWeekly != null
+                              sleepGoalWeekly != 'NaN'
                                   ? '$sleepGoalWeekly%'
                                   : '0%',
                               style: Theme.of(context).textTheme.displayMedium,
@@ -1861,9 +1861,9 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.secondary,
                             ),
                             Text(
-                              hydrationGoalWeekly != null
-                                  ? '0%'
-                                  : '$hydrationGoalWeekly%',
+                              hydrationGoalWeekly != 'NaN'
+                                  ? '$hydrationGoalWeekly%'
+                                  : '0%',
                               style: Theme.of(context).textTheme.displayMedium,
                             ),
                             Text(
