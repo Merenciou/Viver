@@ -20,6 +20,7 @@ class _HoursSleptState extends State<HoursSlept> {
   TimeOfDay selectedTimeSlept = TimeOfDay.now();
   TimeOfDay selectedTimeWokeUp = TimeOfDay.now();
   late Future<String?> name;
+  double? age;
   String hourSlept = '';
   String hourWokeUp = '';
   bool isLoading = false;
@@ -43,6 +44,10 @@ class _HoursSleptState extends State<HoursSlept> {
           .doc('days')
           .set({dayNow: hoursAndMinutes}, SetOptions(merge: true));
     }
+  }
+
+  Future<void> getAge() async {
+    age = await UserModel().getAge();
   }
 
   @override
@@ -517,61 +522,65 @@ class _HoursSleptState extends State<HoursSlept> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            if (hourSlept != '' && hourWokeUp != '') {
-                              int? hourWokeUpInt =
-                                  int.tryParse(hourWokeUp.substring(0, 2));
-                              int? minuteWokeUpInt =
-                                  int.tryParse(hourWokeUp.substring(3, 5));
-                              int? hourSleptInt =
-                                  int.tryParse(hourSlept.substring(0, 2));
-                              int? minuteSleptInt =
-                                  int.tryParse(hourSlept.substring(3, 5));
+                            if (age != null) {
+                              if (hourSlept != '' && hourWokeUp != '') {
+                                int? hourWokeUpInt =
+                                    int.tryParse(hourWokeUp.substring(0, 2));
+                                int? minuteWokeUpInt =
+                                    int.tryParse(hourWokeUp.substring(3, 5));
+                                int? hourSleptInt =
+                                    int.tryParse(hourSlept.substring(0, 2));
+                                int? minuteSleptInt =
+                                    int.tryParse(hourSlept.substring(3, 5));
 
-                              int? minutesWokeUp =
-                                  hourWokeUpInt! * 60 + minuteWokeUpInt!;
-                              int? minutesSlept =
-                                  hourSleptInt! * 60 + minuteSleptInt!;
+                                int? minutesWokeUp =
+                                    hourWokeUpInt! * 60 + minuteWokeUpInt!;
+                                int? minutesSlept =
+                                    hourSleptInt! * 60 + minuteSleptInt!;
 
-                              int? remainingMinutes =
-                                  minutesWokeUp - minutesSlept;
+                                int? remainingMinutes =
+                                    minutesWokeUp - minutesSlept;
 
-                              if (remainingMinutes < 0) {
-                                remainingMinutes += 24 * 60;
+                                if (remainingMinutes < 0) {
+                                  remainingMinutes += 24 * 60;
+                                }
+
+                                hoursRemainings = remainingMinutes ~/ 60;
+                                minutesRemainings = remainingMinutes % 60;
+
+                                hoursAndMinutes =
+                                    '$hoursRemainings.$minutesRemainings';
                               }
 
-                              hoursRemainings = remainingMinutes ~/ 60;
-                              minutesRemainings = remainingMinutes % 60;
-
-                              hoursAndMinutes =
-                                  '$hoursRemainings.$minutesRemainings';
-                            }
-
-                            if (mounted) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                            }
-
-                            Future.delayed(const Duration(seconds: 3), () {
                               if (mounted) {
                                 setState(() {
-                                  isLoading = false;
-                                  if (hourSlept != '' && hourWokeUp != '') {
-                                    setSleepPerDay();
-                                    if (mounted) {
-                                      Warnings.snackBarHourSleptSucessful(
-                                          context);
-                                    }
-
-                                    showResult = true;
-                                  } else {
-                                    if (mounted) {
-                                      Warnings.snackBarHoursNulls(context);
-                                    }
-                                  }
+                                  isLoading = true;
                                 });
                               }
-                            });
+
+                              Future.delayed(const Duration(seconds: 3), () {
+                                if (mounted) {
+                                  setState(() {
+                                    isLoading = false;
+                                    if (hourSlept != '' && hourWokeUp != '') {
+                                      setSleepPerDay();
+                                      if (mounted) {
+                                        Warnings.snackBarHourSleptSucessful(
+                                            context);
+                                      }
+
+                                      showResult = true;
+                                    } else {
+                                      if (mounted) {
+                                        Warnings.snackBarHoursNulls(context);
+                                      }
+                                    }
+                                  });
+                                }
+                              });
+                            } else {
+                              Warnings.snackBarAgeNull(context);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                               minimumSize: const Size(double.infinity, 50),
