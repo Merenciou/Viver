@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
     double? hoursSlept;
     int? hoursToSleep;
     double? sleepGoalDiaryCalc;
-    DateTime today = DateTime.now();
+    DateTime today = DateTime.now().subtract(const Duration(days: 1));
 
     hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
 
@@ -737,7 +737,7 @@ class _HomePageState extends State<HomePage> {
     double? waterToIngest;
     double? hydrationGoalDiaryCalc;
     int? hydrationGoalDiaryInt;
-    DateTime today = DateTime.now();
+    DateTime today = DateTime.now().subtract(const Duration(days: 1));
 
     waterToIngest = await UserModel().getWaterIdeal() ?? 0;
 
