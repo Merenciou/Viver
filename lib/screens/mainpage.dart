@@ -201,9 +201,8 @@ class _MainPage extends State<MainPage> {
                 });
               },
               child: const Scaffold(
-                bottomNavigationBar: CustomNavigationBar(),
                 resizeToAvoidBottomInset: false,
-                // body: CustomNavigationBar(),
+                body: CustomNavigationBar(),
               ),
             ),
           );

@@ -1,15 +1,11 @@
-// ADICIONAR PARADA QUANDO ALTERAR PAGINAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-// if (buttonIndex != 1) {
-//   BreathePage();
-// }
-
 import 'dart:async';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:viver/controllers/home_app_controller.dart';
 
 class BreathePage extends StatefulWidget {
   const BreathePage({super.key});
@@ -18,46 +14,13 @@ class BreathePage extends StatefulWidget {
   State<BreathePage> createState() => _BreathePage();
 }
 
-class _BreathePage extends State<BreathePage> {
+class _BreathePage extends State<BreathePage>
+    with AutomaticKeepAliveClientMixin {
   bool isVoicePlaying = true;
   bool isMusicPlaying = true;
 
-  final player = AudioPlayer();
-  dynamic stateMusicPlayer;
-
-  Future<void> playMusic() async {
-    player.setVolume(1);
-
-    if (mounted) {
-      setState(() {
-        stateMusicPlayer = player.play(AssetSource('ambience.mp3'));
-      });
-    }
-  }
-
-  Future<void> stopMusic() async {
-    if (mounted) {
-      setState(() {
-        stateMusicPlayer = player.stop();
-      });
-    }
-  }
-
-  Future<void> muteMusic() async {
-    if (mounted) {
-      setState(() {
-        stateMusicPlayer = player.setVolume(0);
-      });
-    }
-  }
-
-  Future<void> listenMusic() async {
-    if (mounted) {
-      setState(() {
-        stateMusicPlayer = player.setVolume(1);
-      });
-    }
-  }
+  @override
+  bool get wantKeepAlive => true;
 
   Future<void> speak(String text) async {
     FlutterTts tts = FlutterTts();
@@ -146,16 +109,13 @@ class _BreathePage extends State<BreathePage> {
     timer18?.cancel();
     timer19?.cancel();
     timer20?.cancel();
-    if (isMusicPlaying) {
-      stopMusic();
-    }
     super.dispose();
   }
 
   void changeDetails() {
     if (mounted) {
       Timer(const Duration(milliseconds: 500), () {
-        playMusic();
+        context.read<HomeAppController>().playMusic();
       });
     }
     if (mounted) {
@@ -529,12 +489,17 @@ class _BreathePage extends State<BreathePage> {
         }
       });
     } else {
-      stopMusic();
+      context.read<HomeAppController>().stopMusic();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    // return Container(
+    //   color: Colors.red,
+    //   child: Center(child: Text(_controller.player.state.toString())),
+    // );
     return Center(
       child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 65),
@@ -750,7 +715,7 @@ class _BreathePage extends State<BreathePage> {
             padding: const EdgeInsets.only(top: 20),
             child: ElevatedButton(
               onPressed: () {
-                stopMusic();
+                context.read<HomeAppController>().stopMusic();
 
                 setState(() {
                   stopCounter = true;
@@ -889,7 +854,7 @@ class _BreathePage extends State<BreathePage> {
                           isMusicPlaying = !isMusicPlaying;
                         });
                         if (isMusicPlaying == false) {
-                          muteMusic();
+                          context.read<HomeAppController>().muteMusic();
                         }
                       },
                       icon: Icon(
@@ -906,7 +871,7 @@ class _BreathePage extends State<BreathePage> {
                           isMusicPlaying = !isMusicPlaying;
                         });
                         if (isMusicPlaying == true) {
-                          listenMusic();
+                          context.read<HomeAppController>().listenMusic();
                         }
                       },
                       icon: Icon(

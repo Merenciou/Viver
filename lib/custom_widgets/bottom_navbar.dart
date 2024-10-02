@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:viver/controllers/home_app_controller.dart';
 import 'package:viver/screens/breathe.dart';
 import 'package:viver/screens/homepage.dart';
 import 'package:viver/screens/sleep.dart';
@@ -204,6 +206,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           setState(() {
                             buttonIndex = 0;
+                            context.read<HomeAppController>().stopMusic();
                           });
                         },
                         icon: Image.asset(
@@ -240,6 +243,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           setState(() {
                             buttonIndex = 2;
+                            context.read<HomeAppController>().stopMusic();
                           });
                         },
                         icon: Image.asset(
@@ -258,6 +262,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           setState(() {
                             buttonIndex = 3;
+                            context.read<HomeAppController>().stopMusic();
                           });
                         },
                         icon: Image.asset(
@@ -276,6 +281,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
                         onPressed: () {
                           setState(() {
                             buttonIndex = 4;
+                            context.read<HomeAppController>().stopMusic();
                           });
                         },
                         icon: Image.asset(

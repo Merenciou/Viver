@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:viver/authentication/auth_screen.dart';
 import 'package:viver/controllers/dark_theme_controller.dart';
+import 'package:viver/controllers/home_app_controller.dart';
 import 'package:viver/custom_widgets/treatment_null.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/screens/delete_user.dart';
@@ -42,6 +43,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (_) => NullVerifierProvider(),
         ),
+        ChangeNotifierProvider(create: (_) => HomeAppController()),
       ],
       child: const Main(),
     ),
