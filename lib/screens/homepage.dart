@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -222,7 +222,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -232,7 +232,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -257,7 +257,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -267,7 +267,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -277,7 +277,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             setState(() {
               sleepQuality = qualities[1];
               sleepQualityMood = qualitiesMoods[1];
@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
             });
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {}
             setState(() {
               sleepQuality = qualities[0];
@@ -308,7 +308,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -318,7 +318,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -328,7 +328,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -338,7 +338,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -362,7 +362,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -372,7 +372,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -382,7 +382,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -392,7 +392,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -416,7 +416,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -426,7 +426,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -436,7 +436,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -446,7 +446,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -470,7 +470,7 @@ class _HomePageState extends State<HomePage> {
         int? sleepGoalDiaryInt = int.tryParse(sleepGoalDiary!);
 
         switch (sleepGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[3];
@@ -480,7 +480,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[2];
@@ -490,7 +490,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -500,7 +500,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -760,7 +760,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -770,7 +770,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -780,7 +780,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -790,7 +790,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -817,7 +817,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -827,7 +827,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -837,7 +837,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -847,7 +847,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -874,7 +874,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -884,7 +884,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -894,7 +894,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -904,7 +904,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -931,7 +931,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -941,7 +941,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -951,7 +951,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -961,7 +961,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -988,7 +988,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -998,7 +998,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1008,7 +1008,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1018,7 +1018,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1045,7 +1045,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1055,7 +1055,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1065,7 +1065,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1075,7 +1075,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1102,7 +1102,7 @@ class _HomePageState extends State<HomePage> {
         hydrationGoalDiaryInt = int.tryParse(hydrationGoalDiary!);
 
         switch (hydrationGoalDiaryInt!) {
-          case >= 0 && <= 25:
+          case >= 0 && <= 50:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1112,7 +1112,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 26 && <= 50:
+          case > 50 && < 85:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1122,7 +1122,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 51 && <= 75:
+          case > 85 && < 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -1132,7 +1132,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case >= 76 && <= 100:
+          case 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
