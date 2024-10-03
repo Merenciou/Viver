@@ -38,6 +38,7 @@ class _MainPage extends State<MainPage> {
   @override
   void initState() {
     name = UserModel().getName();
+    DarkThemeController.instance.loadTheme();
     getFirstTime();
     super.initState();
   }
