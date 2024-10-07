@@ -99,7 +99,9 @@ class _MainPage extends State<MainPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/aboutpage');
+                        },
                         child: Text(
                           'Sobre',
                           style: GoogleFonts.montserrat(
