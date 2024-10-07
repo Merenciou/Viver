@@ -322,18 +322,20 @@ class _SleepState extends State<Sleep> {
                 Text(
                   'Você deve dormir',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.black87),
                 ),
-                Text('$hourIdealMin a $hourIdealMax',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge
-                    // GoogleFonts.montserrat(
-                    //     fontSize: 18, color: Colors.yellow),
-                    ),
+                Text(
+                  '$hourIdealMin a $hourIdealMax horas',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.yellow),
+                ),
                 Text(
                   'por noite!',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.black87),
                 ),
               ],
             ),
@@ -367,7 +369,10 @@ class _SleepState extends State<Sleep> {
                           Theme.of(context).buttonTheme.colorScheme!.onPrimary),
                   child: Text(
                     'Sim',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
                 ElevatedButton(
@@ -391,7 +396,10 @@ class _SleepState extends State<Sleep> {
                           .onSecondary),
                   child: Text(
                     'Não',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],

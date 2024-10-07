@@ -356,20 +356,21 @@ class _WaterPage extends State<WaterPage> {
                 Text(
                   'Você deve ingerir',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.black87),
                 ),
                 Text(
-                    '${waterIdeal?.toStringAsFixed(2)} litros'
-                        .replaceAll('.', ','),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleLarge
-                    // GoogleFonts.montserrat(
-                    //     fontSize: 18, color: Colors.yellow),
-                    ),
+                  '${waterIdeal?.toStringAsFixed(2)} litros'
+                      .replaceAll('.', ','),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.yellow),
+                ),
                 Text(
                   'de água por dia!',
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: GoogleFonts.montserrat(
+                      fontSize: 20, color: Colors.black87),
                 ),
               ],
             ),
@@ -401,7 +402,10 @@ class _WaterPage extends State<WaterPage> {
                           Theme.of(context).buttonTheme.colorScheme!.onPrimary),
                   child: Text(
                     'Sim',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
                 ElevatedButton(
@@ -424,7 +428,10 @@ class _WaterPage extends State<WaterPage> {
                           .onSecondary),
                   child: Text(
                     'Não',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: GoogleFonts.montserrat(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
