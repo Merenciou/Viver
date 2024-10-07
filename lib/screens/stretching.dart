@@ -134,6 +134,7 @@ class _StretchingPageState extends State<StretchingPage> {
                         );
                       }).toList(),
                       onChanged: (String? value) {
+                        initializeScheduleProperties();
                         setState(() {
                           dropDownValue = value!;
                           interval = value;

@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:viver/main.dart';
 import 'package:viver/controllers/user_model.dart';
 
-late String? name;
+String? name = 'Usuário';
 late String? wakeUpHour;
 late int? hourSleepMax;
 late double? hourSleepRemainings;
