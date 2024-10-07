@@ -115,7 +115,9 @@ class _MainPage extends State<MainPage> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/privacypage');
+                        },
                         child: Text(
                           'Privacidade',
                           style: GoogleFonts.montserrat(
