@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:dot_loader/dot_loader.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:intl/intl.dart';
 import 'package:viver/warnings/warnings.dart';
@@ -65,9 +66,11 @@ class _HoursSleptState extends State<HoursSlept> {
           Flexible(
             child: Container(
               width: 360,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                color: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0xFF10375C)
+                    : Colors.white,
+                borderRadius: const BorderRadius.all(
                   Radius.circular(10),
                 ),
               ),
@@ -94,9 +97,12 @@ class _HoursSleptState extends State<HoursSlept> {
                                 padding: const EdgeInsets.only(top: 20),
                                 child: Container(
                                   width: double.infinity,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffF6F5F5),
-                                    borderRadius: BorderRadius.only(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        DarkThemeController.instance.isDarkTheme
+                                            ? Colors.white70
+                                            : const Color(0xffF6F5F5),
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(0),
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
@@ -303,9 +309,12 @@ class _HoursSleptState extends State<HoursSlept> {
                                 child: Container(
                                   width: double.infinity,
                                   height: 40,
-                                  decoration: const BoxDecoration(
-                                    color: Color(0xffF6F5F5),
-                                    borderRadius: BorderRadius.only(
+                                  decoration: BoxDecoration(
+                                    color:
+                                        DarkThemeController.instance.isDarkTheme
+                                            ? Colors.white70
+                                            : const Color(0xffF6F5F5),
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(0),
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),

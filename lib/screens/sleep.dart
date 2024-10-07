@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/controllers/user_model.dart';
 import 'package:viver/custom_widgets/custom_timepicker.dart';
 import 'package:viver/controllers/user_controller.dart';
@@ -365,8 +366,12 @@ class _SleepState extends State<Sleep> {
                   style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       shape: const RoundedRectangleBorder(),
-                      backgroundColor:
-                          Theme.of(context).buttonTheme.colorScheme!.onPrimary),
+                      backgroundColor: DarkThemeController.instance.isDarkTheme
+                          ? const Color(0xFF10375C)
+                          : Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .onPrimary),
                   child: Text(
                     'Sim',
                     style: GoogleFonts.montserrat(
@@ -390,10 +395,12 @@ class _SleepState extends State<Sleep> {
                             bottomLeft: Radius.circular(10),
                             bottomRight: Radius.circular(10)),
                       ),
-                      backgroundColor: Theme.of(context)
-                          .buttonTheme
-                          .colorScheme!
-                          .onSecondary),
+                      backgroundColor: DarkThemeController.instance.isDarkTheme
+                          ? const Color(0xFF662549)
+                          : Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .onSecondary),
                   child: Text(
                     'Não',
                     style: GoogleFonts.montserrat(

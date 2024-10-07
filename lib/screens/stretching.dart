@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/custom_widgets/clock.dart';
 import 'package:viver/notifications/notifications.dart';
 import 'package:viver/warnings/warnings.dart';
@@ -119,7 +120,9 @@ class _StretchingPageState extends State<StretchingPage> {
                         color: Colors.black45,
                         size: 30,
                       ),
-                      dropdownColor: Colors.white,
+                      dropdownColor: DarkThemeController.instance.isDarkTheme
+                          ? Colors.white70
+                          : Colors.white,
                       underline: Container(
                         height: 2,
                         color: Theme.of(context).colorScheme.surface,
@@ -180,7 +183,9 @@ class _StretchingPageState extends State<StretchingPage> {
                         }
                         setInterval(value!);
                       }),
-                  inactiveThumbColor: Colors.black38,
+                  inactiveThumbColor: DarkThemeController.instance.isDarkTheme
+                      ? Colors.white70
+                      : Colors.black38,
                   controlAffinity: ListTileControlAffinity.leading,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   inactiveTrackColor: Theme.of(context).colorScheme.surface,

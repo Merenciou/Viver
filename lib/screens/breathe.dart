@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:viver/controllers/dark_theme_controller.dart';
 import 'package:viver/controllers/home_app_controller.dart';
 
 class BreathePage extends StatefulWidget {
@@ -791,8 +792,9 @@ class _BreathePage extends State<BreathePage>
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Theme.of(context).buttonTheme.colorScheme!.onSecondary,
+                backgroundColor: DarkThemeController.instance.isDarkTheme
+                    ? const Color(0xFF662549)
+                    : Theme.of(context).buttonTheme.colorScheme!.onSecondary,
                 minimumSize: const Size(200, 60),
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
