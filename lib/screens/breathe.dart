@@ -58,8 +58,8 @@ class _BreathePage extends State<BreathePage>
 
   int screensIndex = 0;
   bool isStarted = false;
-  var changeFillColor = const Color(0XFF79AC78).withOpacity(0.5);
-  var changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+  var changeFillColor = const Color(0XFF79AC78).withValues(alpha: 0.5);
+  var changeWidthColor = const Color(0xFFC4DFDF).withValues(alpha: 0.5);
   var changedText = 'Prepare-se';
   double changedWidth = 10;
 
@@ -133,9 +133,9 @@ class _BreathePage extends State<BreathePage>
                   timer0 = Timer(const Duration(seconds: 3), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Inspire';
                       speak('Inspire profundamente');
                     });
@@ -150,9 +150,9 @@ class _BreathePage extends State<BreathePage>
                   timer1 = Timer(const Duration(seconds: 8), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure o ar';
                       speak('Segure o ar');
                     });
@@ -167,9 +167,9 @@ class _BreathePage extends State<BreathePage>
                   timer2 = Timer(const Duration(seconds: 13), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Expire';
                       speak('Expire pelo nariz lentamente');
                     });
@@ -184,9 +184,9 @@ class _BreathePage extends State<BreathePage>
                   timer3 = Timer(const Duration(seconds: 18), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure sem ar';
                       speak('Segure sem ar por alguns segundos');
                     });
@@ -201,9 +201,9 @@ class _BreathePage extends State<BreathePage>
                   timer4 = Timer(const Duration(seconds: 23), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Inspire';
                       speak('Inspire profundamente');
                     });
@@ -218,9 +218,9 @@ class _BreathePage extends State<BreathePage>
                   timer5 = Timer(const Duration(seconds: 28), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure o ar';
                       speak('Segure o ar');
                     });
@@ -235,9 +235,9 @@ class _BreathePage extends State<BreathePage>
                   timer6 = Timer(const Duration(seconds: 33), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Expire';
                       speak('Expire pelo nariz lentamente');
                     });
@@ -252,9 +252,9 @@ class _BreathePage extends State<BreathePage>
                   timer7 = Timer(const Duration(seconds: 38), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure sem ar';
                       speak('Segure sem ar por alguns segundos');
                     });
@@ -269,9 +269,9 @@ class _BreathePage extends State<BreathePage>
                   timer8 = Timer(const Duration(seconds: 43), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Inspire';
                       speak('Inspire profundamente');
                     });
@@ -286,9 +286,9 @@ class _BreathePage extends State<BreathePage>
                   timer9 = Timer(const Duration(seconds: 48), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure o ar';
                       speak('Segure o ar');
                     });
@@ -303,9 +303,9 @@ class _BreathePage extends State<BreathePage>
                   timer10 = Timer(const Duration(seconds: 53), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Expire';
                       speak('Expire pelo nariz lentamente');
                     });
@@ -320,9 +320,9 @@ class _BreathePage extends State<BreathePage>
                   timer11 = Timer(const Duration(seconds: 58), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure sem ar';
                       speak('Segure sem ar por alguns segundos');
                     });
@@ -337,9 +337,9 @@ class _BreathePage extends State<BreathePage>
                   timer12 = Timer(const Duration(seconds: 63), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Inspire';
                       speak('Inspire profundamente');
                     });
@@ -354,9 +354,9 @@ class _BreathePage extends State<BreathePage>
                   timer13 = Timer(const Duration(seconds: 68), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure o ar';
                       speak('Segure o ar');
                     });
@@ -371,9 +371,9 @@ class _BreathePage extends State<BreathePage>
                   timer14 = Timer(const Duration(seconds: 73), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Expire';
                       speak('Expire pelo nariz lentamente');
                     });
@@ -388,9 +388,9 @@ class _BreathePage extends State<BreathePage>
                   timer15 = Timer(const Duration(seconds: 78), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure sem ar';
                       speak('Segure sem ar por alguns segundos');
                     });
@@ -405,9 +405,9 @@ class _BreathePage extends State<BreathePage>
                   timer16 = Timer(const Duration(seconds: 83), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Inspire';
                       speak('Inspire profundamente');
                     });
@@ -422,9 +422,9 @@ class _BreathePage extends State<BreathePage>
                   timer17 = Timer(const Duration(seconds: 88), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure o ar';
                       speak('Segure o ar');
                     });
@@ -439,9 +439,9 @@ class _BreathePage extends State<BreathePage>
                   timer18 = Timer(const Duration(seconds: 93), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Expire';
                       speak('Expire pelo nariz lentamente');
                     });
@@ -456,9 +456,9 @@ class _BreathePage extends State<BreathePage>
                   timer19 = Timer(const Duration(seconds: 98), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0xFFF5DD61).withOpacity(0.7);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.7);
                       changeWidthColor =
-                          const Color(0xFFF5DD61).withOpacity(0.4);
+                          const Color(0xFFF5DD61).withValues(alpha: 0.4);
                       changedText = 'Segure sem ar';
                       speak('Segure sem ar por alguns segundos');
                     });
@@ -473,9 +473,9 @@ class _BreathePage extends State<BreathePage>
                   timer20 = Timer(const Duration(seconds: 103), () {
                     setState(() {
                       changeFillColor =
-                          const Color(0XFF79AC78).withOpacity(0.4);
+                          const Color(0XFF79AC78).withValues(alpha: 0.4);
                       changeWidthColor =
-                          const Color(0xFFC4DFDF).withOpacity(0.5);
+                          const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                       changedText = 'Respire normalmente';
                       speak('Para finalizar, respire normalmente');
                     });
@@ -721,8 +721,10 @@ class _BreathePage extends State<BreathePage>
                 setState(() {
                   stopCounter = true;
                   screensIndex = 3;
-                  changeFillColor = const Color(0XFF79AC78).withOpacity(0.5);
-                  changeWidthColor = const Color(0xFFC4DFDF).withOpacity(0.5);
+                  changeFillColor =
+                      const Color(0XFF79AC78).withValues(alpha: 0.5);
+                  changeWidthColor =
+                      const Color(0xFFC4DFDF).withValues(alpha: 0.5);
                   changedText = 'Prepare-se';
                   changedWidth = 10;
                 });
