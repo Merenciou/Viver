@@ -35,7 +35,7 @@ class _HoursSleptState extends State<HoursSlept> {
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     User? user = auth.currentUser;
     CollectionReference userCollection = firestore.collection('Users');
-    DateTime now = DateTime.now().subtract(const Duration(days: 1));
+    DateTime now = DateTime.now().subtract(const Duration(days: 0));
     String dayNow = DateFormat('EEEE', 'en_US').format(now).toLowerCase();
 
     if (user != null) {
