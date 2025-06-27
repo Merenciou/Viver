@@ -48,12 +48,18 @@ class _HoursSleptState extends State<HoursSlept> {
   }
 
   Future<void> getAge() async {
-    age = await UserModel().getAge();
+    try {
+      age = await UserModel().getAge();
+    } catch (e) {
+      print('Errooooooooooooooooor getting age: $e');
+      age = null;
+    }
   }
 
   @override
   void initState() {
     name = UserModel().getName();
+    getAge();
     super.initState();
   }
 
