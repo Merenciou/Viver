@@ -24,11 +24,10 @@ void initializeScheduleProperties() async {
   hourSleepMax = await UserModel().getHourIdealSleepMax() ?? 0;
   hourSleepRemainings = 24.0 - hourSleepMax!;
   hourDividedPerDay = hourSleepRemainings! / 9;
+  waterIdeal = await UserModel().getWaterIdeal();
 
   weight = await UserModel().getWeight();
   if (weight != null) {
-    waterIdeal = ((weight ?? 0) * 0.350) / 10;
-
     double? dosage = waterIdeal! / 9;
     String roundedString = dosage.toStringAsFixed(3);
     waterDosage = double.tryParse(roundedString);
@@ -149,6 +148,10 @@ class NotificationController {
       ReceivedAction receivedAction) async {
     if (receivedAction.buttonKeyPressed == 'confirm_hydration') {
       initializeScheduleProperties();
+      if (waterIngested >= waterIdeal! - waterDosage!) {
+        await AwesomeNotifications()
+            .cancelNotificationsByChannelKey('hydration_channel');
+      }
 
       waterIngested += waterDosage!;
       setWaterIngestedPerDay();
@@ -237,46 +240,44 @@ Future<void> notifyHydrationSchedule() async {
 
   int intervalHydration = (hourDividedPerDay! * 3600).toInt();
 
-  for (int i = 0; i < 9; i++) {
-    await AwesomeNotifications().createNotification(
-      schedule: NotificationInterval(
-        interval: intervalHydration,
-        repeats: true,
-        allowWhileIdle: true,
-        timeZone: 'UTC',
-      ),
-      content: NotificationContent(
-        id: 1,
-        channelKey: 'hydration_channel',
-        title: 'É hora de se hidratar!',
-        body: 'Olá, $name! Beba $waterDosage de água.',
-        summary: 'Lembrete',
-        wakeUpScreen: true,
-        backgroundColor: const Color(0XFF79AC78),
-        category: NotificationCategory.Alarm,
+  await AwesomeNotifications().createNotification(
+    schedule: NotificationInterval(
+      interval: 60,
+      repeats: true,
+      allowWhileIdle: true,
+      timeZone: 'UTC',
+    ),
+    content: NotificationContent(
+      id: 1,
+      channelKey: 'hydration_channel',
+      title: 'É hora de se hidratar!',
+      body: 'Olá, $name! Beba $waterDosage de água.',
+      summary: 'Lembrete',
+      wakeUpScreen: true,
+      backgroundColor: const Color(0XFF79AC78),
+      category: NotificationCategory.Alarm,
+      actionType: ActionType.Default,
+      notificationLayout: NotificationLayout.BigPicture,
+      color: const Color(0xFF000000),
+      locked: true,
+    ),
+    actionButtons: [
+      NotificationActionButton(
+        key: 'confirm_hydration',
+        label: 'Hidratar-se',
         actionType: ActionType.Default,
-        notificationLayout: NotificationLayout.BigPicture,
-        color: const Color(0xFF000000),
-        locked: true,
       ),
-      actionButtons: [
-        NotificationActionButton(
-          key: 'confirm_hydration',
-          label: 'Hidratar-se',
-          actionType: ActionType.KeepOnTop,
-        ),
-        NotificationActionButton(
-            key: 'late_hydration',
-            label: 'Adiar',
-            actionType: ActionType.DisabledAction),
-        NotificationActionButton(
-          key: 'disable_hydration',
-          label: 'Desativar',
-          actionType: ActionType.KeepOnTop,
-        ),
-      ],
-    );
-  }
+      NotificationActionButton(
+          key: 'late_hydration',
+          label: 'Adiar',
+          actionType: ActionType.DisabledAction),
+      NotificationActionButton(
+        key: 'disable_hydration',
+        label: 'Desativar',
+        actionType: ActionType.KeepOnTop,
+      ),
+    ],
+  );
 }
 
 Future<String?> getIntervalStretching() async {
