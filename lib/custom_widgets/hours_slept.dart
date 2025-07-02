@@ -524,7 +524,10 @@ class _HoursSleptState extends State<HoursSlept> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        'Você dormiu $hoursRemainings horas e $minutesRemainings minutos!',
+                                        hoursRemainings == 0 &&
+                                                minutesRemainings == 0
+                                            ? 'Você é um robô? Você não dorme?'
+                                            : 'Você dormiu por $hoursRemainings horas e $minutesRemainings minutos',
                                         style: GoogleFonts.montserrat(
                                             color: Colors.black38,
                                             fontSize: 17),
