@@ -14,6 +14,7 @@ double? sundayHydration;
 
 void initializeChartHydrationProperties() async {
   UserModel userModel = UserModel();
+
   sizeHydrationChart = await userModel.getWaterIdeal();
 }
 
@@ -27,44 +28,56 @@ class HydrationChartBar extends StatefulWidget {
 class _HydrationChartBarState extends State<HydrationChartBar> {
   void getDaysHydration() {
     ChartHydrationModel().getMonday().listen((value) {
-      setState(() {
-        mondayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          mondayHydration = value;
+        });
+      }
     }, onError: (error) {
       mondayHydration = 0;
     });
     ChartHydrationModel().getTuesday().listen((value) {
-      setState(() {
-        tuesdayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          tuesdayHydration = value;
+        });
+      }
     }, onError: (error) {
       tuesdayHydration = 0;
     });
     ChartHydrationModel().getWednesday().listen((value) {
-      setState(() {
-        wednesdayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          wednesdayHydration = value;
+        });
+      }
     }, onError: (error) {
       wednesdayHydration = 0;
     });
     ChartHydrationModel().getThursday().listen((value) {
-      setState(() {
-        thursdayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          thursdayHydration = value;
+        });
+      }
     }, onError: (error) {
       thursdayHydration = 0;
     });
     ChartHydrationModel().getFriday().listen((value) {
-      setState(() {
-        fridayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          fridayHydration = value;
+        });
+      }
     }, onError: (error) {
       fridayHydration = 0;
     });
     ChartHydrationModel().getSaturday().listen((value) {
-      setState(() {
-        saturdayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          saturdayHydration = value;
+        });
+      }
     }, onError: (error) {
       saturdayHydration = 0;
     });
