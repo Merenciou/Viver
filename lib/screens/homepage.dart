@@ -157,6 +157,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -167,7 +168,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -177,7 +179,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -187,14 +190,14 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
 
-    ChartSleepModel().getTuesday().listen((value) {
+    _tuesdaySleepWeeklySubscription =
+        ChartSleepModel().getTuesday().listen((value) {
       if (today.weekday == 2 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -212,6 +215,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -222,7 +226,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -232,7 +237,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -242,14 +248,14 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
 
-    ChartSleepModel().getWednesday().listen((value) {
+    _wednesdaySleepDiarySubscription =
+        ChartSleepModel().getWednesday().listen((value) {
       if (today.weekday == 3 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -267,6 +273,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -277,30 +284,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
-            setState(() {
-              sleepQuality = qualities[1];
-              sleepQualityMood = qualitiesMoods[1];
-              sleepColorMood = colorsMoods[0];
-            });
+
+          case > 85 && < 90:
+            if (mounted) {
+              setState(() {
+                sleepQuality = qualities[1];
+                sleepQualityMood = qualitiesMoods[1];
+                sleepColorMood = colorsMoods[0];
+              });
+            }
 
             break;
-          case 100:
-            if (mounted) {}
-            setState(() {
-              sleepQuality = qualities[0];
-              sleepQualityMood = qualitiesMoods[0];
-              sleepColorMood = colorsMoods[0];
-            });
 
+          case >= 90 && <= 100:
+            if (mounted) {
+              setState(() {
+                sleepQuality = qualities[0];
+                sleepQualityMood = qualitiesMoods[0];
+                sleepColorMood = colorsMoods[0];
+              });
+            }
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
-    ChartSleepModel().getThursday().listen((value) {
+    _thursdaySleepDiarySubscription =
+        ChartSleepModel().getThursday().listen((value) {
       if (today.weekday == 4 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / (hoursToSleep)) * 100);
@@ -318,6 +329,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -328,7 +340,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -338,7 +351,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -348,13 +362,13 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
-    ChartSleepModel().getFriday().listen((value) {
+    _fridaySleepDiarySubscription =
+        ChartSleepModel().getFriday().listen((value) {
       if (today.weekday == 5 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -372,6 +386,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -382,7 +397,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -392,7 +408,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -402,13 +419,13 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
-    ChartSleepModel().getSaturday().listen((value) {
+    _saturdaySleepDiarySubscription =
+        ChartSleepModel().getSaturday().listen((value) {
       if (today.weekday == 6 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -426,6 +443,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -436,7 +454,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -446,7 +465,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -456,13 +476,13 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
       hoursSlept = 0;
     });
-    ChartSleepModel().getSunday().listen((value) {
+    _sundaySleepDiarySubscription =
+        ChartSleepModel().getSunday().listen((value) {
       if (today.weekday == 0 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
@@ -480,6 +500,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
@@ -490,7 +511,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[1];
@@ -500,7 +522,8 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
                 sleepQuality = qualities[0];
@@ -510,7 +533,6 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          default:
         }
       }
     }, onError: (error) {
@@ -768,31 +790,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -823,31 +848,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -877,36 +905,40 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && <= 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          // case 100:
-          //   if (mounted) {
-          //     setState(() {
-          //       hydrationQuality = qualities[3];
-          //       hydrationQualityMood = qualitiesMoods[3];
-          //       hydrationColorMood = colorsMoods[0];
-          //     });
-          //   }
 
-          //   break;
+          case >= 90 && <= 100:
+            if (mounted) {
+              setState(() {
+                print('hydrationQuality: ${today.weekday}');
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
+                hydrationColorMood = colorsMoods[0];
+              });
+            }
+
+            break;
         }
       }
     }, onError: (error) {
@@ -932,31 +964,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -987,31 +1022,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -1042,31 +1080,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -1097,31 +1138,34 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
+
           case > 50 && < 85:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[2];
+                hydrationQualityMood = qualitiesMoods[2];
                 hydrationColorMood = colorsMoods[1];
               });
             }
 
             break;
-          case > 85 && < 100:
+
+          case > 85 && < 90:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[1];
+                hydrationQualityMood = qualitiesMoods[1];
                 hydrationColorMood = colorsMoods[0];
               });
             }
 
             break;
-          case 100:
+
+          case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
+                hydrationQuality = qualities[0];
+                hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];
               });
             }
@@ -1893,7 +1937,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         hydrationQuality != null
                             ? Text(
-                                '$sleepQuality',
+                                '$hydrationQuality',
                                 textAlign: TextAlign.center,
                                 style: GoogleFonts.montserrat(
                                   fontSize: screenSize.width * 0.04,
