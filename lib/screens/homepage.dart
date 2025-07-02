@@ -931,7 +931,6 @@ class _HomePageState extends State<HomePage> {
           case >= 90 && <= 100:
             if (mounted) {
               setState(() {
-                print('hydrationQuality: ${today.weekday}');
                 hydrationQuality = qualities[0];
                 hydrationQualityMood = qualitiesMoods[0];
                 hydrationColorMood = colorsMoods[0];

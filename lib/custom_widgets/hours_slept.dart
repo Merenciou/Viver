@@ -51,7 +51,9 @@ class _HoursSleptState extends State<HoursSlept> {
     try {
       age = await UserModel().getAge();
     } catch (e) {
-      print('Errooooooooooooooooor getting age: $e');
+      if (mounted) {
+        Warnings.snackBarAgeNull(context);
+      }
       age = null;
     }
   }
