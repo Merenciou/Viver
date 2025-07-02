@@ -21,7 +21,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
+  final future = Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
@@ -34,21 +34,27 @@ void main() async {
   });
   await NotificationController.startListeningNotificationEvents();
 
-  initializeScheduleProperties();
-
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => UserController(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => NullVerifierProvider(),
-        ),
-        ChangeNotifierProvider(create: (_) => HomeAppController()),
-      ],
-      child: const Main(),
-    ),
+    FutureBuilder(
+        future: future,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MultiProvider(
+              providers: [
+                ChangeNotifierProvider(
+                  create: (_) => UserController(),
+                ),
+                ChangeNotifierProvider(
+                  create: (_) => NullVerifierProvider(),
+                ),
+                ChangeNotifierProvider(create: (_) => HomeAppController()),
+              ],
+              child: const Main(),
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        }),
   );
 }
 
@@ -75,6 +81,7 @@ class _Main extends State<Main> {
     NotificationController.startListeningNotificationEvents();
     DarkThemeController.instance.addListener(_updatedStatusBarColor);
     NotificationController.scheduleResetDataNotification();
+    initializeScheduleProperties();
     super.initState();
   }
 
