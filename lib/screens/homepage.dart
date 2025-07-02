@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
     double? hoursSlept;
     int? hoursToSleep;
     double? sleepGoalDiaryCalc;
-    DateTime today = DateTime.now().subtract(const Duration(days: 1));
+    DateTime today = DateTime.now().subtract(const Duration(days: 0));
 
     hoursToSleep = await UserModel().getHourIdealSleepMax() ?? 0;
 
@@ -250,6 +250,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartSleepModel().getWednesday().listen((value) {
+      print(today.weekday);
       if (today.weekday == 3 && hoursToSleep != null && hoursSlept != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
