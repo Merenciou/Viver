@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
 
     _mondaySleepDiarySubscription =
         ChartSleepModel().getMonday().listen((value) {
-      if (today.weekday == 1 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 1 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -195,7 +195,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartSleepModel().getTuesday().listen((value) {
-      if (today.weekday == 2 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 2 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -250,8 +250,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     ChartSleepModel().getWednesday().listen((value) {
-      print(today.weekday);
-      if (today.weekday == 3 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 3 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -302,7 +301,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getThursday().listen((value) {
-      if (today.weekday == 4 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 4 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / (hoursToSleep)) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -356,7 +355,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getFriday().listen((value) {
-      if (today.weekday == 5 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 5 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -410,7 +409,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getSaturday().listen((value) {
-      if (today.weekday == 6 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 6 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -464,7 +463,7 @@ class _HomePageState extends State<HomePage> {
       hoursSlept = 0;
     });
     ChartSleepModel().getSunday().listen((value) {
-      if (today.weekday == 0 && hoursToSleep != null && hoursSlept != null) {
+      if (today.weekday == 0 && hoursToSleep != null) {
         hoursSlept = value;
         sleepGoalDiaryCalc = (((hoursSlept ?? 0) / hoursToSleep) * 100);
         sleepGoalDiary = sleepGoalDiaryCalc!.toStringAsFixed(0);
@@ -738,7 +737,7 @@ class _HomePageState extends State<HomePage> {
     double? waterToIngest;
     double? hydrationGoalDiaryCalc;
     int? hydrationGoalDiaryInt;
-    DateTime today = DateTime.now().subtract(const Duration(days: 1));
+    DateTime today = DateTime.now().subtract(const Duration(days: 0));
 
     waterToIngest = await UserModel().getWaterIdeal() ?? 0;
 
@@ -752,9 +751,7 @@ class _HomePageState extends State<HomePage> {
 
     _mondayHydrationDiarySubscription =
         ChartHydrationModel().getMonday().listen((value) {
-      if (today.weekday == 1 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 1 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -809,9 +806,7 @@ class _HomePageState extends State<HomePage> {
 
     _tuesdayHydrationDiarySubscription =
         ChartHydrationModel().getTuesday().listen((value) {
-      if (today.weekday == 2 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 2 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -863,12 +858,9 @@ class _HomePageState extends State<HomePage> {
     }, onError: (error) {
       waterIngested = 0;
     });
-
     _wednesdayHydrationDiarySubscription =
         ChartHydrationModel().getWednesday().listen((value) {
-      if (today.weekday == 3 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 3 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -895,7 +887,7 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case > 85 && < 100:
+          case > 85 && <= 100:
             if (mounted) {
               setState(() {
                 hydrationQuality = qualities[3];
@@ -905,16 +897,16 @@ class _HomePageState extends State<HomePage> {
             }
 
             break;
-          case 100:
-            if (mounted) {
-              setState(() {
-                hydrationQuality = qualities[3];
-                hydrationQualityMood = qualitiesMoods[3];
-                hydrationColorMood = colorsMoods[0];
-              });
-            }
+          // case 100:
+          //   if (mounted) {
+          //     setState(() {
+          //       hydrationQuality = qualities[3];
+          //       hydrationQualityMood = qualitiesMoods[3];
+          //       hydrationColorMood = colorsMoods[0];
+          //     });
+          //   }
 
-            break;
+          //   break;
         }
       }
     }, onError: (error) {
@@ -923,9 +915,7 @@ class _HomePageState extends State<HomePage> {
 
     _thursdayHydrationDiarySubscription =
         ChartHydrationModel().getThursday().listen((value) {
-      if (today.weekday == 4 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 4 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -980,9 +970,7 @@ class _HomePageState extends State<HomePage> {
 
     _fridayHydrationDiarySubscription =
         ChartHydrationModel().getFriday().listen((value) {
-      if (today.weekday == 5 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 5 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -1037,9 +1025,7 @@ class _HomePageState extends State<HomePage> {
 
     _saturdayHydrationDiarySubscription =
         ChartHydrationModel().getSaturday().listen((value) {
-      if (today.weekday == 6 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 6 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
@@ -1094,9 +1080,7 @@ class _HomePageState extends State<HomePage> {
 
     _sundayHydrationDiarySubscription =
         ChartHydrationModel().getSunday().listen((value) {
-      if (today.weekday == 0 &&
-          waterToIngest != null &&
-          waterIngested != null) {
+      if (today.weekday == 0 && waterToIngest != null) {
         waterIngested = value;
         hydrationGoalDiaryCalc = (((waterIngested ?? 0) / waterToIngest) * 100);
         hydrationGoalDiary = hydrationGoalDiaryCalc!.toStringAsFixed(0);
