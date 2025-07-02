@@ -82,9 +82,11 @@ class _HydrationChartBarState extends State<HydrationChartBar> {
       saturdayHydration = 0;
     });
     ChartHydrationModel().getSunday().listen((value) {
-      setState(() {
-        sundayHydration = value;
-      });
+      if (mounted) {
+        setState(() {
+          sundayHydration = value;
+        });
+      }
     }, onError: (error) {
       sundayHydration = 0;
     });
